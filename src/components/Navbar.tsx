@@ -1,12 +1,15 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { Shield, LayoutDashboard, Menu, X } from 'lucide-react';
+import { Shield, LayoutDashboard, Menu, X, CalendarCheck, CalendarPlus, Trophy } from 'lucide-react';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navItems = [
     { to: '/', label: 'Home', icon: LayoutDashboard },
+    { to: '/previous-activities', label: 'Previous Activities', icon: CalendarCheck },
+    { to: '/upcoming-activities', label: 'Upcoming Activities', icon: CalendarPlus },
+    { to: '/winners', label: 'Winners', icon: Trophy },
     { to: '/admin', label: 'Admin Dashboard', icon: Shield },
   ];
 
@@ -18,8 +21,8 @@ const Navbar = () => {
             <img src="/aditya-removebg-preview (1).png" alt="Aditya Logo" className="h-10 w-10 object-contain" />
             <div>
               <h1 className="text-lg font-bold">
-                <span className="text-[#F2722C]">ADMIN</span>{' '}
-                <span className="text-primary">PANEL</span>
+                <span className="text-[#F2722C]">ADITYA</span>{' '}
+                <span className="text-primary">UNIVERSITY</span>
               </h1>
             </div>
           </div>

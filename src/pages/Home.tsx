@@ -76,7 +76,7 @@ const Home = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            <Link to="/upcoming" className="group">
+            <Link to="/upcoming-activities" className="group">
               <div className="bg-card rounded-lg p-8 shadow-card hover:shadow-elevated transition-all duration-300 text-center group-hover:scale-105">
                 <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
                   <Calendar className="h-8 w-8 text-primary" />
@@ -86,7 +86,7 @@ const Home = () => {
               </div>
             </Link>
             
-            <Link to="/previous" className="group">
+            <Link to="/previous-activities" className="group">
               <div className="bg-card rounded-lg p-8 shadow-card hover:shadow-elevated transition-all duration-300 text-center group-hover:scale-105">
                 <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
                   <History className="h-8 w-8 text-primary" />

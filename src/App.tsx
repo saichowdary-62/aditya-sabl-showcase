@@ -9,6 +9,9 @@ import Home from "./pages/Home";
 import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
 import PageLoader from './components/PageLoader';
+import PreviousActivities from './pages/PreviousActivities';
+import UpcomingActivities from './pages/UpcomingActivities';
+import Winners from './pages/Winners';
 
 const queryClient = new QueryClient();
 
@@ -34,6 +37,9 @@ const App = () => {
             <Navbar />
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/previous-activities" element={<PreviousActivities />} />
+              <Route path="/upcoming-activities" element={<UpcomingActivities />} />
+              <Route path="/winners" element={<Winners />} />
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
