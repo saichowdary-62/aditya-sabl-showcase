@@ -1,13 +1,13 @@
+import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { GraduationCap, Calendar, History, Trophy, Image } from 'lucide-react';
+import { Shield, LayoutDashboard, Menu, X } from 'lucide-react';
 
 const Navbar = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const navItems = [
-    { to: '/', label: 'Home', icon: GraduationCap },
-    { to: '/upcoming', label: 'Upcoming Activities', icon: Calendar },
-    { to: '/previous', label: 'Previous Activities', icon: History },
-    { to: '/winners', label: 'Winners', icon: Trophy },
-    { to: '/gallery', label: 'Gallery', icon: Image },
+    { to: '/', label: 'Home', icon: LayoutDashboard },
+    { to: '/admin', label: 'Admin Dashboard', icon: Shield },
   ];
 
   return (
@@ -16,14 +16,11 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center space-x-3 flex-shrink-0">
             <img src="/aditya-removebg-preview (1).png" alt="Aditya Logo" className="h-10 w-10 object-contain" />
-            <div className="hidden sm:block">
+            <div>
               <h1 className="text-lg font-bold">
-  <span className="text-[#F2722C]">ADITYA</span>{' '}
-  <span className="text-primary">UNIVERSITY</span></h1>
-              <p className="text-sm text-muted-foreground">CSE Department SABL Activities</p>
-            </div>
-            <div className="sm:hidden">
-              <h1 className="text-md font-bold text-primary">Aditya University</h1>
+                <span className="text-[#F2722C]">ADMIN</span>{' '}
+                <span className="text-primary">PANEL</span>
+              </h1>
             </div>
           </div>
           
@@ -46,16 +43,41 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* Mobile hamburger menu */}
           <div className="lg:hidden">
-            <button className="text-muted-foreground hover:text-primary p-2 transition-colors duration-200">
-              <svg className="h-6 w-6" fill="none" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" viewBox="0 0 24 24" stroke="currentColor">
-                <path d="M4 6h16M4 12h16M4 18h16"></path>
-              </svg>
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="text-muted-foreground hover:text-primary p-2 transition-colors duration-200"
+            >
+              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
           </div>
         </div>
       </div>
+
+      {/* Mobile Menu */}
+      {isMenuOpen && (
+        <div className="lg:hidden bg-background border-t">
+          <div className="container mx-auto px-4 py-4 space-y-2">
+            {navItems.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                onClick={() => setIsMenuOpen(false)}
+                className={({ isActive }) =>
+                  `flex items-center space-x-3 px-3 py-3 rounded-lg text-base font-medium transition-colors duration-200 ${
+                    isActive
+                      ? 'text-primary bg-primary/10'
+                      : 'text-muted-foreground hover:text-primary hover:bg-primary/5'
+                  }`
+                }
+              >
+                <item.icon className="h-5 w-5" />
+                <span>{item.label}</span>
+              </NavLink>
+            ))}
+          </div>
+        </div>
+      )}
     </nav>
   );
 };
