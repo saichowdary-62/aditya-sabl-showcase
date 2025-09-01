@@ -6,6 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { motion } from 'framer-motion';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import * as DataService from '@/lib/data-service';
@@ -74,6 +75,12 @@ const Admin = () => {
     } else {
       setError('Invalid credentials');
     }
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    setEmail('');
+    setPassword('');
   };
 
   const handleAddWinner = async (e: FormEvent) => {
@@ -226,48 +233,64 @@ const Admin = () => {
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100">
-        <Card className="w-full max-w-md mx-4 sm:mx-0 animate-fade-in-down">
-          <CardHeader>
-            <CardTitle className="text-2xl font-bold text-center">Admin Login</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleLogin} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="admin@adityasabl.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  className="transition-shadow duration-300 focus:shadow-outline"
-                />
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
-                <Input
-                  id="password"
-                  type="password"
-                  placeholder="1122"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="transition-shadow duration-300 focus:shadow-outline"
-                />
-              </div>
-              {error && <p className="text-red-500 text-sm text-center animate-shake">{error}</p>}
-              <Button type="submit" className="w-full transition-transform duration-300 hover:scale-105">
-                Login
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Card className="w-full max-w-md mx-4 sm:mx-0">
+            <CardHeader>
+              <CardTitle className="text-2xl font-bold text-center">Admin Login</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleLogin} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="email">Email</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="transition-shadow duration-300 focus:shadow-outline"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="password">Password</Label>
+                  <Input
+                    id="password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="transition-shadow duration-300 focus:shadow-outline"
+                  />
+                </div>
+                {error && (
+                  <motion.p
+                    initial={{ x: -10, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                    className="text-red-500 text-sm text-center"
+                  >
+                    {error}
+                  </motion.p>
+                )}
+                <Button type="submit" className="w-full transition-transform duration-300 hover:scale-105">
+                  Login
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
+        </motion.div>
       </div>
     );
   }
 
   return (
     <div className="container mx-auto px-4 py-12">
-      <h1 className="text-4xl font-bold text-center mb-12">Admin Panel</h1>
+      <div className="flex justify-between items-center mb-12">
+        <h1 className="text-4xl font-bold text-center">Admin Panel</h1>
+        <Button variant="outline" onClick={handleLogout}>Logout</Button>
+      </div>
       <Tabs defaultValue="winners">
         <TabsList className="grid w-full grid-cols-3">
           <TabsTrigger value="winners">Manage Winners</TabsTrigger>
