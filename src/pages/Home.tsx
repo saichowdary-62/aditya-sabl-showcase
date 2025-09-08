@@ -45,44 +45,16 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="relative min-h-[500px] md:h-[600px] flex items-center justify-center overflow-hidden bg-gradient-to-br from-primary via-primary-light to-accent">
-        {/* Enhanced Animated Background */}
-        <div className="absolute inset-0 overflow-hidden">
-          {/* Primary Floating Elements */}
-          <div className="absolute top-10 left-5 md:left-10 w-16 md:w-20 h-16 md:h-20 bg-white/10 rounded-full animate-float-simple"></div>
-          <div className="absolute top-20 md:top-32 right-10 md:right-20 w-12 md:w-16 h-12 md:h-16 bg-orange-400/20 rounded-full animate-circle-drift"></div>
-          <div className="absolute bottom-20 left-1/4 w-20 md:w-24 h-20 md:h-24 bg-yellow-300/15 rounded-full animate-pulse-soft"></div>
-          <div className="absolute top-1/2 right-5 md:right-10 w-10 md:w-12 h-10 md:h-12 bg-white/20 rounded-full animate-float-simple" style={{ animationDelay: '1s' }}></div>
-          
-          {/* Secondary Floating Elements */}
-          <div className="absolute top-1/3 left-10 md:left-20 w-8 md:w-10 h-8 md:h-10 bg-accent/15 rounded-full animate-bounce-gentle" style={{ animationDelay: '2.5s' }}></div>
-          <div className="absolute bottom-1/3 right-1/4 w-14 md:w-18 h-14 md:h-18 bg-primary-light/20 rounded-full animate-float-simple" style={{ animationDelay: '3s' }}></div>
-          
-          {/* Geometric Shapes */}
-          <div className="absolute top-16 md:top-20 left-1/3 w-6 md:w-8 h-6 md:h-8 bg-orange-400/25 rotate-45 animate-rotate-gentle"></div>
-          <div className="absolute bottom-24 md:bottom-32 right-1/3 w-8 md:w-10 h-8 md:h-10 bg-yellow-300/20 rotate-12 animate-pulse-soft" style={{ animationDelay: '2s' }}></div>
-          <div className="absolute top-1/3 left-16 md:left-20 w-4 md:w-6 h-4 md:h-6 bg-white/30 rotate-45 animate-float-simple" style={{ animationDelay: '0.5s' }}></div>
-          
-          {/* Large Gradient Orbs */}
-          <div className="absolute top-8 md:top-16 right-1/4 w-24 md:w-32 h-24 md:h-32 bg-gradient-to-r from-orange-400/10 to-yellow-300/10 rounded-full blur-xl animate-circle-drift"></div>
-          <div className="absolute bottom-8 md:bottom-16 left-1/3 w-32 md:w-40 h-32 md:h-40 bg-gradient-to-r from-white/5 to-orange-400/5 rounded-full blur-2xl animate-pulse-soft"></div>
-          <div className="absolute top-1/2 left-1/2 w-28 md:w-36 h-28 md:h-36 bg-gradient-to-r from-accent/8 to-primary-light/8 rounded-full blur-2xl animate-morph-gentle" style={{ animationDelay: '1.5s' }}></div>
-          
-          {/* Animated Lines and Gradients */}
-          <div className="absolute top-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/20 to-transparent animate-pulse"></div>
-          <div className="absolute bottom-1/4 left-0 w-full h-px bg-gradient-to-r from-transparent via-orange-400/20 to-transparent animate-pulse" style={{ animationDelay: '1.5s' }}></div>
-          <div className="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-accent/15 to-transparent animate-pulse" style={{ animationDelay: '3s' }}></div>
-          
-          {/* Sparkle Effects */}
-          <div className="absolute top-12 left-1/2 w-2 h-2 bg-white/40 rounded-full animate-twinkle" style={{ animationDelay: '0.8s' }}></div>
-          <div className="absolute bottom-16 left-1/5 w-1.5 h-1.5 bg-yellow-300/50 rounded-full animate-twinkle" style={{ animationDelay: '2.2s' }}></div>
-          <div className="absolute top-1/3 right-1/5 w-2.5 h-2.5 bg-orange-400/40 rounded-full animate-twinkle" style={{ animationDelay: '4s' }}></div>
-        </div>
+      <section
+        className="relative min-h-[500px] md:h-[600px] flex items-center justify-center bg-cover bg-center"
+        style={{ backgroundImage: "url('https://images.unsplash.com/photo-1640163561346-7778a2edf353?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c3R1ZGVudHMlMjB3b3JraW5nJTIwdG9nZXRoZXJ8ZW58MHx8MHx8fDA%3d')" }}
+      >
+        <div className="absolute inset-0 bg-black/50"></div>
 
         {/* Main Content */}
         <div className="relative z-10 text-center text-primary-foreground px-4">
           <h1 className="text-4xl md:text-6xl font-bold mb-6 animate-fade-in-up">
-            <span style={{ color: "#F2722C" }}>ADITYA</span> UNIVERSITY
+            <span className="text-primary">ADITYA</span> UNIVERSITY
           </h1>
 
           <h2 className="text-2xl md:text-3xl font-semibold mb-4 opacity-90 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
@@ -94,7 +66,7 @@ const Home = () => {
             Fostering innovation, creativity, and excellence in computer science education through engaging activities and competitions.
           </p>
           <div className="animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
-            <Button size="lg" variant="secondary" asChild className="hover:scale-105 transition-all duration-300">
+            <Button size="lg" variant="primary" asChild className="hover:scale-105 transition-all duration-300">
               <Link to="/upcoming">
                 Explore Activities
                 <ArrowRight className="ml-2 h-5 w-5" />

@@ -18,24 +18,23 @@ const Navbar = () => {
   return (
     <nav className="bg-background border-b shadow-header sticky top-0 z-50">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-start h-16">
           <div className="flex items-center space-x-3 flex-shrink-0">
             <img src="/aditya-removebg-preview (1).png" alt="Aditya Logo" className="h-10 w-10 object-contain" />
             <div className="hidden sm:block">
               <h1 className="text-lg font-bold">
-  <span className="text-[#F2722C]">ADITYA</span>{' '}
-  <span className="text-primary">UNIVERSITY</span></h1>
+                <span className="text-primary">ADITYA</span> UNIVERSITY
+              </h1>
               <p className="text-sm text-muted-foreground">Department of Computer Science and Engineering SABL Activites</p>
             </div>
             <div className="sm:hidden">
               <h1 className="text-lg font-bold">
-                <span className="text-[#F2722C]">ADITYA</span>{' '}
-                <span className="text-primary">UNIVERSITY</span>
+                <span className="text-primary">ADITYA</span> UNIVERSITY
               </h1>
             </div>
           </div>
           
-          <div className="hidden lg:flex space-x-6">
+          <div className="hidden lg:flex space-x-6 ml-auto">
             {navItems.map((item) => (
               <NavLink
                 key={item.to}

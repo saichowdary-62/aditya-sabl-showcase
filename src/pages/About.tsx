@@ -12,7 +12,7 @@ const About: React.FC = () => {
         Aditya University has embraced Student-Based Learning (SABL) to provide a dynamic and engaging educational experience. Our SABL activities are designed to complement the traditional curriculum, offering students opportunities to apply their knowledge in practical scenarios. These activities include project-based learning, case studies, group discussions, and interactive workshops, all aimed at enhancing the learning process and preparing students for future challenges.
       </p>
       <a href="/SABL_Grading_Points_Overview.pdf" download>
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+        <button className="bg-primary hover:bg-primary-dark text-white font-bold py-2 px-4 rounded">
           Download Grading Points Overview
         </button>
       </a>
@@ -20,9 +20,9 @@ const About: React.FC = () => {
       <div className="mt-8">
         <h2 className="text-2xl font-bold mb-4">SABL Activities in Action</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          <img src="https://placehold.co/600x400/F2722C/white?text=SABL+Project" alt="SABL Project" className="rounded-lg shadow-md" />
-          <img src="https://placehold.co/600x400/007BFF/white?text=Group+Discussion" alt="Group Discussion" className="rounded-lg shadow-md" />
-          <img src="https://placehold.co/600x400/28A745/white?text=Workshop" alt="Workshop" className="rounded-lg shadow-md" />
+          <img src="https://images.unsplash.com/photo-1712903911017-7c10a3c4b3e5?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8c3R1ZGVudCUyMHByZXNlbnRhdGlvbnxlbnwwfHwwfHx8MA%3D%3D" alt="SABL Project" className="rounded-lg shadow-md" />
+          <img src="https://images.unsplash.com/photo-1660795863766-cc0ee743185b?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c3R1ZGVudCUyMHByZXNlbnRhdGlvbnxlbnwwfHwwfHx8MA%3D%3D" alt="Group Discussion" className="rounded-lg shadow-md" />
+          <img src="https://images.unsplash.com/photo-1646579886135-068c73800308?fm=jpg&q=60&w=3000&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8c3R1ZGVudCUyMHByZXNlbnRhdGlvbnxlbnwwfHwwfHx8MA%3D%3D" alt="Workshop" className="rounded-lg shadow-md" />
         </div>
       </div>
     </div>
