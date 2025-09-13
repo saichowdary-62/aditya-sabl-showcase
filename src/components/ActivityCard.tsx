@@ -61,15 +61,13 @@ export default function ActivityCard({ activity, className, onViewParticipants }
   return (
     <Card className={cn('activity-card group border shadow-card hover:shadow-elevated', className)}>
       {/* Activity Poster */}
-      {activity.poster && (
-        <div className="relative overflow-hidden rounded-t-xl">
-          <img
-            src={activity.poster}
-            alt={activity.name}
-            className="activity-poster w-full h-auto object-cover"
-          />
-        </div>
-      )}
+      <div className="relative overflow-hidden rounded-t-xl">
+        <img
+          src={activity.poster || '/placeholder.svg'}
+          alt={activity.name}
+          className="activity-poster w-full h-48 object-cover"
+        />
+      </div>
 
       <CardHeader className="pb-3">
         <div className="flex justify-between items-start gap-3">
@@ -101,49 +99,26 @@ export default function ActivityCard({ activity, className, onViewParticipants }
         )}
 
         <div className="flex flex-col gap-3 pt-2">
-          {/* View Details Button */}
-          <Button asChild variant="outline" className="w-full">
-            <Link to={`/activity/${activity.id}`}>
-              <ExternalLink className="w-4 h-4 mr-2" />
-              View Details
-            </Link>
-          </Button>
-
-          {/* Register Button for Upcoming Activities */}
           {activity.status === 'upcoming' && (
-            <div className="relative">
-              {registrationOpen && activity.formLink ? (
-                <Button asChild className="w-full">
-                  <a href={activity.formLink} target="_blank" rel="noopener noreferrer">
-                    ✨ Register Now ✨
-                  </a>
-                </Button>
-              ) : (
-                <Button
-                  disabled
-                  className="w-full"
-                >
-                  {!activity.formLink ? 'Registration Not Available' : 'Registration Closed'}
-                </Button>
-              )}
-            </div>
+            <Button asChild className="w-full" disabled={!registrationOpen || !activity.formLink}>
+              <a href={activity.formLink || '#'} target="_blank" rel="noopener noreferrer">
+                ✨ Register Now ✨
+              </a>
+            </Button>
           )}
 
-          {/* Buttons for Previous Activities */}
           {activity.status === 'completed' && (
             <div className="flex gap-3">
+              <Button asChild variant="outline" className="w-full">
+                <Link to={`/activity/${activity.id}/photos`}>
+                  <Trophy className="w-4 h-4 mr-2" />
+                  View Photos
+                </Link>
+              </Button>
               {onViewParticipants && (
-                <Button variant="outline" className="w-full" onClick={() => onViewParticipants(activity)}>
+                <Button variant="secondary" className="w-full" onClick={() => onViewParticipants(activity)}>
                   <Users className="w-4 h-4 mr-2" />
                   View Participants
-                </Button>
-              )}
-              {activity.photos && activity.photos.length > 0 && (
-                <Button asChild variant="secondary" className="w-full">
-                  <Link to={`/activity/${activity.id}/photos`}>
-                    <Trophy className="w-4 h-4 mr-2" />
-                    View Photos ({activity.photos.length})
-                  </Link>
                 </Button>
               )}
             </div>

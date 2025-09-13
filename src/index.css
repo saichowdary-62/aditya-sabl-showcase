@@ -429,7 +429,7 @@
 
 /* Clean Navbar Styles */
 .navbar-clean {
-  @apply bg-white/95 backdrop-blur-md border-b border-gray-200/50 shadow-sm;
+  @apply bg-white/95 border-b border-gray-200/50 shadow-sm;
 }
 
 .navbar-item-clean {

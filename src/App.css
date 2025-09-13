@@ -40,13 +40,4 @@
 .read-the-docs {
   color: #888;
 }
-.navbar-title {
-  color: #f97316 !important;
-}
-
-@media (max-width: 768px) {
-  .navbar-title {
-    color: #f97316 !important;
-  }
-}
 

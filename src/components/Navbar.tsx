@@ -16,7 +16,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 bg-background border-b shadow-header">
+    <nav className="sticky top-0 z-50 bg-card border-b shadow-header">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo Section */}
@@ -51,8 +51,8 @@ const Navbar = () => {
                   className={({ isActive }) =>
                     `navbar-item-clean relative flex items-center space-x-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${
                       isActive
-                        ? 'text-primary bg-primary/10 active'
-                        : 'text-foreground/70 hover:text-primary hover:bg-primary/5'
+                        ? 'text-primary active'
+                        : 'text-foreground/80 hover:text-primary'
                     }`
                   }
                 >
@@ -78,7 +78,7 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden bg-background border-t">
+        <div className="lg:hidden bg-card border-t">
           <div className="container mx-auto px-4 py-4 space-y-2">
             {navItems.map((item) => (
               <NavLink
@@ -89,7 +89,7 @@ const Navbar = () => {
                   `flex items-center space-x-3 px-4 py-3 rounded-lg text-base font-medium transition-colors duration-200 ${
                     isActive
                       ? 'text-primary bg-primary/10'
-                      : 'text-foreground/70 hover:text-primary hover:bg-primary/10'
+                      : 'text-foreground/80 hover:text-primary hover:bg-primary/10'
                   }`
                 }
               >
