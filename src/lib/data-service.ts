@@ -150,7 +150,10 @@ const transformParticipantFromDB = (row: ParticipantRow): Participant => ({
   college: row.college,
   award: row.award as Participant['award'],
   studentPin: row.student_pin || undefined,
-  marks: row.marks || (row.award === 'Participation' || row.award === 'Volunteer' ? 5 : 10),
+  // Ensure winners always have at least 10 marks, others at least 5
+  marks: row.marks == null
+    ? (row.award === 'Participation' || row.award === 'Volunteer' ? 5 : 10)
+    : Math.max(row.marks, (row.award === 'Participation' || row.award === 'Volunteer' ? 5 : 10)),
   createdAt: row.created_at || undefined,
 });
 
