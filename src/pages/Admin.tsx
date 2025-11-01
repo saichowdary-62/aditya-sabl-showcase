@@ -34,11 +34,13 @@ import {
   Student
 } from '@/lib/data-service';
 import { useData } from '@/contexts/DataContext';
+import { useAdminAuth } from '@/contexts/AdminAuthContext';
 import { useToast } from '@/hooks/use-toast';
-import { Trash2, Edit, Plus, Users, Calendar, Trophy, Image as ImageIcon, UserPlus, Search, Download } from 'lucide-react';
+import { Trash2, Edit, Plus, Users, Calendar, Trophy, Image as ImageIcon, UserPlus, Search, Download, LogOut } from 'lucide-react';
 import ActivityPhotoManager from '@/components/ActivityPhotoManager';
 import BulkStudentUpload from '@/components/BulkStudentUpload';
 import BulkParticipantUpload from '@/components/BulkParticipantUpload';
+import { useNavigate } from 'react-router-dom';
 
 const Admin = () => {
   // State for winners
@@ -101,7 +103,18 @@ const Admin = () => {
   const [galleryFile, setGalleryFile] = useState<File | null>(null);
 
   const { triggerDataChange } = useData();
+  const { logout } = useAdminAuth();
   const { toast } = useToast();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    toast({
+      title: "Logged Out",
+      description: "You have been successfully logged out",
+    });
+    navigate('/admin/login');
+  };
 
   // Fetch data on component mount
   useEffect(() => {
@@ -589,9 +602,18 @@ const Admin = () => {
   return (
     <div className="page-bg-clean">
       <div className="container mx-auto px-4 py-8">
-        <div className="text-center mb-8">
+        <div className="text-center mb-8 relative">
           <h1 className="text-3xl font-bold text-primary mb-4">Admin Panel</h1>
           <p className="text-muted-foreground">Manage SABL activities, winners, and content</p>
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleLogout}
+            className="absolute top-0 right-0 gap-2"
+          >
+            <LogOut className="h-4 w-4" />
+            Logout
+          </Button>
         </div>
 
         <Tabs defaultValue="winners" className="w-full">
