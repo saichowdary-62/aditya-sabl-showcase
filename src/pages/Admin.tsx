@@ -92,6 +92,7 @@ const Admin = () => {
     marks: 5
   });
   const [searchPin, setSearchPin] = useState('');
+  const [participantSearch, setParticipantSearch] = useState('');
 
   const [loading, setLoading] = useState(false);
   const [participantLoading, setParticipantLoading] = useState(false);
@@ -565,6 +566,7 @@ const Admin = () => {
     });
     setEditingParticipant(null);
     setSearchPin('');
+    setParticipantSearch('');
   };
 
   const handleEditParticipant = (participant: Participant) => {
@@ -1152,21 +1154,25 @@ const Admin = () => {
                                 <Label htmlFor="participantAward">Award/Position *</Label>
                                 <Select
                                   value={participantForm.award}
-                                  onValueChange={(value: 'Participation' | '1st Place' | '2nd Place' | '3rd Place' | 'Volunteer') => 
-                                    setParticipantForm({ ...participantForm, award: value })
-                                  }
+                                  onValueChange={(value: 'Participation' | '1st Place' | '2nd Place' | '3rd Place' | 'Volunteer') => {
+                                    const newMarks = (value === 'Participation' || value === 'Volunteer') ? 5 : 10;
+                                    setParticipantForm({ ...participantForm, award: value, marks: newMarks });
+                                  }}
                                 >
                                   <SelectTrigger>
                                     <SelectValue />
                                   </SelectTrigger>
                                   <SelectContent>
-                                    <SelectItem value="1st Place">1st Place</SelectItem>
-                                    <SelectItem value="2nd Place">2nd Place</SelectItem>
-                                    <SelectItem value="3rd Place">3rd Place</SelectItem>
-                                    <SelectItem value="Participation">Participation</SelectItem>
-                                    <SelectItem value="Volunteer">Volunteer</SelectItem>
+                                    <SelectItem value="1st Place">1st Place (10 marks)</SelectItem>
+                                    <SelectItem value="2nd Place">2nd Place (10 marks)</SelectItem>
+                                    <SelectItem value="3rd Place">3rd Place (10 marks)</SelectItem>
+                                    <SelectItem value="Participation">Participation (5 marks)</SelectItem>
+                                    <SelectItem value="Volunteer">Volunteer (5 marks)</SelectItem>
                                   </SelectContent>
                                 </Select>
+                                <p className="text-xs text-muted-foreground mt-1">
+                                  Marks: {participantForm.marks}
+                                </p>
                               </div>
                               <div className="flex gap-2">
                                 <Button type="submit" disabled={loading}>
@@ -1190,6 +1196,19 @@ const Admin = () => {
                             </CardTitle>
                           </CardHeader>
                           <CardContent>
+                            {/* Search for participants */}
+                            <div className="mb-4">
+                              <div className="relative">
+                                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                                <Input
+                                  value={participantSearch}
+                                  onChange={(e) => setParticipantSearch(e.target.value)}
+                                  placeholder="Search by name or roll number..."
+                                  className="pl-9"
+                                />
+                              </div>
+                            </div>
+
                             {participantLoading ? (
                               <div className="flex items-center justify-center py-8">
                                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
@@ -1198,6 +1217,11 @@ const Admin = () => {
                             ) : participants.length > 0 ? (
                               <div className="space-y-3 max-h-96 overflow-y-auto">
                                 {participants
+                                  .filter(p => 
+                                    participantSearch === '' || 
+                                    p.name.toLowerCase().includes(participantSearch.toLowerCase()) ||
+                                    p.rollNumber.toLowerCase().includes(participantSearch.toLowerCase())
+                                  )
                                   .sort((a, b) => {
                                     // Winners first (1st, 2nd, 3rd Place), then others
                                     const awardOrder = { '1st Place': 1, '2nd Place': 2, '3rd Place': 3, 'Participation': 4, 'Volunteer': 5 };
@@ -1210,16 +1234,20 @@ const Admin = () => {
                                       <p className="text-sm text-muted-foreground">
                                         {participant.rollNumber} • {participant.department}
                                       </p>
-                                      <Badge 
-                                        variant={
-                                          participant.award === '1st Place' ? 'default' :
-                                          participant.award === '2nd Place' ? 'secondary' :
-                                          participant.award === '3rd Place' ? 'outline' : 'secondary'
-                                        }
-                                        className="mt-1"
-                                      >
-                                        {participant.award}
-                                      </Badge>
+                                      <div className="flex items-center gap-2 mt-1">
+                                        <Badge 
+                                          variant={
+                                            participant.award === '1st Place' ? 'default' :
+                                            participant.award === '2nd Place' ? 'secondary' :
+                                            participant.award === '3rd Place' ? 'outline' : 'secondary'
+                                          }
+                                        >
+                                          {participant.award}
+                                        </Badge>
+                                        <span className="text-xs text-muted-foreground">
+                                          {participant.marks || 5} marks
+                                        </span>
+                                      </div>
                                     </div>
                                     <div className="flex gap-2">
                                       <Button
