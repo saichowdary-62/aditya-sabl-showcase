@@ -395,26 +395,58 @@ export const addActivity = async (activity: Omit<Activity, 'id'>): Promise<Activ
 
 export const updateActivity = async (activity: Activity): Promise<Activity | null> => {
   try {
-    if (activity.status === 'upcoming') {
+    // First, find which table the activity is currently in
+    const currentActivity = await getActivity(activity.id);
+    
+    if (!currentActivity) {
+      console.error('Activity not found');
+      return null;
+    }
+
+    // If status changed, need to move between tables
+    if (currentActivity.status !== activity.status) {
+      // Delete from old table
+      const oldTable = currentActivity.status === 'upcoming' ? 'upcoming_activities' : 'previous_activities';
+      await supabase
+        .from(oldTable)
+        .delete()
+        .eq('id', parseInt(activity.id));
+
+      // Insert into new table
+      const newTable = activity.status === 'upcoming' ? 'upcoming_activities' : 'previous_activities';
+      const transformFn = activity.status === 'upcoming' ? transformActivityToUpcomingDB : transformActivityToPreviousDB;
+      
       const { data, error } = await supabase
-        .from('upcoming_activities')
-        .update(transformActivityToUpcomingDB(activity))
-        .eq('id', parseInt(activity.id))
+        .from(newTable)
+        .insert([transformFn(activity)])
         .select()
         .single();
 
       if (error) throw error;
-      return data ? transformActivityFromDB(data, 'upcoming') : null;
+      return data ? transformActivityFromDB(data, activity.status) : null;
     } else {
-      const { data, error } = await supabase
-        .from('previous_activities')
-        .update(transformActivityToPreviousDB(activity))
-        .eq('id', parseInt(activity.id))
-        .select()
-        .single();
+      // Status hasn't changed, just update in current table
+      if (activity.status === 'upcoming') {
+        const { data, error } = await supabase
+          .from('upcoming_activities')
+          .update(transformActivityToUpcomingDB(activity))
+          .eq('id', parseInt(activity.id))
+          .select()
+          .single();
 
-      if (error) throw error;
-      return data ? transformActivityFromDB(data, 'completed') : null;
+        if (error) throw error;
+        return data ? transformActivityFromDB(data, 'upcoming') : null;
+      } else {
+        const { data, error } = await supabase
+          .from('previous_activities')
+          .update(transformActivityToPreviousDB(activity))
+          .eq('id', parseInt(activity.id))
+          .select()
+          .single();
+
+        if (error) throw error;
+        return data ? transformActivityFromDB(data, 'completed') : null;
+      }
     }
   } catch (error) {
     console.error('Error updating activity:', error);
