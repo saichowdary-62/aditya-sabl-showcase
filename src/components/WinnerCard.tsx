@@ -35,31 +35,31 @@ const WinnerCard = ({ winner, featured = false, onClick }: WinnerCardProps) => {
         <div className="flex items-center space-x-4">
           <div className="relative flex-shrink-0">
             {winner.photo ? (
-              <img 
-                src={winner.photo} 
-                alt={winner.name} 
-                className="w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover border-2 border-gray-100 group-hover:border-primary transition-colors duration-300 aspect-square" 
-                style={{ objectFit: 'cover' }}
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.style.display = 'none';
-                  const parent = target.parentElement;
-                  if (parent) {
-                    const fallback = document.createElement('div');
-                    fallback.className = "w-12 h-12 sm:w-16 sm:h-16 bg-primary rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-lg border-2 border-gray-100 aspect-square";
-                    fallback.textContent = winner.name.split(' ').map(n => n[0]).join('');
-                    parent.appendChild(fallback);
-                  }
-                }}
-              />
-            ) : (
-              <div className="w-12 h-12 sm:w-16 sm:h-16 bg-primary rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-lg border-2 border-gray-100 group-hover:bg-primary/90 transition-colors duration-300 aspect-square">
-                {winner.name.split(' ').map(n => n[0]).join('')}
+              <div className="winner-image-golden-border">
+                <img 
+                  src={winner.photo} 
+                  alt={winner.name} 
+                  className="w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover aspect-square" 
+                  style={{ objectFit: 'cover' }}
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = 'none';
+                    const parent = target.parentElement?.parentElement;
+                    if (parent) {
+                      const fallback = document.createElement('div');
+                      fallback.className = "winner-image-golden-border";
+                      fallback.innerHTML = `<div class="w-12 h-12 sm:w-16 sm:h-16 bg-primary rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-lg aspect-square">${winner.name.split(' ').map(n => n[0]).join('')}</div>`;
+                      parent.appendChild(fallback);
+                      target.parentElement?.remove();
+                    }
+                  }}
+                />
               </div>
-            )}
-            {featured && (
-              <div className="absolute -top-1 -right-1 bg-primary rounded-full p-1 shadow-lg animate-pulse-soft">
-                <Trophy className="h-3 w-3 text-white" />
+            ) : (
+              <div className="winner-image-golden-border">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-primary rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-lg group-hover:bg-primary/90 transition-colors duration-300 aspect-square">
+                  {winner.name.split(' ').map(n => n[0]).join('')}
+                </div>
               </div>
             )}
           </div>

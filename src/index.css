@@ -1245,6 +1245,28 @@ select:focus {
     inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
 
+/* Golden border for winner images */
+.winner-image-golden-border {
+  position: relative;
+  display: inline-block;
+  border-radius: 50%;
+  padding: 3px;
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FFD700 100%);
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+  transition: all 0.3s ease;
+}
+
+.winner-image-golden-border:hover {
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+  transform: scale(1.05);
+}
+
+.winner-image-golden-border img,
+.winner-image-golden-border > div {
+  display: block;
+  border-radius: 50%;
+}
+
 /* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
