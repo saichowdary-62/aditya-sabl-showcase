@@ -26,18 +26,10 @@ const WinnerCard = ({ winner, featured = false, onClick }: WinnerCardProps) => {
 
   return (
     <div
-      className={`clean-card clean-card-hover overflow-hidden group transition-all duration-500 relative ${
+      className={`winner-card-golden-border overflow-hidden group transition-all duration-500 relative ${
         onClick ? 'cursor-pointer hover:-translate-y-1' : ''
       }`}
       onClick={onClick}
-      style={{
-        background: 'linear-gradient(white, white) padding-box, linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FFD700 100%) border-box',
-        border: '2px solid transparent',
-        borderRadius: '12px',
-        boxShadow: featured 
-          ? '0 0 30px rgba(255, 215, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.5)'
-          : '0 0 20px rgba(255, 215, 0, 0.25), 0 4px 16px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.3)'
-      }}
     >
       <div className="p-4 sm:p-6">
         <div className="flex items-center space-x-4">
