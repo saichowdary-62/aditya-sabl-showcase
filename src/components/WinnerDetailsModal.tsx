@@ -21,14 +21,24 @@ const WinnerDetailsModal = ({ winner, isOpen, onClose }: WinnerDetailsModalProps
   }, []);
 
   useEffect(() => {
-    let timer: NodeJS.Timeout;
+    let startTimer: NodeJS.Timeout;
+    let endTimer: NodeJS.Timeout;
     if (isOpen) {
-      setShowParticles(true);
-      timer = setTimeout(() => {
-        setShowParticles(false);
-      }, 6000);
+      // Delay celebration by 400ms to start after modal animation
+      startTimer = setTimeout(() => {
+        setShowParticles(true);
+        // Show particles for 5 seconds
+        endTimer = setTimeout(() => {
+          setShowParticles(false);
+        }, 5000);
+      }, 400);
+    } else {
+      setShowParticles(false);
     }
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(startTimer);
+      clearTimeout(endTimer);
+    };
   }, [isOpen]);
 
   if (!winner) return null;
@@ -67,18 +77,21 @@ const WinnerDetailsModal = ({ winner, isOpen, onClose }: WinnerDetailsModalProps
                   value: 0,
                 },
                 color: {
-                  value: ["#FF5A86", "#953AFE", "#22C55E", "#3B82F6", "#F97316"]
+                  value: ["#FFD700", "#FFA500", "#FF5A86", "#22C55E", "#3B82F6", "#F97316", "#953AFE"]
                 },
                 shape: {
-                  type: ["circle", "square", "triangle", "polygon"],
+                  type: ["circle", "square", "triangle", "star", "polygon"],
                   options: {
                     polygon: {
                       sides: 6,
                     },
+                    star: {
+                      sides: 5,
+                    },
                   },
                 },
                 opacity: {
-                  value: { min: 0.4, max: 0.9 },
+                  value: { min: 0.5, max: 1 },
                   animation: {
                     enable: true,
                     speed: 1,
@@ -87,12 +100,12 @@ const WinnerDetailsModal = ({ winner, isOpen, onClose }: WinnerDetailsModalProps
                   },
                 },
                 size: {
-                  value: { min: 3, max: 7 },
+                  value: { min: 4, max: 10 },
                 },
                 life: {
                   duration: {
                     sync: true,
-                    value: 5,
+                    value: 4,
                   },
                   count: 1,
                 },
@@ -100,12 +113,12 @@ const WinnerDetailsModal = ({ winner, isOpen, onClose }: WinnerDetailsModalProps
                   enable: true,
                   gravity: {
                     enable: true,
-                    acceleration: 20
+                    acceleration: 15
                   },
-                  speed: { min: 10, max: 30 },
+                  speed: { min: 15, max: 40 },
                   decay: 0.05,
                   direction: "top",
-                  random: false,
+                  random: true,
                   straight: false,
                   outModes: {
                     default: "destroy",
@@ -120,46 +133,59 @@ const WinnerDetailsModal = ({ winner, isOpen, onClose }: WinnerDetailsModalProps
                   direction: "random",
                   animation: {
                     enable: true,
-                    speed: 60,
+                    speed: 90,
                   },
+                },
+                wobble: {
+                  enable: true,
+                  distance: 20,
+                  speed: 10,
                 },
               },
               emitters: [
                 {
                   direction: "top",
                   rate: {
-                    quantity: 12,
-                    delay: 0.08,
+                    quantity: 15,
+                    delay: 0.05,
                   },
                   position: {
-                    x: 25,
+                    x: 20,
                     y: 100,
                   },
                   size: {
                     width: 0,
                     height: 0,
                   },
+                  life: {
+                    duration: 0.3,
+                    count: 1,
+                  },
                 },
                 {
                   direction: "top",
                   rate: {
-                    quantity: 12,
-                    delay: 0.08,
+                    quantity: 15,
+                    delay: 0.05,
                   },
                   position: {
-                    x: 75,
+                    x: 80,
                     y: 100,
                   },
                   size: {
                     width: 0,
                     height: 0,
                   },
+                  life: {
+                    duration: 0.3,
+                    count: 1,
+                  },
                 },
                 {
                   direction: "top",
                   rate: {
-                    quantity: 10,
-                    delay: 0.1,
+                    quantity: 20,
+                    delay: 0.04,
                   },
                   position: {
                     x: 50,
@@ -168,6 +194,48 @@ const WinnerDetailsModal = ({ winner, isOpen, onClose }: WinnerDetailsModalProps
                   size: {
                     width: 0,
                     height: 0,
+                  },
+                  life: {
+                    duration: 0.4,
+                    count: 1,
+                  },
+                },
+                {
+                  direction: "top",
+                  rate: {
+                    quantity: 12,
+                    delay: 0.06,
+                  },
+                  position: {
+                    x: 35,
+                    y: 100,
+                  },
+                  size: {
+                    width: 0,
+                    height: 0,
+                  },
+                  life: {
+                    duration: 0.3,
+                    count: 1,
+                  },
+                },
+                {
+                  direction: "top",
+                  rate: {
+                    quantity: 12,
+                    delay: 0.06,
+                  },
+                  position: {
+                    x: 65,
+                    y: 100,
+                  },
+                  size: {
+                    width: 0,
+                    height: 0,
+                  },
+                  life: {
+                    duration: 0.3,
+                    count: 1,
                   },
                 },
               ],
