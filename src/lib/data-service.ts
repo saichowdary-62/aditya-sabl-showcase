@@ -412,13 +412,13 @@ export const updateActivity = async (activity: Activity): Promise<Activity | nul
         .delete()
         .eq('id', parseInt(activity.id));
 
-      // Insert into new table
+      // Insert into new table with preserved ID
       const newTable = activity.status === 'upcoming' ? 'upcoming_activities' : 'previous_activities';
       const transformFn = activity.status === 'upcoming' ? transformActivityToUpcomingDB : transformActivityToPreviousDB;
       
       const { data, error } = await supabase
         .from(newTable)
-        .insert([transformFn(activity)])
+        .insert([{ ...transformFn(activity), id: parseInt(activity.id) }])
         .select()
         .single();
 
