@@ -14,7 +14,11 @@ interface CSVParticipant {
   award: '1st Place' | '2nd Place' | '3rd Place' | 'Participation' | 'Volunteer';
 }
 
-const BulkParticipantUpload = () => {
+interface BulkParticipantUploadProps {
+  onUploadComplete?: () => void;
+}
+
+const BulkParticipantUpload = ({ onUploadComplete }: BulkParticipantUploadProps) => {
   const [uploading, setUploading] = useState(false);
   const [uploadResult, setUploadResult] = useState<{ success: boolean; message: string; details?: string } | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -128,6 +132,11 @@ const BulkParticipantUpload = () => {
           title: 'Upload Successful',
           description: detailMessage,
         });
+        
+        // Trigger refresh of participants list
+        if (onUploadComplete) {
+          onUploadComplete();
+        }
       } else {
         setUploadResult({
           success: false,

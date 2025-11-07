@@ -602,8 +602,8 @@ const Admin = () => {
     });
   };
 
-  // Get completed activities for participant management
-  const completedActivities = activities.filter(activity => activity.status === 'completed');
+  // Get all activities for participant management (both upcoming and completed)
+  const allActivitiesForParticipants = activities;
 
   return (
     <div className="page-bg-clean">
@@ -1097,12 +1097,12 @@ const Admin = () => {
                         }}
                       >
                         <SelectTrigger>
-                          <SelectValue placeholder="Choose a completed activity" />
+                          <SelectValue placeholder="Choose an activity" />
                         </SelectTrigger>
                         <SelectContent>
-                          {completedActivities.map((activity) => (
+                          {allActivitiesForParticipants.map((activity) => (
                             <SelectItem key={activity.id} value={activity.id}>
-                              ID: {activity.id} - {activity.name} - {new Date(activity.date).toLocaleDateString()}
+                              ID: {activity.id} - {activity.name} - {new Date(activity.date).toLocaleDateString()} - {activity.status}
                             </SelectItem>
                           ))}
                         </SelectContent>
@@ -1312,7 +1312,7 @@ const Admin = () => {
                   </div>
                 </CardContent>
               </Card>
-              <BulkParticipantUpload />
+              <BulkParticipantUpload onUploadComplete={fetchParticipants} />
             </div>
           </TabsContent>
         </Tabs>
