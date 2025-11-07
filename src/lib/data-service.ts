@@ -405,25 +405,34 @@ export const updateActivity = async (activity: Activity): Promise<Activity | nul
 
     // If status changed, need to move between tables
     if (currentActivity.status !== activity.status) {
-      // Delete from old table
       const oldTable = currentActivity.status === 'upcoming' ? 'upcoming_activities' : 'previous_activities';
-      await supabase
-        .from(oldTable)
-        .delete()
-        .eq('id', parseInt(activity.id));
-
-      // Insert into new table (will get new ID)
       const newTable = activity.status === 'upcoming' ? 'upcoming_activities' : 'previous_activities';
       const activityData = activity.status === 'upcoming' ? transformActivityToUpcomingDB(activity) : transformActivityToPreviousDB(activity);
       
-      const { data, error } = await supabase
+      // First insert into new table
+      const { data: newData, error: insertError } = await supabase
         .from(newTable)
         .insert([activityData])
         .select()
         .single();
 
-      if (error) throw error;
-      return data ? transformActivityFromDB(data, activity.status) : null;
+      if (insertError) {
+        console.error('Error inserting activity into new table:', insertError);
+        throw insertError;
+      }
+
+      // Then delete from old table
+      const { error: deleteError } = await supabase
+        .from(oldTable)
+        .delete()
+        .eq('id', parseInt(activity.id));
+
+      if (deleteError) {
+        console.error('Error deleting activity from old table:', deleteError);
+        // Note: new activity already inserted, so we don't throw here
+      }
+
+      return newData ? transformActivityFromDB(newData, activity.status) : null;
     } else {
       // Status hasn't changed, just update in current table
       if (activity.status === 'upcoming') {
