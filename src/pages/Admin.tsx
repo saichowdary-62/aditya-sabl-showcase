@@ -275,15 +275,21 @@ const Admin = () => {
       };
 
       if (editingActivity) {
-        await updateActivity({ ...activityData, id: editingActivity.id });
+        const updatedActivity = await updateActivity({ ...activityData, id: editingActivity.id });
+        if (!updatedActivity) {
+          throw new Error('Failed to update activity');
+        }
         toast({ title: "Success", description: "Activity updated successfully" });
       } else {
-        await addActivity(activityData);
+        const newActivity = await addActivity(activityData);
+        if (!newActivity) {
+          throw new Error('Failed to add activity');
+        }
         toast({ title: "Success", description: "Activity added successfully" });
       }
 
       resetActivityForm();
-      fetchAllData();
+      await fetchAllData();
       triggerDataChange();
     } catch (error) {
       console.error('Error saving activity:', error);
