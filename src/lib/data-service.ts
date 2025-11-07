@@ -412,34 +412,18 @@ export const updateActivity = async (activity: Activity): Promise<Activity | nul
         .delete()
         .eq('id', parseInt(activity.id));
 
-      // Move activity to new table preserving ID using raw SQL
+      // Insert into new table (will get new ID)
       const newTable = activity.status === 'upcoming' ? 'upcoming_activities' : 'previous_activities';
       const activityData = activity.status === 'upcoming' ? transformActivityToUpcomingDB(activity) : transformActivityToPreviousDB(activity);
       
-      // Use raw SQL to preserve ID when inserting
-      const { data, error } = await supabase.rpc('insert_activity_with_id', {
-        table_name: newTable,
-        activity_id: parseInt(activity.id),
-        activity_title: activityData.title,
-        activity_date: activityData.activity_date,
-        activity_description: activityData.description,
-        activity_details: activityData.details,
-        activity_poster_url: activityData.poster_url,
-        activity_form_link: activityData.form_link,
-        activity_photos: 'photos' in activityData ? activityData.photos : null
-      });
-
-      if (error) throw error;
-      
-      // Fetch the inserted activity
-      const { data: insertedData, error: fetchError } = await supabase
+      const { data, error } = await supabase
         .from(newTable)
+        .insert([activityData])
         .select()
-        .eq('id', parseInt(activity.id))
         .single();
 
-      if (fetchError) throw fetchError;
-      return insertedData ? transformActivityFromDB(insertedData, activity.status) : null;
+      if (error) throw error;
+      return data ? transformActivityFromDB(data, activity.status) : null;
     } else {
       // Status hasn't changed, just update in current table
       if (activity.status === 'upcoming') {
