@@ -6,9 +6,9 @@ const Footer: React.FC = () => {
     <footer className="bg-background border-t py-4 mt-auto">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
-          <span>Built with</span>
+          <span></span>
           <Heart className="h-4 w-4 text-red-500 fill-red-500" />
-          <span>Make results, not excuses!!</span>
+          <span>Every event needs your energy</span>
         </div>
       </div>
     </footer>
