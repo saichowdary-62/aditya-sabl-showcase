@@ -9,6 +9,7 @@ const Footer: React.FC = () => {
           <span></span>
           <Heart className="h-4 w-4 text-red-500 fill-red-500" />
           <span>Every event needs your energy</span>
+           <Heart className="h-4 w-4 text-red-500 fill-red-500" />
         </div>
       </div>
     </footer>
