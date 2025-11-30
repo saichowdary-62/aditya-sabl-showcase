@@ -231,6 +231,22 @@ const StudentPerformance = () => {
                         <span className="text-sm font-medium">Participated</span>
                         <span className="text-2xl font-bold text-green-600 dark:text-green-400">{performanceData.participations.length}</span>
                       </div>
+                      <div className="flex justify-between items-center p-3 bg-blue-50 dark:bg-blue-950/30 rounded-lg">
+                        <span className="text-sm font-medium">Activity Marks</span>
+                        <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">{performanceData.participationMarks || 0}</span>
+                      </div>
+                      <div className="flex justify-between items-center p-3 bg-purple-50 dark:bg-purple-950/30 rounded-lg">
+                        <span className="text-sm font-medium">Extra Marks (Certificates)</span>
+                        <span className="text-2xl font-bold text-purple-600 dark:text-purple-400">{performanceData.extraMarks || 0}</span>
+                      </div>
+                      <div className="flex justify-between items-center p-3 bg-blue-50 dark:bg-blue-950/30 rounded-lg">
+                        <span className="text-sm font-medium">Activity Marks</span>
+                        <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">{performanceData.participationMarks || 0}</span>
+                      </div>
+                      <div className="flex justify-between items-center p-3 bg-purple-50 dark:bg-purple-950/30 rounded-lg">
+                        <span className="text-sm font-medium">Extra Marks (Certificates)</span>
+                        <span className="text-2xl font-bold text-purple-600 dark:text-purple-400">{performanceData.extraMarks || 0}</span>
+                      </div>
                       <div className="flex justify-between items-center p-3 bg-orange-50 dark:bg-orange-950/30 rounded-lg">
                         <span className="text-sm font-medium">Total Marks</span>
                         <span className="text-2xl font-bold text-orange-600 dark:text-orange-400">{performanceData.totalMarks}</span>

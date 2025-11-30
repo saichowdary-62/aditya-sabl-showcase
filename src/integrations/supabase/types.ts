@@ -122,6 +122,7 @@ export type Database = {
         Row: {
           branch: string
           created_at: string | null
+          extra_marks: number | null
           id: number
           name: string
           pin: string
@@ -131,6 +132,7 @@ export type Database = {
         Insert: {
           branch: string
           created_at?: string | null
+          extra_marks?: number | null
           id?: number
           name: string
           pin: string
@@ -140,6 +142,7 @@ export type Database = {
         Update: {
           branch?: string
           created_at?: string | null
+          extra_marks?: number | null
           id?: number
           name?: string
           pin?: string

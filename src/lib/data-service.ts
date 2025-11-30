@@ -54,6 +54,7 @@ export interface Student {
   branch: string;
   year: string;
   section: string;
+  extra_marks?: number;
   createdAt?: string;
 }
 
@@ -185,6 +186,7 @@ const transformStudentFromDB = (row: StudentRow): Student => ({
   branch: row.branch,
   year: row.year,
   section: row.section,
+  extra_marks: row.extra_marks || 0,
   createdAt: row.created_at || undefined,
 });
 
@@ -195,6 +197,7 @@ const transformStudentToDB = (student: Omit<Student, 'id'>) => ({
   branch: student.branch,
   year: student.year,
   section: student.section,
+  extra_marks: student.extra_marks || 0,
 });
 
 // --- Winners ---
@@ -741,12 +744,16 @@ export const getStudentPerformance = async (pin: string) => {
       activityDate: (p as any).previous_activities?.activity_date || '',
     })) || [];
 
-    const totalMarks = participations.reduce((sum, p) => sum + (p.marks || 5), 0);
+    const participationMarks = participations.reduce((sum, p) => sum + (p.marks || 5), 0);
+    const extraMarks = student.extra_marks || 0;
+    const totalMarks = participationMarks + extraMarks;
 
     return {
       student,
       participations,
       totalMarks,
+      participationMarks,
+      extraMarks
     };
   } catch (error) {
     console.error('Error fetching student performance:', error);
