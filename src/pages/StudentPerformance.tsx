@@ -132,40 +132,6 @@ const StudentPerformance = () => {
           {/* Student Details & Performance */}
           {performanceData && (
             <div className="space-y-6">
-              {/* Student Info Card */}
-              <Card>
-                <CardHeader className="bg-primary/5">
-                  <CardTitle className="flex items-center gap-2">
-                    <User className="h-5 w-5" />
-                    Student Details
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="pt-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <div>
-                      <p className="text-sm text-muted-foreground">PIN Number</p>
-                      <p className="text-lg font-semibold">{performanceData.student.pin}</p>
-                    </div>
-                    <div>
-                      <p className="text-sm text-muted-foreground">Name</p>
-                      <p className="text-lg font-semibold">{performanceData.student.name}</p>
-                    </div>
-                    <div>
-                      <p className="text-sm text-muted-foreground">Branch</p>
-                      <p className="text-lg font-semibold">{performanceData.student.branch}</p>
-                    </div>
-                    <div>
-                      <p className="text-sm text-muted-foreground">Year</p>
-                      <p className="text-lg font-semibold">{performanceData.student.year}</p>
-                    </div>
-                    <div>
-                      <p className="text-sm text-muted-foreground">Section</p>
-                      <p className="text-lg font-semibold">{performanceData.student.section}</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
               {/* Performance Chart & Stats */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Participation Chart */}
@@ -230,14 +196,6 @@ const StudentPerformance = () => {
                       <div className="flex justify-between items-center p-3 bg-green-50 dark:bg-green-950/30 rounded-lg">
                         <span className="text-sm font-medium">Participated</span>
                         <span className="text-2xl font-bold text-green-600 dark:text-green-400">{performanceData.participations.length}</span>
-                      </div>
-                      <div className="flex justify-between items-center p-3 bg-blue-50 dark:bg-blue-950/30 rounded-lg">
-                        <span className="text-sm font-medium">Activity Marks</span>
-                        <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">{performanceData.participationMarks || 0}</span>
-                      </div>
-                      <div className="flex justify-between items-center p-3 bg-purple-50 dark:bg-purple-950/30 rounded-lg">
-                        <span className="text-sm font-medium">Extra Marks (Certificates)</span>
-                        <span className="text-2xl font-bold text-purple-600 dark:text-purple-400">{performanceData.extraMarks || 0}</span>
                       </div>
                       <div className="flex justify-between items-center p-3 bg-blue-50 dark:bg-blue-950/30 rounded-lg">
                         <span className="text-sm font-medium">Activity Marks</span>
