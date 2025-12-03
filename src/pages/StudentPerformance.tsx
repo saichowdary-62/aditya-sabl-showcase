@@ -132,6 +132,36 @@ const StudentPerformance = () => {
           {/* Student Details & Performance */}
           {performanceData && (
             <div className="space-y-6">
+              {/* Student Info Card */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <User className="h-5 w-5" />
+                    Student Details
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div>
+                      <p className="text-sm text-muted-foreground">PIN Number</p>
+                      <p className="text-lg font-semibold">{performanceData.student.pin}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted-foreground">Name</p>
+                      <p className="text-lg font-semibold">{performanceData.student.name}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted-foreground">Branch</p>
+                      <p className="text-lg font-semibold">{performanceData.student.branch}</p>
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted-foreground">Year</p>
+                      <p className="text-lg font-semibold">{performanceData.student.year}</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
               {/* Performance Chart & Stats */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Participation Chart */}
