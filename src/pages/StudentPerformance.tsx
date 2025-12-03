@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Search, User, Award, Calendar, Trophy, TrendingUp, Sparkles } from 'lucide-react';
+import { Search, User, Award, Calendar, Trophy, TrendingUp, Sparkles, Printer } from 'lucide-react';
 import { getStudentPerformance } from '@/lib/data-service';
 import { supabase } from '@/integrations/supabase/client';
 import { format } from 'date-fns';
@@ -58,6 +58,103 @@ const StudentPerformance = () => {
   const handleKeyPress = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
       handleSearch();
+    }
+  };
+
+  const handlePrint = () => {
+    if (!performanceData) return;
+    
+    const printContent = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <title>Performance Report - ${performanceData.student.name}</title>
+        <style>
+          body { font-family: Arial, sans-serif; padding: 20px; max-width: 800px; margin: 0 auto; }
+          h1 { color: #1a365d; border-bottom: 2px solid #3b82f6; padding-bottom: 10px; }
+          h2 { color: #2d3748; margin-top: 24px; }
+          .student-info { background: #f7fafc; padding: 16px; border-radius: 8px; margin: 16px 0; }
+          .student-info p { margin: 8px 0; }
+          .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 16px 0; }
+          .stat-box { background: #edf2f7; padding: 12px; border-radius: 6px; text-align: center; }
+          .stat-value { font-size: 24px; font-weight: bold; color: #3b82f6; }
+          .stat-label { font-size: 12px; color: #718096; }
+          table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+          th, td { border: 1px solid #e2e8f0; padding: 10px; text-align: left; }
+          th { background: #3b82f6; color: white; }
+          tr:nth-child(even) { background: #f7fafc; }
+          .footer { margin-top: 32px; text-align: center; color: #718096; font-size: 12px; }
+        </style>
+      </head>
+      <body>
+        <h1>Student Performance Report</h1>
+        <div class="student-info">
+          <p><strong>Name:</strong> ${performanceData.student.name}</p>
+          <p><strong>PIN:</strong> ${performanceData.student.pin}</p>
+          <p><strong>Branch:</strong> ${performanceData.student.branch}</p>
+          <p><strong>Year:</strong> ${performanceData.student.year}</p>
+        </div>
+        
+        <h2>Performance Summary</h2>
+        <div class="stats">
+          <div class="stat-box">
+            <div class="stat-value">${performanceData.participations.length}</div>
+            <div class="stat-label">Activities Participated</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value">${totalEvents}</div>
+            <div class="stat-label">Total Events</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value">${performanceData.participationMarks || 0}</div>
+            <div class="stat-label">Activity Marks</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value">${performanceData.extraMarks || 0}</div>
+            <div class="stat-label">Extra Marks (Certificates)</div>
+          </div>
+          <div class="stat-box" style="grid-column: span 2;">
+            <div class="stat-value" style="color: #ed8936;">${performanceData.totalMarks}</div>
+            <div class="stat-label">Total Marks</div>
+          </div>
+        </div>
+        
+        <h2>Activity Participations</h2>
+        ${performanceData.participations.length > 0 ? `
+          <table>
+            <thead>
+              <tr>
+                <th>Activity</th>
+                <th>Date</th>
+                <th>Award</th>
+                <th>Marks</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${performanceData.participations.map((p: any) => `
+                <tr>
+                  <td>${p.activityName}</td>
+                  <td>${p.activityDate ? format(new Date(p.activityDate), 'MMM dd, yyyy') : 'N/A'}</td>
+                  <td>${p.award}</td>
+                  <td>${p.marks || 5}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        ` : '<p>No participations recorded yet.</p>'}
+        
+        <div class="footer">
+          <p>Generated on ${format(new Date(), 'MMMM dd, yyyy')}</p>
+        </div>
+      </body>
+      </html>
+    `;
+    
+    const printWindow = window.open('', '_blank');
+    if (printWindow) {
+      printWindow.document.write(printContent);
+      printWindow.document.close();
+      printWindow.print();
     }
   };
 
@@ -134,11 +231,15 @@ const StudentPerformance = () => {
             <div className="space-y-6">
               {/* Student Info Card */}
               <Card>
-                <CardHeader>
+                <CardHeader className="flex flex-row items-center justify-between">
                   <CardTitle className="flex items-center gap-2">
                     <User className="h-5 w-5" />
                     Student Details
                   </CardTitle>
+                  <Button variant="outline" size="sm" onClick={handlePrint}>
+                    <Printer className="h-4 w-4 mr-2" />
+                    Print Report
+                  </Button>
                 </CardHeader>
                 <CardContent>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
