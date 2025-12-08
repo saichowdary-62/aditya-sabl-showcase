@@ -6,14 +6,12 @@ const About: React.FC = () => {
     <div className="page-bg-clean">
       <div className="container mx-auto px-4 py-12">
         {/* Hero Section */}
-        <div className="text-center mb-12 sm:mb-16 animate-slide-up">
-          <div className="flex items-center justify-center mb-4 sm:mb-6">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gradient-navy px-4">
-  About SABL
-            </h1>
-            </div>
-          <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed px-4">
-            Student-Based Learning (SABL) is an innovative educational approach that places students at the center of the learning process.
+        <div className="text-center mb-10 sm:mb-12 animate-slide-up">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary mb-3">
+            About SABL
+          </h1>
+          <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
+            Student-Based Learning (SABL) is an innovative educational approach that places students at the center of learning.
           </p>
         </div>
 

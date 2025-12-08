@@ -79,13 +79,12 @@ const Winners = () => {
     <div className="page-bg-clean">
       <div className="container mx-auto px-4 py-8 sm:py-12">
         {/* Header */}
-        <div className="text-center mb-8 sm:mb-12 animate-slide-up">
-          <div className="flex flex-col sm:flex-row items-center justify-center mb-4 gap-2 sm:gap-0">
-            <Trophy className="h-8 w-8 text-primary mr-3" />
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-gradient-navy text-center">Hall of Fame</h1>
-          </div>
+        <div className="text-center mb-10 sm:mb-12 animate-slide-up">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary mb-3">
+            Hall of Fame
+          </h1>
           <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
-            Celebrating the outstanding achievements of our students across various SABL activities and competitions.
+            Celebrating the outstanding achievements of our students in SABL activities.
           </p>
         </div>
 

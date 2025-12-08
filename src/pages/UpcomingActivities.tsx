@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import ActivityCard from '@/components/ActivityCard';
 import { getActivities, Activity } from '@/lib/data-service';
 import { useData } from '@/contexts/DataContext';
-import { Calendar, Clock, MapPin, Sparkles, Target, Users } from 'lucide-react';
+import { Calendar, Clock, MapPin, Target, Users } from 'lucide-react';
 
 const UpcomingActivities = () => {
   const [upcomingActivities, setUpcomingActivities] = useState<Activity[]>([]);
@@ -35,24 +35,13 @@ const UpcomingActivities = () => {
     <div className="page-bg-clean">
       <div className="container mx-auto px-4 py-8 sm:py-12">
         {/* Header */}
-        <div className="text-center mb-12 sm:mb-16 animate-slide-up">
-          <div className="relative inline-block mb-6">
-            <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 rounded-full blur-xl"></div>
-            <div className="relative bg-white rounded-full p-4 shadow-elevated">
-              <Calendar className="h-12 w-12 text-primary" />
-            </div>
-          </div>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gradient-navy mb-6">
+        <div className="text-center mb-10 sm:mb-12 animate-slide-up">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary mb-3">
             Upcoming Activities
           </h1>
-          <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto px-4 leading-relaxed">
-            Stay updated with our exciting upcoming SABL activities and competitions. Mark your calendars and get ready to participate!
+          <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
+            Stay updated with our exciting upcoming SABL activities and competitions.
           </p>
-          <div className="flex items-center justify-center gap-2 mt-4">
-            <Sparkles className="h-5 w-5 text-accent animate-pulse" />
-            <span className="text-accent font-medium">New events added regularly</span>
-            <Sparkles className="h-5 w-5 text-accent animate-pulse" />
-          </div>
         </div>
 
         {/* Activities Grid */}

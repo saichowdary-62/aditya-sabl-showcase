@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import ActivityCard from '@/components/ActivityCard';
 import { getActivities, Activity, getParticipants, Participant, getWinners, Winner } from '@/lib/data-service';
 import { useData } from '@/contexts/DataContext';
-import { History, Trophy, Users, Camera, Download, Award, Target, Sparkles } from 'lucide-react';
+import { History, Trophy, Users, Camera, Download, Sparkles } from 'lucide-react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -185,33 +185,17 @@ const PreviousActivities = () => {
     <div className="page-bg-clean">
       <div className="container mx-auto px-4 py-8 sm:py-12">
         {/* Header */}
-        <div className="text-center mb-12 sm:mb-16 animate-slide-up">
-          <div className="relative inline-block mb-6">
-            <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 rounded-full blur-xl"></div>
-            <div className="relative bg-white rounded-full p-4 shadow-elevated">
-              <History className="h-12 w-12 text-primary" />
-            </div>
-          </div>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gradient-navy mb-6">
+        <div className="text-center mb-10 sm:mb-12 animate-slide-up">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary mb-3">
             Previous Activities
           </h1>
-          <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto px-4 leading-relaxed">
-            Explore our successful past events and the amazing achievements of our students in various SABL activities.
+          <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
+            Explore our successful past events and achievements in various SABL activities.
           </p>
-          <div className="flex items-center justify-center gap-2 mt-4">
-            <Award className="h-5 w-5 text-accent animate-pulse" />
-            <span className="text-accent font-medium">Celebrating excellence and innovation</span>
-            <Award className="h-5 w-5 text-accent animate-pulse" />
-          </div>
         </div>
 
         {/* Activities Timeline */}
         <div className="mb-8">
-          <h2 className="text-2xl sm:text-3xl font-bold text-primary mb-8 text-center flex items-center justify-center gap-3">
-            <Target className="h-8 w-8 text-accent" />
-            Event Timeline
-            <Target className="h-8 w-8 text-accent" />
-          </h2>
           {loading ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
               {Array.from({ length: 6 }).map((_, index) => (
