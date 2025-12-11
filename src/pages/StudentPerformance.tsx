@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Search, User, Award, Calendar, Trophy, TrendingUp, Sparkles, Printer } from 'lucide-react';
+import { Search, User, Award, Calendar, Trophy, TrendingUp, Sparkles, Download } from 'lucide-react';
 import { getStudentPerformance } from '@/lib/data-service';
 import { supabase } from '@/integrations/supabase/client';
 import { format } from 'date-fns';
@@ -61,10 +61,10 @@ const StudentPerformance = () => {
     }
   };
 
-  const handlePrint = () => {
+  const handleDownload = () => {
     if (!performanceData) return;
     
-    const printContent = `
+    const htmlContent = `
       <!DOCTYPE html>
       <html>
       <head>
@@ -150,12 +150,15 @@ const StudentPerformance = () => {
       </html>
     `;
     
-    const printWindow = window.open('', '_blank');
-    if (printWindow) {
-      printWindow.document.write(printContent);
-      printWindow.document.close();
-      printWindow.print();
-    }
+    const blob = new Blob([htmlContent], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `${performanceData.student.name}_Performance_Report.html`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
   };
 
   const getMotivationalQuote = (participationRate: number) => {
@@ -177,7 +180,7 @@ const StudentPerformance = () => {
     }
   };
 
-  const COLORS = ['#3b82f6', '#e5e7eb'];
+  const COLORS = ['#22c55e', '#ef4444'];
 
   return (
     <div className="container mx-auto px-4 py-12">
@@ -236,9 +239,9 @@ const StudentPerformance = () => {
                     <User className="h-5 w-5" />
                     Student Details
                   </CardTitle>
-                  <Button variant="outline" size="sm" onClick={handlePrint}>
-                    <Printer className="h-4 w-4 mr-2" />
-                    Print Report
+                  <Button variant="outline" size="sm" onClick={handleDownload}>
+                    <Download className="h-4 w-4 mr-2" />
+                    Download
                   </Button>
                 </CardHeader>
                 <CardContent>
@@ -274,7 +277,7 @@ const StudentPerformance = () => {
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="flex-1 flex flex-col justify-center">
-                    <ResponsiveContainer width="100%" height={300}>
+                    <ResponsiveContainer width="100%" height={280}>
                       <PieChart>
                         <Pie
                           data={[
@@ -283,17 +286,32 @@ const StudentPerformance = () => {
                           ]}
                           cx="50%"
                           cy="50%"
-                          labelLine={true}
-                          label={({ name, value }) => `${name}: ${value}`}
-                          outerRadius={90}
-                          fill="#8884d8"
+                          innerRadius={60}
+                          outerRadius={100}
+                          paddingAngle={3}
                           dataKey="value"
+                          strokeWidth={2}
+                          stroke="hsl(var(--background))"
                         >
                           {[0, 1].map((entry, index) => (
                             <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                           ))}
                         </Pie>
-                        <Tooltip />
+                        <Tooltip 
+                          contentStyle={{ 
+                            backgroundColor: 'hsl(var(--card))', 
+                            border: '1px solid hsl(var(--border))',
+                            borderRadius: '8px',
+                            boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                          }}
+                        />
+                        <Legend 
+                          verticalAlign="bottom" 
+                          height={36}
+                          formatter={(value, entry: any) => (
+                            <span className="text-sm text-foreground">{value}: {entry.payload.value}</span>
+                          )}
+                        />
                       </PieChart>
                     </ResponsiveContainer>
                     <div className="mt-4 text-center">
