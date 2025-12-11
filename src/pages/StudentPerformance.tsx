@@ -11,6 +11,8 @@ import { getStudentPerformance } from '@/lib/data-service';
 import { supabase } from '@/integrations/supabase/client';
 import { format } from 'date-fns';
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 
 const StudentPerformance = () => {
   const [pin, setPin] = useState('');
@@ -64,101 +66,78 @@ const StudentPerformance = () => {
   const handleDownload = () => {
     if (!performanceData) return;
     
-    const htmlContent = `
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <title>Performance Report - ${performanceData.student.name}</title>
-        <style>
-          body { font-family: Arial, sans-serif; padding: 20px; max-width: 800px; margin: 0 auto; }
-          h1 { color: #1a365d; border-bottom: 2px solid #3b82f6; padding-bottom: 10px; }
-          h2 { color: #2d3748; margin-top: 24px; }
-          .student-info { background: #f7fafc; padding: 16px; border-radius: 8px; margin: 16px 0; }
-          .student-info p { margin: 8px 0; }
-          .stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 16px 0; }
-          .stat-box { background: #edf2f7; padding: 12px; border-radius: 6px; text-align: center; }
-          .stat-value { font-size: 24px; font-weight: bold; color: #3b82f6; }
-          .stat-label { font-size: 12px; color: #718096; }
-          table { width: 100%; border-collapse: collapse; margin-top: 16px; }
-          th, td { border: 1px solid #e2e8f0; padding: 10px; text-align: left; }
-          th { background: #3b82f6; color: white; }
-          tr:nth-child(even) { background: #f7fafc; }
-          .footer { margin-top: 32px; text-align: center; color: #718096; font-size: 12px; }
-        </style>
-      </head>
-      <body>
-        <h1>Student Performance Report</h1>
-        <div class="student-info">
-          <p><strong>Name:</strong> ${performanceData.student.name}</p>
-          <p><strong>PIN:</strong> ${performanceData.student.pin}</p>
-          <p><strong>Branch:</strong> ${performanceData.student.branch}</p>
-          <p><strong>Year:</strong> ${performanceData.student.year}</p>
-        </div>
-        
-        <h2>Performance Summary</h2>
-        <div class="stats">
-          <div class="stat-box">
-            <div class="stat-value">${performanceData.participations.length}</div>
-            <div class="stat-label">Activities Participated</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-value">${totalEvents}</div>
-            <div class="stat-label">Total Events</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-value">${performanceData.participationMarks || 0}</div>
-            <div class="stat-label">Activity Marks</div>
-          </div>
-          <div class="stat-box">
-            <div class="stat-value">${performanceData.extraMarks || 0}</div>
-            <div class="stat-label">Extra Marks (Certificates)</div>
-          </div>
-          <div class="stat-box" style="grid-column: span 2;">
-            <div class="stat-value" style="color: #ed8936;">${performanceData.totalMarks}</div>
-            <div class="stat-label">Total Marks</div>
-          </div>
-        </div>
-        
-        <h2>Activity Participations</h2>
-        ${performanceData.participations.length > 0 ? `
-          <table>
-            <thead>
-              <tr>
-                <th>Activity</th>
-                <th>Date</th>
-                <th>Award</th>
-                <th>Marks</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${performanceData.participations.map((p: any) => `
-                <tr>
-                  <td>${p.activityName}</td>
-                  <td>${p.activityDate ? format(new Date(p.activityDate), 'MMM dd, yyyy') : 'N/A'}</td>
-                  <td>${p.award}</td>
-                  <td>${p.marks || 5}</td>
-                </tr>
-              `).join('')}
-            </tbody>
-          </table>
-        ` : '<p>No participations recorded yet.</p>'}
-        
-        <div class="footer">
-          <p>Generated on ${format(new Date(), 'MMMM dd, yyyy')}</p>
-        </div>
-      </body>
-      </html>
-    `;
+    const doc = new jsPDF();
+    const pageWidth = doc.internal.pageSize.getWidth();
     
-    const blob = new Blob([htmlContent], { type: 'text/html' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `${performanceData.student.name}_Performance_Report.html`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+    // Title
+    doc.setFontSize(20);
+    doc.setTextColor(26, 54, 93);
+    doc.text('Student Performance Report', pageWidth / 2, 20, { align: 'center' });
+    
+    // Divider line
+    doc.setDrawColor(59, 130, 246);
+    doc.setLineWidth(0.5);
+    doc.line(20, 25, pageWidth - 20, 25);
+    
+    // Student Info Section
+    doc.setFontSize(14);
+    doc.setTextColor(45, 55, 72);
+    doc.text('Student Details', 20, 35);
+    
+    doc.setFontSize(11);
+    doc.setTextColor(0, 0, 0);
+    doc.text(`Name: ${performanceData.student.name}`, 20, 45);
+    doc.text(`PIN: ${performanceData.student.pin}`, 20, 52);
+    doc.text(`Branch: ${performanceData.student.branch}`, 20, 59);
+    doc.text(`Year: ${performanceData.student.year}`, 20, 66);
+    
+    // Performance Summary Section
+    doc.setFontSize(14);
+    doc.setTextColor(45, 55, 72);
+    doc.text('Performance Summary', 20, 80);
+    
+    doc.setFontSize(11);
+    doc.setTextColor(0, 0, 0);
+    doc.text(`Total Events: ${totalEvents}`, 20, 90);
+    doc.text(`Activities Participated: ${performanceData.participations.length}`, 20, 97);
+    doc.text(`Activity Marks: ${performanceData.participationMarks || 0}`, 20, 104);
+    doc.text(`Extra Marks (Certificates): ${performanceData.extraMarks || 0}`, 20, 111);
+    
+    doc.setFontSize(12);
+    doc.setTextColor(237, 137, 54);
+    doc.text(`Total Marks: ${performanceData.totalMarks}`, 20, 120);
+    
+    // Participations Table
+    if (performanceData.participations.length > 0) {
+      doc.setFontSize(14);
+      doc.setTextColor(45, 55, 72);
+      doc.text('Activity Participations', 20, 135);
+      
+      const tableData = performanceData.participations.map((p: any) => [
+        p.activityName,
+        p.activityDate ? format(new Date(p.activityDate), 'MMM dd, yyyy') : 'N/A',
+        p.award,
+        String(p.marks || 5)
+      ]);
+      
+      autoTable(doc, {
+        startY: 140,
+        head: [['Activity', 'Date', 'Award', 'Marks']],
+        body: tableData,
+        headStyles: { fillColor: [59, 130, 246], textColor: 255 },
+        alternateRowStyles: { fillColor: [247, 250, 252] },
+        styles: { fontSize: 10 }
+      });
+    }
+    
+    // Footer
+    const finalY = (doc as any).lastAutoTable?.finalY || 140;
+    doc.setFontSize(9);
+    doc.setTextColor(113, 128, 150);
+    doc.text(`Generated on ${format(new Date(), 'MMMM dd, yyyy')}`, pageWidth / 2, finalY + 15, { align: 'center' });
+    
+    // Download
+    doc.save(`${performanceData.student.name}_Performance_Report.pdf`);
   };
 
   const getMotivationalQuote = (participationRate: number) => {
