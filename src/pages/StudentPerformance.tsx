@@ -63,159 +63,78 @@ const StudentPerformance = () => {
     }
   };
 
-  const handleDownload = async () => {
+  const handleDownload = () => {
     if (!performanceData) return;
     
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
     
-    // Load and add logo
-    try {
-      const img = new Image();
-      img.crossOrigin = 'anonymous';
-      await new Promise<void>((resolve, reject) => {
-        img.onload = () => resolve();
-        img.onerror = () => reject();
-        img.src = '/aditya-university-logo.webp';
+    // Title
+    doc.setFontSize(20);
+    doc.setTextColor(26, 54, 93);
+    doc.text('Student Performance Report', pageWidth / 2, 20, { align: 'center' });
+    
+    // Divider line
+    doc.setDrawColor(59, 130, 246);
+    doc.setLineWidth(0.5);
+    doc.line(20, 25, pageWidth - 20, 25);
+    
+    // Student Info Section
+    doc.setFontSize(14);
+    doc.setTextColor(45, 55, 72);
+    doc.text('Student Details', 20, 35);
+    
+    doc.setFontSize(11);
+    doc.setTextColor(0, 0, 0);
+    doc.text(`Name: ${performanceData.student.name}`, 20, 45);
+    doc.text(`PIN: ${performanceData.student.pin}`, 20, 52);
+    doc.text(`Branch: ${performanceData.student.branch}`, 20, 59);
+    doc.text(`Year: ${performanceData.student.year}`, 20, 66);
+    
+    // Performance Summary Section
+    doc.setFontSize(14);
+    doc.setTextColor(45, 55, 72);
+    doc.text('Performance Summary', 20, 80);
+    
+    doc.setFontSize(11);
+    doc.setTextColor(0, 0, 0);
+    doc.text(`Total Events: ${totalEvents}`, 20, 90);
+    doc.text(`Activities Participated: ${performanceData.participations.length}`, 20, 97);
+    doc.text(`Activity Marks: ${performanceData.participationMarks || 0}`, 20, 104);
+    doc.text(`Extra Marks (Certificates): ${performanceData.extraMarks || 0}`, 20, 111);
+    
+    doc.setFontSize(12);
+    doc.setTextColor(237, 137, 54);
+    doc.text(`Total Marks: ${performanceData.totalMarks}`, 20, 120);
+    
+    // Participations Table
+    if (performanceData.participations.length > 0) {
+      doc.setFontSize(14);
+      doc.setTextColor(45, 55, 72);
+      doc.text('Activity Participations', 20, 135);
+      
+      const tableData = performanceData.participations.map((p: any) => [
+        p.activityName,
+        p.activityDate ? format(new Date(p.activityDate), 'MMM dd, yyyy') : 'N/A',
+        p.award,
+        String(p.marks || 5)
+      ]);
+      
+      autoTable(doc, {
+        startY: 140,
+        head: [['Activity', 'Date', 'Award', 'Marks']],
+        body: tableData,
+        headStyles: { fillColor: [59, 130, 246], textColor: 255 },
+        alternateRowStyles: { fillColor: [247, 250, 252] },
+        styles: { fontSize: 10 }
       });
-      
-      // Add logo to PDF (centered at top)
-      const logoWidth = 50;
-      const logoHeight = (img.height / img.width) * logoWidth;
-      doc.addImage(img, 'PNG', (pageWidth - logoWidth) / 2, 8, logoWidth, logoHeight);
-      
-      // Title below logo
-      doc.setFontSize(18);
-      doc.setTextColor(26, 54, 93);
-      doc.text('Student Performance Report', pageWidth / 2, 8 + logoHeight + 10, { align: 'center' });
-      
-      // Divider line
-      const dividerY = 8 + logoHeight + 15;
-      doc.setDrawColor(59, 130, 246);
-      doc.setLineWidth(0.5);
-      doc.line(20, dividerY, pageWidth - 20, dividerY);
-      
-      // Student Info Section
-      const contentStartY = dividerY + 10;
-      doc.setFontSize(14);
-      doc.setTextColor(45, 55, 72);
-      doc.text('Student Details', 20, contentStartY);
-      
-      doc.setFontSize(11);
-      doc.setTextColor(0, 0, 0);
-      doc.text(`Name: ${performanceData.student.name}`, 20, contentStartY + 10);
-      doc.text(`PIN: ${performanceData.student.pin}`, 20, contentStartY + 17);
-      doc.text(`Branch: ${performanceData.student.branch}`, 20, contentStartY + 24);
-      doc.text(`Year: ${performanceData.student.year}`, 20, contentStartY + 31);
-      
-      // Performance Summary Section
-      doc.setFontSize(14);
-      doc.setTextColor(45, 55, 72);
-      doc.text('Performance Summary', 20, contentStartY + 45);
-      
-      doc.setFontSize(11);
-      doc.setTextColor(0, 0, 0);
-      doc.text(`Total Events: ${totalEvents}`, 20, contentStartY + 55);
-      doc.text(`Activities Participated: ${performanceData.participations.length}`, 20, contentStartY + 62);
-      doc.text(`Activity Marks: ${performanceData.participationMarks || 0}`, 20, contentStartY + 69);
-      doc.text(`Extra Marks (Certificates): ${performanceData.extraMarks || 0}`, 20, contentStartY + 76);
-      
-      doc.setFontSize(12);
-      doc.setTextColor(237, 137, 54);
-      doc.text(`Total Marks: ${performanceData.totalMarks}`, 20, contentStartY + 85);
-      
-      // Participations Table
-      if (performanceData.participations.length > 0) {
-        doc.setFontSize(14);
-        doc.setTextColor(45, 55, 72);
-        doc.text('Activity Participations', 20, contentStartY + 100);
-        
-        const tableData = performanceData.participations.map((p: any) => [
-          p.activityName,
-          p.activityDate ? format(new Date(p.activityDate), 'MMM dd, yyyy') : 'N/A',
-          p.award,
-          String(p.marks || 5)
-        ]);
-        
-        autoTable(doc, {
-          startY: contentStartY + 105,
-          head: [['Activity', 'Date', 'Award', 'Marks']],
-          body: tableData,
-          headStyles: { fillColor: [59, 130, 246], textColor: 255 },
-          alternateRowStyles: { fillColor: [247, 250, 252] },
-          styles: { fontSize: 10 }
-        });
-      }
-      
-      // Footer
-      const finalY = (doc as any).lastAutoTable?.finalY || (contentStartY + 105);
-      doc.setFontSize(9);
-      doc.setTextColor(113, 128, 150);
-      doc.text(`Generated on ${format(new Date(), 'MMMM dd, yyyy')}`, pageWidth / 2, finalY + 15, { align: 'center' });
-      
-    } catch (error) {
-      // Fallback without logo if loading fails
-      doc.setFontSize(20);
-      doc.setTextColor(26, 54, 93);
-      doc.text('Student Performance Report', pageWidth / 2, 20, { align: 'center' });
-      
-      doc.setDrawColor(59, 130, 246);
-      doc.setLineWidth(0.5);
-      doc.line(20, 25, pageWidth - 20, 25);
-      
-      doc.setFontSize(14);
-      doc.setTextColor(45, 55, 72);
-      doc.text('Student Details', 20, 35);
-      
-      doc.setFontSize(11);
-      doc.setTextColor(0, 0, 0);
-      doc.text(`Name: ${performanceData.student.name}`, 20, 45);
-      doc.text(`PIN: ${performanceData.student.pin}`, 20, 52);
-      doc.text(`Branch: ${performanceData.student.branch}`, 20, 59);
-      doc.text(`Year: ${performanceData.student.year}`, 20, 66);
-      
-      doc.setFontSize(14);
-      doc.setTextColor(45, 55, 72);
-      doc.text('Performance Summary', 20, 80);
-      
-      doc.setFontSize(11);
-      doc.setTextColor(0, 0, 0);
-      doc.text(`Total Events: ${totalEvents}`, 20, 90);
-      doc.text(`Activities Participated: ${performanceData.participations.length}`, 20, 97);
-      doc.text(`Activity Marks: ${performanceData.participationMarks || 0}`, 20, 104);
-      doc.text(`Extra Marks (Certificates): ${performanceData.extraMarks || 0}`, 20, 111);
-      
-      doc.setFontSize(12);
-      doc.setTextColor(237, 137, 54);
-      doc.text(`Total Marks: ${performanceData.totalMarks}`, 20, 120);
-      
-      if (performanceData.participations.length > 0) {
-        doc.setFontSize(14);
-        doc.setTextColor(45, 55, 72);
-        doc.text('Activity Participations', 20, 135);
-        
-        const tableData = performanceData.participations.map((p: any) => [
-          p.activityName,
-          p.activityDate ? format(new Date(p.activityDate), 'MMM dd, yyyy') : 'N/A',
-          p.award,
-          String(p.marks || 5)
-        ]);
-        
-        autoTable(doc, {
-          startY: 140,
-          head: [['Activity', 'Date', 'Award', 'Marks']],
-          body: tableData,
-          headStyles: { fillColor: [59, 130, 246], textColor: 255 },
-          alternateRowStyles: { fillColor: [247, 250, 252] },
-          styles: { fontSize: 10 }
-        });
-      }
-      
-      const finalY = (doc as any).lastAutoTable?.finalY || 140;
-      doc.setFontSize(9);
-      doc.setTextColor(113, 128, 150);
-      doc.text(`Generated on ${format(new Date(), 'MMMM dd, yyyy')}`, pageWidth / 2, finalY + 15, { align: 'center' });
     }
+    
+    // Footer
+    const finalY = (doc as any).lastAutoTable?.finalY || 140;
+    doc.setFontSize(9);
+    doc.setTextColor(113, 128, 150);
+    doc.text(`Generated on ${format(new Date(), 'MMMM dd, yyyy')}`, pageWidth / 2, finalY + 15, { align: 'center' });
     
     // Download
     doc.save(`${performanceData.student.name}_Performance_Report.pdf`);
