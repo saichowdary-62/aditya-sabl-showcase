@@ -137,10 +137,11 @@ const StudentPerformance = () => {
     doc.setDrawColor(59, 130, 246);
     doc.line(20, 111, 95, 111);
     
-    // Stats boxes
-    const boxWidth = 40;
+    // Stats boxes - 5 boxes
+    const boxWidth = 33;
     const boxHeight = 30;
-    const startX = 20;
+    const boxGap = 4;
+    const startX = 15;
     const boxY = 118;
     
     // Box 1: Total Events
@@ -148,56 +149,74 @@ const StudentPerformance = () => {
     doc.roundedRect(startX, boxY, boxWidth, boxHeight, 2, 2, 'F');
     doc.setDrawColor(59, 130, 246);
     doc.roundedRect(startX, boxY, boxWidth, boxHeight, 2, 2, 'S');
-    doc.setFontSize(16);
+    doc.setFontSize(14);
     doc.setTextColor(59, 130, 246);
     doc.setFont('helvetica', 'bold');
-    doc.text(String(totalEvents), startX + boxWidth / 2, boxY + 14, { align: 'center' });
-    doc.setFontSize(7);
+    doc.text(String(totalEvents), startX + boxWidth / 2, boxY + 12, { align: 'center' });
+    doc.setFontSize(6);
     doc.setTextColor(71, 85, 105);
     doc.setFont('helvetica', 'normal');
-    doc.text('Total Events', startX + boxWidth / 2, boxY + 24, { align: 'center' });
+    doc.text('Total Events', startX + boxWidth / 2, boxY + 22, { align: 'center' });
     
     // Box 2: Participated
+    const box2X = startX + boxWidth + boxGap;
     doc.setFillColor(240, 253, 244);
-    doc.roundedRect(startX + boxWidth + 5, boxY, boxWidth, boxHeight, 2, 2, 'F');
+    doc.roundedRect(box2X, boxY, boxWidth, boxHeight, 2, 2, 'F');
     doc.setDrawColor(34, 197, 94);
-    doc.roundedRect(startX + boxWidth + 5, boxY, boxWidth, boxHeight, 2, 2, 'S');
-    doc.setFontSize(16);
+    doc.roundedRect(box2X, boxY, boxWidth, boxHeight, 2, 2, 'S');
+    doc.setFontSize(14);
     doc.setTextColor(34, 197, 94);
     doc.setFont('helvetica', 'bold');
-    doc.text(String(performanceData.participations.length), startX + boxWidth + 5 + boxWidth / 2, boxY + 14, { align: 'center' });
-    doc.setFontSize(7);
+    doc.text(String(performanceData.participations.length), box2X + boxWidth / 2, boxY + 12, { align: 'center' });
+    doc.setFontSize(6);
     doc.setTextColor(71, 85, 105);
     doc.setFont('helvetica', 'normal');
-    doc.text('Participated', startX + boxWidth + 5 + boxWidth / 2, boxY + 24, { align: 'center' });
+    doc.text('Participated', box2X + boxWidth / 2, boxY + 22, { align: 'center' });
     
     // Box 3: Activity Marks
+    const box3X = startX + (boxWidth + boxGap) * 2;
     doc.setFillColor(254, 249, 195);
-    doc.roundedRect(startX + (boxWidth + 5) * 2, boxY, boxWidth, boxHeight, 2, 2, 'F');
+    doc.roundedRect(box3X, boxY, boxWidth, boxHeight, 2, 2, 'F');
     doc.setDrawColor(234, 179, 8);
-    doc.roundedRect(startX + (boxWidth + 5) * 2, boxY, boxWidth, boxHeight, 2, 2, 'S');
-    doc.setFontSize(16);
+    doc.roundedRect(box3X, boxY, boxWidth, boxHeight, 2, 2, 'S');
+    doc.setFontSize(14);
     doc.setTextColor(161, 98, 7);
     doc.setFont('helvetica', 'bold');
-    doc.text(String(performanceData.participationMarks || 0), startX + (boxWidth + 5) * 2 + boxWidth / 2, boxY + 14, { align: 'center' });
-    doc.setFontSize(7);
+    doc.text(String(performanceData.participationMarks || 0), box3X + boxWidth / 2, boxY + 12, { align: 'center' });
+    doc.setFontSize(6);
     doc.setTextColor(71, 85, 105);
     doc.setFont('helvetica', 'normal');
-    doc.text('Activity Marks', startX + (boxWidth + 5) * 2 + boxWidth / 2, boxY + 24, { align: 'center' });
+    doc.text('Activity Marks', box3X + boxWidth / 2, boxY + 22, { align: 'center' });
     
-    // Box 4: Total Marks
+    // Box 4: Extra Marks (Certificates)
+    const box4X = startX + (boxWidth + boxGap) * 3;
+    doc.setFillColor(243, 232, 255);
+    doc.roundedRect(box4X, boxY, boxWidth, boxHeight, 2, 2, 'F');
+    doc.setDrawColor(147, 51, 234);
+    doc.roundedRect(box4X, boxY, boxWidth, boxHeight, 2, 2, 'S');
+    doc.setFontSize(14);
+    doc.setTextColor(126, 34, 206);
+    doc.setFont('helvetica', 'bold');
+    doc.text(String(performanceData.extraMarks || 0), box4X + boxWidth / 2, boxY + 12, { align: 'center' });
+    doc.setFontSize(6);
+    doc.setTextColor(71, 85, 105);
+    doc.setFont('helvetica', 'normal');
+    doc.text('Extra Marks', box4X + boxWidth / 2, boxY + 22, { align: 'center' });
+    
+    // Box 5: Total Marks
+    const box5X = startX + (boxWidth + boxGap) * 4;
     doc.setFillColor(255, 237, 213);
-    doc.roundedRect(startX + (boxWidth + 5) * 3, boxY, boxWidth, boxHeight, 2, 2, 'F');
+    doc.roundedRect(box5X, boxY, boxWidth, boxHeight, 2, 2, 'F');
     doc.setDrawColor(249, 115, 22);
-    doc.roundedRect(startX + (boxWidth + 5) * 3, boxY, boxWidth, boxHeight, 2, 2, 'S');
-    doc.setFontSize(16);
+    doc.roundedRect(box5X, boxY, boxWidth, boxHeight, 2, 2, 'S');
+    doc.setFontSize(14);
     doc.setTextColor(234, 88, 12);
     doc.setFont('helvetica', 'bold');
-    doc.text(String(performanceData.totalMarks), startX + (boxWidth + 5) * 3 + boxWidth / 2, boxY + 14, { align: 'center' });
-    doc.setFontSize(7);
+    doc.text(String(performanceData.totalMarks), box5X + boxWidth / 2, boxY + 12, { align: 'center' });
+    doc.setFontSize(6);
     doc.setTextColor(71, 85, 105);
     doc.setFont('helvetica', 'normal');
-    doc.text('Total Marks', startX + (boxWidth + 5) * 3 + boxWidth / 2, boxY + 24, { align: 'center' });
+    doc.text('Total Marks', box5X + boxWidth / 2, boxY + 22, { align: 'center' });
     
     // Participation rate bar
     doc.setFontSize(9);
