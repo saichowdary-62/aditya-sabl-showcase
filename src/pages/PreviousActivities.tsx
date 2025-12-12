@@ -18,7 +18,20 @@ const ParticipantsModal = ({ activity, isOpen, onClose }: { activity: Activity |
         setLoading(true);
         try {
           const participantsData = await getParticipants(activity.id);
-          setParticipants(participantsData);
+          
+          // Sort participants: winners first (1st, 2nd, 3rd), then others
+          const sortedParticipants = participantsData.sort((a, b) => {
+            const awardOrder: Record<string, number> = {
+              '1st Place': 1,
+              '2nd Place': 2,
+              '3rd Place': 3,
+            };
+            const aOrder = awardOrder[a.award] || 999;
+            const bOrder = awardOrder[b.award] || 999;
+            return aOrder - bOrder;
+          });
+          
+          setParticipants(sortedParticipants);
         } catch (error) {
           console.error('Error fetching data:', error);
         } finally {
