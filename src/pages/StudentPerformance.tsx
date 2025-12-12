@@ -68,50 +68,159 @@ const StudentPerformance = () => {
     
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
+    const participationRate = totalEvents > 0 ? Math.round((performanceData.participations.length / totalEvents) * 100) : 0;
+    
+    // Header background
+    doc.setFillColor(26, 54, 93);
+    doc.rect(0, 0, pageWidth, 40, 'F');
+    
+    // Header accent line
+    doc.setFillColor(249, 115, 22);
+    doc.rect(0, 40, pageWidth, 3, 'F');
     
     // Title
-    doc.setFontSize(20);
-    doc.setTextColor(26, 54, 93);
-    doc.text('Student Performance Report', pageWidth / 2, 20, { align: 'center' });
+    doc.setFontSize(22);
+    doc.setTextColor(255, 255, 255);
+    doc.setFont('helvetica', 'bold');
+    doc.text('STUDENT PERFORMANCE REPORT', pageWidth / 2, 22, { align: 'center' });
     
-    // Divider line
-    doc.setDrawColor(59, 130, 246);
-    doc.setLineWidth(0.5);
-    doc.line(20, 25, pageWidth - 20, 25);
+    // Subtitle
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    doc.text('SABL - Student Activity Based Learning', pageWidth / 2, 32, { align: 'center' });
     
-    // Student Info Section
-    doc.setFontSize(14);
-    doc.setTextColor(45, 55, 72);
-    doc.text('Student Details', 20, 35);
-    
-    doc.setFontSize(11);
-    doc.setTextColor(0, 0, 0);
-    doc.text(`Name: ${performanceData.student.name}`, 20, 45);
-    doc.text(`PIN: ${performanceData.student.pin}`, 20, 52);
-    doc.text(`Branch: ${performanceData.student.branch}`, 20, 59);
-    doc.text(`Year: ${performanceData.student.year}`, 20, 66);
-    
-    // Performance Summary Section
-    doc.setFontSize(14);
-    doc.setTextColor(45, 55, 72);
-    doc.text('Performance Summary', 20, 80);
-    
-    doc.setFontSize(11);
-    doc.setTextColor(0, 0, 0);
-    doc.text(`Total Events: ${totalEvents}`, 20, 90);
-    doc.text(`Activities Participated: ${performanceData.participations.length}`, 20, 97);
-    doc.text(`Activity Marks: ${performanceData.participationMarks || 0}`, 20, 104);
-    doc.text(`Extra Marks (Certificates): ${performanceData.extraMarks || 0}`, 20, 111);
+    // Student Details Section
+    doc.setFillColor(241, 245, 249);
+    doc.roundedRect(15, 50, pageWidth - 30, 45, 3, 3, 'F');
     
     doc.setFontSize(12);
-    doc.setTextColor(237, 137, 54);
-    doc.text(`Total Marks: ${performanceData.totalMarks}`, 20, 120);
+    doc.setTextColor(26, 54, 93);
+    doc.setFont('helvetica', 'bold');
+    doc.text('STUDENT DETAILS', 20, 60);
+    
+    doc.setDrawColor(59, 130, 246);
+    doc.setLineWidth(0.5);
+    doc.line(20, 63, 75, 63);
+    
+    doc.setFontSize(10);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(51, 65, 85);
+    
+    // Left column
+    doc.setFont('helvetica', 'bold');
+    doc.text('Name:', 20, 73);
+    doc.setFont('helvetica', 'normal');
+    doc.text(performanceData.student.name, 45, 73);
+    
+    doc.setFont('helvetica', 'bold');
+    doc.text('PIN:', 20, 82);
+    doc.setFont('helvetica', 'normal');
+    doc.text(performanceData.student.pin, 45, 82);
+    
+    // Right column
+    doc.setFont('helvetica', 'bold');
+    doc.text('Branch:', 110, 73);
+    doc.setFont('helvetica', 'normal');
+    doc.text(performanceData.student.branch, 135, 73);
+    
+    doc.setFont('helvetica', 'bold');
+    doc.text('Year:', 110, 82);
+    doc.setFont('helvetica', 'normal');
+    doc.text(performanceData.student.year, 135, 82);
+    
+    // Performance Summary Section
+    doc.setFontSize(12);
+    doc.setTextColor(26, 54, 93);
+    doc.setFont('helvetica', 'bold');
+    doc.text('PERFORMANCE SUMMARY', 20, 108);
+    
+    doc.setDrawColor(59, 130, 246);
+    doc.line(20, 111, 95, 111);
+    
+    // Stats boxes
+    const boxWidth = 40;
+    const boxHeight = 30;
+    const startX = 20;
+    const boxY = 118;
+    
+    // Box 1: Total Events
+    doc.setFillColor(239, 246, 255);
+    doc.roundedRect(startX, boxY, boxWidth, boxHeight, 2, 2, 'F');
+    doc.setDrawColor(59, 130, 246);
+    doc.roundedRect(startX, boxY, boxWidth, boxHeight, 2, 2, 'S');
+    doc.setFontSize(16);
+    doc.setTextColor(59, 130, 246);
+    doc.setFont('helvetica', 'bold');
+    doc.text(String(totalEvents), startX + boxWidth / 2, boxY + 14, { align: 'center' });
+    doc.setFontSize(7);
+    doc.setTextColor(71, 85, 105);
+    doc.setFont('helvetica', 'normal');
+    doc.text('Total Events', startX + boxWidth / 2, boxY + 24, { align: 'center' });
+    
+    // Box 2: Participated
+    doc.setFillColor(240, 253, 244);
+    doc.roundedRect(startX + boxWidth + 5, boxY, boxWidth, boxHeight, 2, 2, 'F');
+    doc.setDrawColor(34, 197, 94);
+    doc.roundedRect(startX + boxWidth + 5, boxY, boxWidth, boxHeight, 2, 2, 'S');
+    doc.setFontSize(16);
+    doc.setTextColor(34, 197, 94);
+    doc.setFont('helvetica', 'bold');
+    doc.text(String(performanceData.participations.length), startX + boxWidth + 5 + boxWidth / 2, boxY + 14, { align: 'center' });
+    doc.setFontSize(7);
+    doc.setTextColor(71, 85, 105);
+    doc.setFont('helvetica', 'normal');
+    doc.text('Participated', startX + boxWidth + 5 + boxWidth / 2, boxY + 24, { align: 'center' });
+    
+    // Box 3: Activity Marks
+    doc.setFillColor(254, 249, 195);
+    doc.roundedRect(startX + (boxWidth + 5) * 2, boxY, boxWidth, boxHeight, 2, 2, 'F');
+    doc.setDrawColor(234, 179, 8);
+    doc.roundedRect(startX + (boxWidth + 5) * 2, boxY, boxWidth, boxHeight, 2, 2, 'S');
+    doc.setFontSize(16);
+    doc.setTextColor(161, 98, 7);
+    doc.setFont('helvetica', 'bold');
+    doc.text(String(performanceData.participationMarks || 0), startX + (boxWidth + 5) * 2 + boxWidth / 2, boxY + 14, { align: 'center' });
+    doc.setFontSize(7);
+    doc.setTextColor(71, 85, 105);
+    doc.setFont('helvetica', 'normal');
+    doc.text('Activity Marks', startX + (boxWidth + 5) * 2 + boxWidth / 2, boxY + 24, { align: 'center' });
+    
+    // Box 4: Total Marks
+    doc.setFillColor(255, 237, 213);
+    doc.roundedRect(startX + (boxWidth + 5) * 3, boxY, boxWidth, boxHeight, 2, 2, 'F');
+    doc.setDrawColor(249, 115, 22);
+    doc.roundedRect(startX + (boxWidth + 5) * 3, boxY, boxWidth, boxHeight, 2, 2, 'S');
+    doc.setFontSize(16);
+    doc.setTextColor(234, 88, 12);
+    doc.setFont('helvetica', 'bold');
+    doc.text(String(performanceData.totalMarks), startX + (boxWidth + 5) * 3 + boxWidth / 2, boxY + 14, { align: 'center' });
+    doc.setFontSize(7);
+    doc.setTextColor(71, 85, 105);
+    doc.setFont('helvetica', 'normal');
+    doc.text('Total Marks', startX + (boxWidth + 5) * 3 + boxWidth / 2, boxY + 24, { align: 'center' });
+    
+    // Participation rate bar
+    doc.setFontSize(9);
+    doc.setTextColor(51, 65, 85);
+    doc.setFont('helvetica', 'bold');
+    doc.text(`Participation Rate: ${participationRate}%`, 20, 160);
+    
+    doc.setFillColor(226, 232, 240);
+    doc.roundedRect(20, 163, pageWidth - 40, 6, 2, 2, 'F');
+    
+    const rateColor = participationRate >= 70 ? [34, 197, 94] : participationRate >= 40 ? [59, 130, 246] : [249, 115, 22];
+    doc.setFillColor(rateColor[0], rateColor[1], rateColor[2]);
+    doc.roundedRect(20, 163, (pageWidth - 40) * (participationRate / 100), 6, 2, 2, 'F');
     
     // Participations Table
     if (performanceData.participations.length > 0) {
-      doc.setFontSize(14);
-      doc.setTextColor(45, 55, 72);
-      doc.text('Activity Participations', 20, 135);
+      doc.setFontSize(12);
+      doc.setTextColor(26, 54, 93);
+      doc.setFont('helvetica', 'bold');
+      doc.text('ACTIVITY PARTICIPATIONS', 20, 182);
+      
+      doc.setDrawColor(59, 130, 246);
+      doc.line(20, 185, 105, 185);
       
       const tableData = performanceData.participations.map((p: any) => [
         p.activityName,
@@ -121,20 +230,49 @@ const StudentPerformance = () => {
       ]);
       
       autoTable(doc, {
-        startY: 140,
+        startY: 190,
         head: [['Activity', 'Date', 'Award', 'Marks']],
         body: tableData,
-        headStyles: { fillColor: [59, 130, 246], textColor: 255 },
-        alternateRowStyles: { fillColor: [247, 250, 252] },
-        styles: { fontSize: 10 }
+        headStyles: { 
+          fillColor: [26, 54, 93], 
+          textColor: 255,
+          fontStyle: 'bold',
+          fontSize: 10
+        },
+        bodyStyles: {
+          fontSize: 9,
+          textColor: [51, 65, 85]
+        },
+        alternateRowStyles: { fillColor: [248, 250, 252] },
+        columnStyles: {
+          0: { cellWidth: 70 },
+          1: { cellWidth: 35 },
+          2: { cellWidth: 40 },
+          3: { cellWidth: 25, halign: 'center', fontStyle: 'bold' }
+        },
+        styles: { 
+          cellPadding: 4,
+          lineColor: [226, 232, 240],
+          lineWidth: 0.1
+        },
+        didParseCell: function(data: any) {
+          if (data.column.index === 3 && data.section === 'body') {
+            data.cell.styles.textColor = [234, 88, 12];
+          }
+        }
       });
     }
     
     // Footer
-    const finalY = (doc as any).lastAutoTable?.finalY || 140;
-    doc.setFontSize(9);
-    doc.setTextColor(113, 128, 150);
-    doc.text(`Generated on ${format(new Date(), 'MMMM dd, yyyy')}`, pageWidth / 2, finalY + 15, { align: 'center' });
+    const finalY = (doc as any).lastAutoTable?.finalY || 190;
+    
+    doc.setFillColor(248, 250, 252);
+    doc.rect(0, finalY + 10, pageWidth, 20, 'F');
+    
+    doc.setFontSize(8);
+    doc.setTextColor(100, 116, 139);
+    doc.setFont('helvetica', 'normal');
+    doc.text(`Generated on ${format(new Date(), 'MMMM dd, yyyy')} | SABL Performance Report`, pageWidth / 2, finalY + 20, { align: 'center' });
     
     // Download
     doc.save(`${performanceData.student.name}_Performance_Report.pdf`);
