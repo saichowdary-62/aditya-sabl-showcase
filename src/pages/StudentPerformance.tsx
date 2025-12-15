@@ -63,7 +63,7 @@ const StudentPerformance = () => {
     }
   };
 
-  const handleDownload = () => {
+  const handleDownload = async () => {
     if (!performanceData) return;
     
     const doc = new jsPDF();
@@ -72,35 +72,50 @@ const StudentPerformance = () => {
     
     // Header background
     doc.setFillColor(26, 54, 93);
-    doc.rect(0, 0, pageWidth, 40, 'F');
+    doc.rect(0, 0, pageWidth, 50, 'F');
     
     // Header accent line
     doc.setFillColor(249, 115, 22);
-    doc.rect(0, 40, pageWidth, 3, 'F');
+    doc.rect(0, 50, pageWidth, 3, 'F');
     
-    // Title
-    doc.setFontSize(22);
+    // Add logo
+    try {
+      const logoImg = new Image();
+      logoImg.crossOrigin = 'anonymous';
+      logoImg.src = '/aditya-logo.jpg';
+      await new Promise((resolve, reject) => {
+        logoImg.onload = resolve;
+        logoImg.onerror = reject;
+      });
+      doc.addImage(logoImg, 'JPEG', 15, 5, 35, 35);
+    } catch (e) {
+      console.log('Logo could not be loaded');
+    }
+    
+    // Title - positioned to the right of the logo
+    doc.setFontSize(20);
     doc.setTextColor(255, 255, 255);
     doc.setFont('helvetica', 'bold');
-    doc.text('STUDENT PERFORMANCE REPORT', pageWidth / 2, 22, { align: 'center' });
+    doc.text('STUDENT PERFORMANCE REPORT', pageWidth / 2 + 10, 20, { align: 'center' });
     
     // Subtitle
     doc.setFontSize(10);
     doc.setFont('helvetica', 'normal');
-    doc.text('SABL - Student Activity Based Learning', pageWidth / 2, 32, { align: 'center' });
+    doc.text('SABL - Student Activity Based Learning', pageWidth / 2 + 10, 32, { align: 'center' });
+    doc.text('Aditya College of Engineering & Technology', pageWidth / 2 + 10, 42, { align: 'center' });
     
     // Student Details Section
     doc.setFillColor(241, 245, 249);
-    doc.roundedRect(15, 50, pageWidth - 30, 45, 3, 3, 'F');
+    doc.roundedRect(15, 60, pageWidth - 30, 45, 3, 3, 'F');
     
     doc.setFontSize(12);
     doc.setTextColor(26, 54, 93);
     doc.setFont('helvetica', 'bold');
-    doc.text('STUDENT DETAILS', 20, 60);
+    doc.text('STUDENT DETAILS', 20, 70);
     
     doc.setDrawColor(59, 130, 246);
     doc.setLineWidth(0.5);
-    doc.line(20, 63, 75, 63);
+    doc.line(20, 73, 75, 73);
     
     doc.setFontSize(10);
     doc.setFont('helvetica', 'normal');
@@ -108,41 +123,41 @@ const StudentPerformance = () => {
     
     // Left column
     doc.setFont('helvetica', 'bold');
-    doc.text('Name:', 20, 73);
+    doc.text('Name:', 20, 83);
     doc.setFont('helvetica', 'normal');
-    doc.text(performanceData.student.name, 45, 73);
+    doc.text(performanceData.student.name, 45, 83);
     
     doc.setFont('helvetica', 'bold');
-    doc.text('PIN:', 20, 82);
+    doc.text('PIN:', 20, 92);
     doc.setFont('helvetica', 'normal');
-    doc.text(performanceData.student.pin, 45, 82);
+    doc.text(performanceData.student.pin, 45, 92);
     
     // Right column
     doc.setFont('helvetica', 'bold');
-    doc.text('Branch:', 110, 73);
+    doc.text('Branch:', 110, 83);
     doc.setFont('helvetica', 'normal');
-    doc.text(performanceData.student.branch, 135, 73);
+    doc.text(performanceData.student.branch, 135, 83);
     
     doc.setFont('helvetica', 'bold');
-    doc.text('Year:', 110, 82);
+    doc.text('Year:', 110, 92);
     doc.setFont('helvetica', 'normal');
-    doc.text(performanceData.student.year, 135, 82);
+    doc.text(performanceData.student.year, 135, 92);
     
     // Performance Summary Section
     doc.setFontSize(12);
     doc.setTextColor(26, 54, 93);
     doc.setFont('helvetica', 'bold');
-    doc.text('PERFORMANCE SUMMARY', 20, 108);
+    doc.text('PERFORMANCE SUMMARY', 20, 118);
     
     doc.setDrawColor(59, 130, 246);
-    doc.line(20, 111, 95, 111);
+    doc.line(20, 121, 95, 121);
     
     // Stats boxes - 5 boxes
     const boxWidth = 33;
     const boxHeight = 30;
     const boxGap = 4;
     const startX = 15;
-    const boxY = 118;
+    const boxY = 128;
     
     // Box 1: Total Events
     doc.setFillColor(239, 246, 255);
@@ -222,24 +237,24 @@ const StudentPerformance = () => {
     doc.setFontSize(9);
     doc.setTextColor(51, 65, 85);
     doc.setFont('helvetica', 'bold');
-    doc.text(`Participation Rate: ${participationRate}%`, 20, 160);
+    doc.text(`Participation Rate: ${participationRate}%`, 20, 170);
     
     doc.setFillColor(226, 232, 240);
-    doc.roundedRect(20, 163, pageWidth - 40, 6, 2, 2, 'F');
+    doc.roundedRect(20, 173, pageWidth - 40, 6, 2, 2, 'F');
     
     const rateColor = participationRate >= 70 ? [34, 197, 94] : participationRate >= 40 ? [59, 130, 246] : [249, 115, 22];
     doc.setFillColor(rateColor[0], rateColor[1], rateColor[2]);
-    doc.roundedRect(20, 163, (pageWidth - 40) * (participationRate / 100), 6, 2, 2, 'F');
+    doc.roundedRect(20, 173, (pageWidth - 40) * (participationRate / 100), 6, 2, 2, 'F');
     
     // Participations Table
     if (performanceData.participations.length > 0) {
       doc.setFontSize(12);
       doc.setTextColor(26, 54, 93);
       doc.setFont('helvetica', 'bold');
-      doc.text('ACTIVITY PARTICIPATIONS', 20, 182);
+      doc.text('ACTIVITY PARTICIPATIONS', 20, 192);
       
       doc.setDrawColor(59, 130, 246);
-      doc.line(20, 185, 105, 185);
+      doc.line(20, 195, 105, 195);
       
       const tableData = performanceData.participations.map((p: any) => [
         p.activityName,
@@ -249,7 +264,7 @@ const StudentPerformance = () => {
       ]);
       
       autoTable(doc, {
-        startY: 190,
+        startY: 200,
         head: [['Activity', 'Date', 'Award', 'Marks']],
         body: tableData,
         headStyles: { 
