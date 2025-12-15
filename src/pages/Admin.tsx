@@ -42,6 +42,7 @@ import { Trash2, Edit, Plus, Users, Calendar, Trophy, Image as ImageIcon, UserPl
 import ActivityPhotoManager from '@/components/ActivityPhotoManager';
 import BulkStudentUpload from '@/components/BulkStudentUpload';
 import BulkParticipantUpload from '@/components/BulkParticipantUpload';
+import BulkExtraMarksUpload from '@/components/BulkExtraMarksUpload';
 import { useNavigate } from 'react-router-dom';
 
 const Admin = () => {
@@ -1238,6 +1239,9 @@ const Admin = () => {
                   </div>
                 </CardContent>
               </Card>
+
+              {/* Bulk Extra Marks Upload */}
+              <BulkExtraMarksUpload onSuccess={fetchAllData} />
             </div>
           </TabsContent>
 
