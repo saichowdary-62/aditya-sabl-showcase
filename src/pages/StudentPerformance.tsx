@@ -98,11 +98,20 @@ const StudentPerformance = () => {
     doc.setFont('helvetica', 'bold');
     doc.text('STUDENT PERFORMANCE REPORT', pageWidth / 2 + 10, 20, { align: 'center' });
     
-    // Subtitle
-    doc.setFontSize(10);
+    // Subtitle - Aditya University with matching navbar colors
+    doc.setFontSize(12);
+    doc.setFont('helvetica', 'bold');
+    // Orange color for ADITYA (matching orange-500)
+    doc.setTextColor(249, 115, 22);
+    doc.text('ADITYA', pageWidth / 2 - 5, 38, { align: 'center' });
+    // Navy blue for UNIVERSITY (matching primary)
+    doc.setTextColor(26, 54, 93);
+    doc.text('UNIVERSITY', pageWidth / 2 + 35, 38, { align: 'center' });
+    
+    doc.setFontSize(9);
     doc.setFont('helvetica', 'normal');
-    doc.text('SABL - Student Activity Based Learning', pageWidth / 2 + 10, 32, { align: 'center' });
-    doc.text('Aditya College of Engineering & Technology', pageWidth / 2 + 10, 42, { align: 'center' });
+    doc.setTextColor(200, 200, 200);
+    doc.text('Department of CSE - SABL Activities', pageWidth / 2 + 10, 46, { align: 'center' });
     
     // Student Details Section
     doc.setFillColor(241, 245, 249);
