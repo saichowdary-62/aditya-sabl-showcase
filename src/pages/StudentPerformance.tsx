@@ -78,25 +78,11 @@ const StudentPerformance = () => {
     doc.setFillColor(249, 115, 22);
     doc.rect(0, 50, pageWidth, 3, 'F');
     
-    // Add logo
-    try {
-      const logoImg = new Image();
-      logoImg.crossOrigin = 'anonymous';
-      logoImg.src = '/aditya-logo.jpg';
-      await new Promise((resolve, reject) => {
-        logoImg.onload = resolve;
-        logoImg.onerror = reject;
-      });
-      doc.addImage(logoImg, 'JPEG', 15, 5, 35, 35);
-    } catch (e) {
-      console.log('Logo could not be loaded');
-    }
-    
-    // Title - positioned to the right of the logo
+    // Title - centered
     doc.setFontSize(20);
     doc.setTextColor(255, 255, 255);
     doc.setFont('helvetica', 'bold');
-    doc.text('STUDENT PERFORMANCE REPORT', pageWidth / 2 + 10, 20, { align: 'center' });
+    doc.text('STUDENT PERFORMANCE REPORT', pageWidth / 2, 20, { align: 'center' });
     
     // Subtitle - Aditya University
     doc.setFontSize(14);
@@ -106,9 +92,8 @@ const StudentPerformance = () => {
     const adityaText = 'ADITYA';
     const universityText = 'UNIVERSITY';
     const adityaWidth = doc.getTextWidth(adityaText);
-    const universityWidth = doc.getTextWidth(universityText);
-    const totalWidth = adityaWidth + 4 + universityWidth;
-    const titleStartX = (pageWidth - totalWidth) / 2 + 20;
+    const totalWidth = adityaWidth + 4 + doc.getTextWidth(universityText);
+    const titleStartX = (pageWidth - totalWidth) / 2;
     doc.text(adityaText, titleStartX, 35);
     // White color for UNIVERSITY
     doc.setTextColor(255, 255, 255);
@@ -117,42 +102,7 @@ const StudentPerformance = () => {
     doc.setFontSize(9);
     doc.setFont('helvetica', 'normal');
     doc.setTextColor(200, 200, 200);
-    doc.text('Department of CSE - SABL Activities', pageWidth / 2 + 10, 44, { align: 'center' });
-    
-    // QR Code - Generate simple QR pattern
-    const qrSize = 25;
-    const qrX = pageWidth - qrSize - 15;
-    const qrY = 12;
-    
-    // QR code background
-    doc.setFillColor(255, 255, 255);
-    doc.roundedRect(qrX - 2, qrY - 2, qrSize + 4, qrSize + 4, 2, 2, 'F');
-    
-    // Generate QR-like pattern
-    const cellSize = qrSize / 7;
-    const qrPattern = [
-      [1,1,1,1,1,1,1],
-      [1,0,0,0,0,0,1],
-      [1,0,1,1,1,0,1],
-      [1,0,1,0,1,0,1],
-      [1,0,1,1,1,0,1],
-      [1,0,0,0,0,0,1],
-      [1,1,1,1,1,1,1]
-    ];
-    
-    doc.setFillColor(26, 54, 93);
-    for (let row = 0; row < 7; row++) {
-      for (let col = 0; col < 7; col++) {
-        if (qrPattern[row][col] === 1) {
-          doc.rect(qrX + col * cellSize, qrY + row * cellSize, cellSize, cellSize, 'F');
-        }
-      }
-    }
-    
-    // QR label
-    doc.setFontSize(5);
-    doc.setTextColor(100, 116, 139);
-    doc.text('Scan for Portal', qrX + qrSize / 2, qrY + qrSize + 6, { align: 'center' });
+    doc.text('Department of CSE - SABL Activities', pageWidth / 2, 44, { align: 'center' });
     
     // Student Details Section
     doc.setFillColor(241, 245, 249);
