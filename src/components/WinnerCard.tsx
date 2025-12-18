@@ -11,7 +11,7 @@ interface WinnerCardProps {
 
 const WinnerCard = ({ winner, featured = false, onClick }: WinnerCardProps) => {
   const getPositionIcon = (position?: number) => {
-    if (position === 1) return <Trophy className="h-3 w-3 text-yellow-500" />;
+    if (position === 1) return <Trophy className="h-3 w-3 text-yellow-500 trophy-animate" />;
     if (position === 2) return <Medal className="h-3 w-3 text-gray-400" />;
     if (position === 3) return <Medal className="h-3 w-3 text-amber-600" />;
     return null;

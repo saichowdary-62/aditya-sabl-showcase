@@ -243,16 +243,21 @@ const WinnerDetailsModal = ({ winner, isOpen, onClose }: WinnerDetailsModalProps
             className="absolute inset-0 z-0"
           />
         )}
-        <div className="relative z-10 bg-white rounded-2xl border-4 border-yellow-500 shadow-2xl">
+        <div className="relative z-10 bg-white rounded-2xl border-4 border-yellow-500 shadow-2xl winner-modal-animated overflow-hidden">
+          {/* Golden shimmer overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-yellow-100/30 to-transparent animate-[golden-shimmer_3s_linear_infinite] pointer-events-none" style={{ backgroundSize: '200% 100%' }} />
+          
           <DialogClose className="absolute right-4 top-4 z-20 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
             <X className="h-4 w-4" />
             <span className="sr-only">Close</span>
           </DialogClose>
-          <div className="p-6">
+          <div className="p-6 relative">
             <DialogHeader>
               <DialogTitle className="flex items-center gap-2">
-                <Trophy className="h-5 w-5 text-primary" />
-                Winner Details
+                <Trophy className="h-5 w-5 text-yellow-500 trophy-animate" />
+                <span className="bg-gradient-to-r from-yellow-600 to-orange-500 bg-clip-text text-transparent font-bold">
+                  Winner Details
+                </span>
               </DialogTitle>
             </DialogHeader>
             
@@ -261,29 +266,33 @@ const WinnerDetailsModal = ({ winner, isOpen, onClose }: WinnerDetailsModalProps
               <div className="text-center">
                 <div className="relative inline-block">
                   {winner.photo ? (
-                    <img
-                      src={winner.photo}
-                      alt={winner.name}
-                      className="w-24 h-24 rounded-full object-cover mx-auto border-4 border-primary/20"
-                    />
+                    <div className="winner-image-golden-border">
+                      <img
+                        src={winner.photo}
+                        alt={winner.name}
+                        className="w-24 h-24 rounded-full object-cover"
+                      />
+                    </div>
                   ) : (
-                    <div className="w-24 h-24 bg-gradient-primary rounded-full flex items-center justify-center text-primary-foreground font-bold text-2xl mx-auto border-4 border-primary/20">
-                      {winner.name.split(' ').map(n => n[0]).join('')}
+                    <div className="winner-image-golden-border">
+                      <div className="w-24 h-24 bg-gradient-to-br from-primary to-blue-600 rounded-full flex items-center justify-center text-primary-foreground font-bold text-2xl">
+                        {winner.name.split(' ').map(n => n[0]).join('')}
+                      </div>
                     </div>
                   )}
 
                   {/* Position Badge */}
                   {winner.position && (
-                    <div className={`absolute -bottom-2 -right-2 ${getPositionColor(winner.position)} text-white rounded-full p-2 shadow-lg`}>
+                    <div className={`absolute -bottom-2 -right-2 ${getPositionColor(winner.position)} text-white rounded-full p-2 shadow-lg winner-position-badge`}>
                       {getPositionIcon(winner.position)}
                     </div>
                   )}
                 </div>
 
-                <h3 className="text-xl font-bold text-foreground mt-4">{winner.name}</h3>
+                <h3 className="text-xl font-bold text-foreground mt-4 animate-fade-in">{winner.name}</h3>
 
                 {winner.position && (
-                  <Badge variant="secondary" className="mt-2">
+                  <Badge variant="secondary" className="mt-2 bg-gradient-to-r from-yellow-100 to-orange-100 text-yellow-800 border border-yellow-300">
                     {getPositionText(winner.position)}
                   </Badge>
                 )}
