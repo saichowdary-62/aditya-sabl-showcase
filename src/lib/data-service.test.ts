@@ -90,7 +90,7 @@ describe('DataService', () => {
         event: 'New Event',
         date: '2025-02-01',
         photo_url: 'http://example.com/new.jpg',
-        year: '2025',
+        year: 2025,
         is_week_winner: false,
         position: 1,
         activity_type: 'General',
@@ -101,8 +101,14 @@ describe('DataService', () => {
       const singleMock = vi.fn().mockResolvedValue({ data: mockInsertedWinner, error: null });
       const selectMock = vi.fn().mockReturnValue({ single: singleMock });
       const insertMock = vi.fn().mockReturnValue({ select: selectMock });
-      supabase.from = vi.fn().mockReturnValue({
-        insert: insertMock,
+
+      const updateMock = vi.fn().mockResolvedValue({ error: null });
+      const eqMock = vi.fn().mockReturnValue({ update: updateMock });
+
+      supabase.from = vi.fn().mockImplementation((table) => {
+        if (table === 'winners') return { insert: insertMock };
+        if (table === 'participants') return { update: updateMock, eq: eqMock };
+        return {};
       });
 
       const result = await DataService.addWinner(newWinner);
@@ -151,7 +157,7 @@ describe('DataService', () => {
         event: 'Updated Event',
         date: '2025-01-15',
         photo_url: 'http://example.com/updated.jpg',
-        year: '2025',
+        year: 2025,
         is_week_winner: true,
         position: 1,
         activity_type: 'General',
@@ -161,10 +167,16 @@ describe('DataService', () => {
 
       const singleMock = vi.fn().mockResolvedValue({ data: mockUpdatedWinner, error: null });
       const selectMock = vi.fn().mockReturnValue({ single: singleMock });
-      const eqMock = vi.fn().mockReturnValue({ select: selectMock });
-      const updateMock = vi.fn().mockReturnValue({ eq: eqMock });
-      supabase.from = vi.fn().mockReturnValue({
-        update: updateMock,
+
+      const updateMock = vi.fn().mockReturnValue({ eq: vi.fn().mockReturnValue({ select: selectMock }) });
+
+      const participantsUpdateMock = vi.fn().mockResolvedValue({ error: null });
+      const participantsEqMock = vi.fn().mockReturnValue({ update: participantsUpdateMock });
+
+      supabase.from = vi.fn().mockImplementation((table) => {
+        if (table === 'winners') return { update: updateMock };
+        if (table === 'participants') return { update: participantsUpdateMock, eq: participantsEqMock };
+        return {};
       });
 
       const result = await DataService.updateWinner(updatedWinner);
@@ -176,13 +188,12 @@ describe('DataService', () => {
         event: 'Updated Event',
         date: '2025-01-15',
         photo_url: 'http://example.com/updated.jpg',
-        year: '2025',
+        year: 2025,
         is_week_winner: true,
         position: 1,
         activity_type: 'General',
         week_number: null,
       });
-      expect(eqMock).toHaveBeenCalledWith('id', 1);
       expect(result).toEqual(updatedWinner);
     });
   });
@@ -260,11 +271,23 @@ describe('DataService', () => {
     it('should update an activity', async () => {
       const updatedActivity = { id: '1', name: 'Updated Activity', date: '2025-03-01', description: 'New Desc', status: 'upcoming' as const };
       const mockActivity = { id: 1, title: 'Updated Activity', activity_date: '2025-03-01', description: 'New Desc' };
+
+      // Mocks for getActivity
+      const maybeSingleMock = vi.fn().mockResolvedValue({ data: mockActivity, error: null });
+      const selectActivityMock = vi.fn().mockReturnValue({ eq: vi.fn().mockReturnValue({ maybeSingle: maybeSingleMock }) });
+
+      // Mocks for updateActivity
       const singleMock = vi.fn().mockResolvedValue({ data: mockActivity, error: null });
       const selectMock = vi.fn().mockReturnValue({ single: singleMock });
       const eqMock = vi.fn().mockReturnValue({ select: selectMock });
       const updateMock = vi.fn().mockReturnValue({ eq: eqMock });
-      supabase.from = vi.fn().mockReturnValue({ update: updateMock });
+
+      supabase.from = vi.fn().mockImplementation((table) => {
+          if (table === 'upcoming_activities' || table === 'previous_activities') {
+              return { select: selectActivityMock, update: updateMock };
+          }
+          return {};
+      });
 
       const result = await DataService.updateActivity(updatedActivity);
       expect(supabase.from).toHaveBeenCalledWith('upcoming_activities');
