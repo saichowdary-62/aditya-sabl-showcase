@@ -6,9 +6,15 @@ const Footer: React.FC = () => {
     <footer className="bg-background border-t py-3 mt-auto">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground">
-          <span>Built with</span>
-          <Heart className="h-3 w-3 text-red-500 fill-red-500" />
-          <span>by Amar and team</span>
+          <span>Forged by</span>
+          <a 
+            href="https://ropebit.live/bitpowr" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="font-bold text-primary hover:text-primary/80 transition-colors"
+          >
+            BitPowr
+          </a>
         </div>
       </div>
     </footer>
