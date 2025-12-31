@@ -6,14 +6,14 @@ const Footer: React.FC = () => {
     <footer className="bg-background border-t py-3 mt-auto">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground">
-          <span>Forged by</span>
+          <span>Forged by Team</span>
           <a 
-            href="https://ropebit.live/bitpowr" 
+            href="#" 
             target="_blank" 
             rel="noopener noreferrer"
             className="font-bold text-primary hover:text-primary/80 transition-colors"
           >
-            BitPowr
+            ArcCoders
           </a>
         </div>
       </div>
