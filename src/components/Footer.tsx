@@ -6,7 +6,7 @@ const Footer: React.FC = () => {
     <footer className="bg-background border-t py-3 mt-auto">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground">
-          <span>Forged by Team</span>
+          <span>Forged by</span>
           <a 
             href="#" 
             target="_blank" 
