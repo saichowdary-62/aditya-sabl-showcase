@@ -6,6 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Search, User, Award, Calendar, Trophy, TrendingUp, Sparkles, Download } from 'lucide-react';
 import { getStudentPerformance } from '@/lib/data-service';
 import { supabase } from '@/integrations/supabase/client';
@@ -388,9 +389,83 @@ const StudentPerformance = () => {
             </CardContent>
           </Card>
 
+          {/* Loading Skeleton */}
+          {loading && (
+            <div className="space-y-6 animate-fade-in">
+              {/* Student Info Skeleton */}
+              <Card>
+                <CardHeader>
+                  <Skeleton className="h-6 w-40" />
+                </CardHeader>
+                <CardContent>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                    {[...Array(4)].map((_, i) => (
+                      <div key={i}>
+                        <Skeleton className="h-4 w-24 mb-2" />
+                        <Skeleton className="h-6 w-32" />
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Charts & Stats Skeleton */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <Card>
+                  <CardHeader>
+                    <Skeleton className="h-6 w-48" />
+                  </CardHeader>
+                  <CardContent className="flex items-center justify-center">
+                    <Skeleton className="h-[280px] w-[280px] rounded-full" />
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <Skeleton className="h-6 w-32" />
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    {[...Array(4)].map((_, i) => (
+                      <div key={i} className="flex items-center gap-4 p-4 rounded-lg bg-muted/50">
+                        <Skeleton className="h-10 w-10 rounded-full" />
+                        <div className="flex-1">
+                          <Skeleton className="h-4 w-24 mb-2" />
+                          <Skeleton className="h-6 w-16" />
+                        </div>
+                      </div>
+                    ))}
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* Table Skeleton */}
+              <Card>
+                <CardHeader>
+                  <Skeleton className="h-6 w-48" />
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    <div className="flex gap-4 p-3 bg-muted/30 rounded">
+                      {[...Array(5)].map((_, i) => (
+                        <Skeleton key={i} className="h-4 flex-1" />
+                      ))}
+                    </div>
+                    {[...Array(5)].map((_, i) => (
+                      <div key={i} className="flex gap-4 p-3">
+                        {[...Array(5)].map((_, j) => (
+                          <Skeleton key={j} className="h-4 flex-1" />
+                        ))}
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          )}
+
           {/* Student Details & Performance */}
-          {performanceData && (
-            <div className="space-y-6">
+          {performanceData && !loading && (
+            <div className="space-y-6 animate-fade-in">
               {/* Student Info Card */}
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between">
