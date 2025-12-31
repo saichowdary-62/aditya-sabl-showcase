@@ -341,6 +341,14 @@ const StudentPerformance = () => {
             <p className="text-muted-foreground">View your activity participation and marks</p>
           </div>
 
+          {/* Data Update Notice */}
+          <Alert className="mb-6 border-amber-500/50 bg-amber-500/10">
+            <AlertDescription className="text-amber-700 dark:text-amber-400 text-sm">
+              <strong>Note:</strong> Our team is currently uploading data, so some information may be inconsistent. 
+              Don't worry if marks are not shown — we will update it shortly. Thank you for your patience!
+            </AlertDescription>
+          </Alert>
+
           {/* Search Section */}
           <Card className="mb-8">
             <CardHeader>
