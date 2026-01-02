@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
 import { Winner } from '@/lib/data-service';
-import { Trophy, Calendar, Medal, ExternalLink } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Trophy, Calendar, Medal } from 'lucide-react';
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 interface WinnerCardProps {
   winner: Winner;
@@ -10,110 +10,89 @@ interface WinnerCardProps {
 }
 
 const WinnerCard = ({ winner, featured = false, onClick }: WinnerCardProps) => {
-  const getPositionIcon = (position?: number) => {
-    if (position === 1) return <Trophy className="h-3 w-3 text-yellow-500 trophy-animate" />;
-    if (position === 2) return <Medal className="h-3 w-3 text-gray-400" />;
-    if (position === 3) return <Medal className="h-3 w-3 text-amber-600" />;
+  const getPositionStyle = (position?: number) => {
+    if (position === 1) return { icon: Trophy, color: 'text-yellow-500', bg: 'bg-yellow-500/10', label: '1st' };
+    if (position === 2) return { icon: Medal, color: 'text-slate-400', bg: 'bg-slate-400/10', label: '2nd' };
+    if (position === 3) return { icon: Medal, color: 'text-amber-600', bg: 'bg-amber-600/10', label: '3rd' };
     return null;
   };
 
-  const getPositionText = (position?: number) => {
-    if (position === 1) return '1st Place';
-    if (position === 2) return '2nd Place';
-    if (position === 3) return '3rd Place';
-    return '';
-  };
+  const positionStyle = getPositionStyle(winner.position);
+  const PositionIcon = positionStyle?.icon;
 
   return (
-    <div
-      className={`winner-card-golden-border overflow-hidden group transition-all duration-500 relative ${
-        onClick ? 'cursor-pointer hover:-translate-y-1' : ''
+    <Card
+      className={`group overflow-hidden border border-border/50 bg-card/80 backdrop-blur-sm transition-all duration-300 hover:shadow-lg hover:border-primary/30 ${
+        onClick ? 'cursor-pointer hover:-translate-y-0.5' : ''
       }`}
       onClick={onClick}
     >
-      <div className="p-4 sm:p-6">
-        <div className="flex items-center space-x-4">
+      <div className="p-4">
+        <div className="flex items-start gap-3">
+          {/* Avatar */}
           <div className="relative flex-shrink-0">
             {winner.photo ? (
-              <div className="winner-image-golden-border">
-                <img 
-                  src={winner.photo} 
-                  alt={winner.name} 
-                  className="w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover aspect-square" 
-                  style={{ objectFit: 'cover' }}
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.style.display = 'none';
-                    const parent = target.parentElement?.parentElement;
-                    if (parent) {
-                      const fallback = document.createElement('div');
-                      fallback.className = "winner-image-golden-border";
-                      fallback.innerHTML = `<div class="w-12 h-12 sm:w-16 sm:h-16 bg-primary rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-lg aspect-square">${winner.name.split(' ').map(n => n[0]).join('')}</div>`;
-                      parent.appendChild(fallback);
-                      target.parentElement?.remove();
-                    }
-                  }}
-                />
-              </div>
-            ) : (
-              <div className="winner-image-golden-border">
-                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-primary rounded-full flex items-center justify-center text-white font-bold text-sm sm:text-lg group-hover:bg-primary/90 transition-colors duration-300 aspect-square">
-                  {winner.name.split(' ').map(n => n[0]).join('')}
-                </div>
+              <img 
+                src={winner.photo} 
+                alt={winner.name} 
+                className="w-12 h-12 rounded-full object-cover ring-2 ring-primary/20 group-hover:ring-primary/40 transition-all" 
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                  target.nextElementSibling?.classList.remove('hidden');
+                }}
+              />
+            ) : null}
+            <div className={`w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary font-semibold text-sm ${winner.photo ? 'hidden' : ''}`}>
+              {winner.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
+            </div>
+            
+            {/* Position Badge */}
+            {positionStyle && PositionIcon && (
+              <div className={`absolute -bottom-1 -right-1 w-6 h-6 rounded-full ${positionStyle.bg} flex items-center justify-center ring-2 ring-background`}>
+                <PositionIcon className={`h-3 w-3 ${positionStyle.color}`} />
               </div>
             )}
           </div>
-          
-          <div className="flex-1">
-            <h3 className="font-semibold text-primary group-hover:text-blue-600 transition-colors text-sm sm:text-base truncate group-hover:scale-105 transform transition-transform duration-300">
-              {winner.name}
-            </h3>
-            {winner.rollNumber && (
-              <p className="text-xs sm:text-sm text-muted-foreground truncate">{winner.rollNumber}</p>
-            )}
-            <p className="text-primary font-medium text-xs sm:text-sm truncate group-hover:text-blue-600 transition-colors duration-300">{winner.event}</p>
-            
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-xs mt-1 gap-1 sm:gap-0">
-              <div className="flex items-center text-muted-foreground">
-                <Calendar className="h-3 w-3 mr-1" />
-                <span className="truncate">{new Date(winner.date).toLocaleDateString('en-US', { 
-                  month: 'short', 
-                  day: 'numeric', 
-                  year: 'numeric' 
-                })}</span>
+
+          {/* Content */}
+          <div className="flex-1 min-w-0">
+            <div className="flex items-start justify-between gap-2">
+              <div className="min-w-0">
+                <h3 className="font-medium text-foreground text-sm truncate group-hover:text-primary transition-colors">
+                  {winner.name}
+                </h3>
+                {winner.rollNumber && (
+                  <p className="text-xs text-muted-foreground truncate">{winner.rollNumber}</p>
+                )}
               </div>
-              {winner.position && (
-                <div className="flex items-center text-primary font-medium group-hover:scale-110 transition-transform duration-300">
-                  {getPositionIcon(winner.position)}
-                  <span className="ml-1">{getPositionText(winner.position)}</span>
-                </div>
+              {positionStyle && (
+                <Badge variant="secondary" className={`${positionStyle.bg} ${positionStyle.color} border-0 text-xs px-1.5 py-0.5 font-medium`}>
+                  {positionStyle.label}
+                </Badge>
               )}
             </div>
-            
-            <div className="text-xs text-muted-foreground mt-2 flex flex-wrap gap-1">
+
+            <p className="text-xs text-primary/80 font-medium mt-1 truncate">{winner.event}</p>
+
+            <div className="flex items-center gap-2 mt-2 text-xs text-muted-foreground">
+              <Calendar className="h-3 w-3" />
+              <span>{new Date(winner.date).toLocaleDateString('en-US', { 
+                month: 'short', 
+                day: 'numeric'
+              })}</span>
+              
               {winner.activityType && winner.activityType !== 'General' && (
-                <Link 
-                  to="/previous"
-                  className="bg-primary/10 hover:bg-accent hover:text-white text-primary px-2 py-1 rounded-full transition-all duration-300 inline-flex items-center text-xs hover:scale-110"
-                >
-                  <span className="truncate max-w-20">{winner.activityType}</span>
-                  <ExternalLink className="h-2 w-2 ml-1" />
-                </Link>
-              )}
-              {winner.weekNumber && (
-                <Link 
-                  to="/weekly-winners"
-                  className="bg-accent/10 text-accent hover:bg-accent hover:text-white px-2 py-1 rounded-full transition-all duration-300 inline-flex items-center text-xs hover:scale-110"
-                >
-                  Week {winner.weekNumber}
-                  <ExternalLink className="h-2 w-2 ml-1" />
-                </Link>
+                <>
+                  <span className="text-border">•</span>
+                  <span className="truncate">{winner.activityType}</span>
+                </>
               )}
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </Card>
   );
 };
 
