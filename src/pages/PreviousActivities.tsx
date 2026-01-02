@@ -285,32 +285,32 @@ const PreviousActivities = () => {
           <div className="text-center mb-8">
             <h2 className="text-2xl sm:text-3xl font-bold mb-6">Success Stories</h2>
             <p className="text-white/90 text-lg max-w-2xl mx-auto leading-relaxed">
-              Our previous activities have been stepping stones for many students' career growth
+              All SABL activities are conducted entirely within the college by our dedicated faculty and student coordinators — no external industrial experts involved
             </p>
           </div>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
             <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-8 shadow-soft hover:bg-white/30 transition-all duration-300 hover:scale-105 border border-white/20">
+              <div className="text-5xl mb-6 text-center">🎓</div>
+              <h3 className="font-bold text-white mb-4 text-lg text-center">In-House Excellence</h3>
+              <p className="text-white/90 text-sm leading-relaxed text-center">
+                All events are organized and mentored by our own college faculty and senior students
+              </p>
+            </div>
+            
+            <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-8 shadow-soft hover:bg-white/30 transition-all duration-300 hover:scale-105 border border-white/20">
               <div className="text-5xl mb-6 text-center">💡</div>
-              <h3 className="font-bold text-white mb-4 text-lg text-center">Innovation Boost</h3>
+              <h3 className="font-bold text-white mb-4 text-lg text-center">Student-Led Innovation</h3>
               <p className="text-white/90 text-sm leading-relaxed text-center">
                 Students developed 15+ innovative projects through our hackathons and competitions
               </p>
             </div>
             
             <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-8 shadow-soft hover:bg-white/30 transition-all duration-300 hover:scale-105 border border-white/20">
-              <div className="text-5xl mb-6 text-center">🚀</div>
-              <h3 className="font-bold text-white mb-4 text-lg text-center">Career Growth</h3>
-              <p className="text-white/90 text-sm leading-relaxed text-center">
-                Many participants received internship offers and job placements after showcasing their skills
-              </p>
-            </div>
-            
-            <div className="bg-white/20 backdrop-blur-sm rounded-2xl p-8 shadow-soft hover:bg-white/30 transition-all duration-300 hover:scale-105 border border-white/20">
               <div className="text-5xl mb-6 text-center">🤝</div>
-              <h3 className="font-bold text-white mb-4 text-lg text-center">Network Building</h3>
+              <h3 className="font-bold text-white mb-4 text-lg text-center">Peer Collaboration</h3>
               <p className="text-white/90 text-sm leading-relaxed text-center">
-                Strong connections formed between students, faculty, and industry professionals
+                Strong connections formed between students and faculty within our college community
               </p>
             </div>
           </div>
