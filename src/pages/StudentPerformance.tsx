@@ -549,12 +549,11 @@ Thanks for your patience 💙
                       <p className="text-sm text-muted-foreground mb-2">
                         Participation Rate: {totalEvents > 0 ? Math.round((performanceData.participations.length / totalEvents) * 100) : 0}%
                       </p>
-                      <div className={`flex items-center justify-center gap-2 ${getMotivationalQuote(totalEvents > 0 ? (performanceData.participations.length / totalEvents) * 100 : 0).color}`}>
-                        <Sparkles className="h-4 w-4" />
-                        <p className="text-sm font-medium">
+                      {getMotivationalQuote(totalEvents > 0 ? (performanceData.participations.length / totalEvents) * 100 : 0).quote && (
+                        <p className={`text-sm font-medium ${getMotivationalQuote(totalEvents > 0 ? (performanceData.participations.length / totalEvents) * 100 : 0).color}`}>
                           {getMotivationalQuote(totalEvents > 0 ? (performanceData.participations.length / totalEvents) * 100 : 0).quote}
                         </p>
-                      </div>
+                      )}
                     </div>
                   </CardContent>
                 </Card>
