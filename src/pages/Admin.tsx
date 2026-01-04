@@ -42,7 +42,7 @@ import { Trash2, Edit, Plus, Users, Calendar, Trophy, Image as ImageIcon, UserPl
 import ActivityPhotoManager from '@/components/ActivityPhotoManager';
 import BulkStudentUpload from '@/components/BulkStudentUpload';
 import BulkParticipantUpload from '@/components/BulkParticipantUpload';
-import BulkExtraMarksUpload from '@/components/BulkExtraMarksUpload';
+
 import { useNavigate } from 'react-router-dom';
 
 const Admin = () => {
@@ -553,48 +553,6 @@ const Admin = () => {
     }
   };
 
-  const handleAddExtraMarks = async () => {
-    if (!searchedStudent) {
-      toast({
-        title: "Error",
-        description: "Please search for a student first",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    const marks = parseInt(extraMarksInput);
-    if (isNaN(marks) || marks < 0) {
-      toast({
-        title: "Error",
-        description: "Please enter a valid number of marks",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    setIsAddingExtraMarks(true);
-    try {
-      await updateStudent({
-        ...searchedStudent,
-        extra_marks: marks
-      });
-      toast({
-        title: "Success",
-        description: `Extra marks updated to ${marks} for ${searchedStudent.name}`,
-      });
-      fetchAllData();
-      setSearchedStudent({ ...searchedStudent, extra_marks: marks });
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to update extra marks",
-        variant: "destructive",
-      });
-    } finally {
-      setIsAddingExtraMarks(false);
-    }
-  };
 
   const handleDownloadStudentReport = async () => {
     try {
@@ -730,10 +688,6 @@ const Admin = () => {
             <TabsTrigger value="students" className="flex items-center gap-2">
               <Users className="h-4 w-4" />
               <span className="hidden sm:inline">Students</span>
-            </TabsTrigger>
-            <TabsTrigger value="extra-marks" className="flex items-center gap-2">
-              <Plus className="h-4 w-4" />
-              <span className="hidden sm:inline">Extra Marks</span>
             </TabsTrigger>
             <TabsTrigger value="participants" className="flex items-center gap-2">
               <UserPlus className="h-4 w-4" />
@@ -1150,100 +1104,6 @@ const Admin = () => {
             </div>
           </TabsContent>
 
-          {/* Extra Marks Tab */}
-          <TabsContent value="extra-marks">
-            <div className="space-y-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Extra Marks Management</CardTitle>
-                  <CardDescription>
-                    Search students by roll number and add extra marks for other certificates
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  {/* Search Student Section */}
-                  <div className="space-y-4">
-                    <div className="flex gap-4">
-                      <div className="flex-1">
-                        <Label htmlFor="studentSearchRollNo">Student Roll Number (PIN)</Label>
-                        <Input
-                          id="studentSearchRollNo"
-                          value={studentSearchRollNo}
-                          onChange={(e) => setStudentSearchRollNo(e.target.value)}
-                          placeholder="Enter roll number (e.g., 21A51A0501)"
-                          className="mt-1"
-                          onKeyPress={(e) => e.key === 'Enter' && handleSearchStudentByRollNo()}
-                        />
-                      </div>
-                      <div className="flex items-end">
-                        <Button onClick={handleSearchStudentByRollNo}>
-                          <Search className="h-4 w-4 mr-2" />
-                          Search
-                        </Button>
-                      </div>
-                    </div>
-
-                    {/* Student Details & Extra Marks */}
-                    {searchedStudent && (
-                      <Card className="bg-muted/50">
-                        <CardContent className="pt-6">
-                          <div className="space-y-4">
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                              <div>
-                                <p className="text-sm text-muted-foreground">Name</p>
-                                <p className="text-lg font-semibold">{searchedStudent.name}</p>
-                              </div>
-                              <div>
-                                <p className="text-sm text-muted-foreground">Roll Number</p>
-                                <p className="text-lg font-semibold">{searchedStudent.pin}</p>
-                              </div>
-                              <div>
-                                <p className="text-sm text-muted-foreground">Branch</p>
-                                <p className="text-lg font-semibold">{searchedStudent.branch}</p>
-                              </div>
-                              <div>
-                                <p className="text-sm text-muted-foreground">Year & Section</p>
-                                <p className="text-lg font-semibold">{searchedStudent.year} - {searchedStudent.section}</p>
-                              </div>
-                            </div>
-
-                            <div className="border-t pt-4 mt-4">
-                              <div className="flex gap-4 items-end">
-                                <div className="flex-1">
-                                  <Label htmlFor="extraMarks">Extra Marks (Other Certificates)</Label>
-                                  <Input
-                                    id="extraMarks"
-                                    type="number"
-                                    min="0"
-                                    value={extraMarksInput}
-                                    onChange={(e) => setExtraMarksInput(e.target.value)}
-                                    placeholder="Enter extra marks"
-                                    className="mt-1"
-                                  />
-                                </div>
-                                <Button 
-                                  onClick={handleAddExtraMarks}
-                                  disabled={isAddingExtraMarks}
-                                >
-                                  {isAddingExtraMarks ? 'Updating...' : 'Update Extra Marks'}
-                                </Button>
-                              </div>
-                              <p className="text-sm text-muted-foreground mt-2">
-                                Current extra marks: {searchedStudent.extra_marks || 0}
-                              </p>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Bulk Extra Marks Upload */}
-              <BulkExtraMarksUpload onSuccess={fetchAllData} />
-            </div>
-          </TabsContent>
 
           {/* Students Tab */}
           <TabsContent value="students">
