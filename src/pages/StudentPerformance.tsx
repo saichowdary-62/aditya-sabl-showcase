@@ -160,7 +160,7 @@ const StudentPerformance = () => {
     const startX = 15;
     const boxY = 128;
     
-    // Box 1: Total Events
+    // Box 1: SABL Total Events
     doc.setFillColor(239, 246, 255);
     doc.roundedRect(startX, boxY, boxWidth, boxHeight, 2, 2, 'F');
     doc.setDrawColor(59, 130, 246);
@@ -170,11 +170,14 @@ const StudentPerformance = () => {
     doc.setFont('helvetica', 'bold');
     doc.text(String(totalEvents), startX + boxWidth / 2, boxY + 12, { align: 'center' });
     doc.setFontSize(6);
+    doc.setTextColor(59, 130, 246);
+    doc.setFont('helvetica', 'bold');
+    doc.text('SABL', startX + boxWidth / 2 - 8, boxY + 22, { align: 'center' });
     doc.setTextColor(71, 85, 105);
     doc.setFont('helvetica', 'normal');
-    doc.text('Total Events', startX + boxWidth / 2, boxY + 22, { align: 'center' });
+    doc.text('Total Events', startX + boxWidth / 2 + 5, boxY + 22, { align: 'center' });
     
-    // Box 2: Participated
+    // Box 2: SABL Participated
     const box2X = startX + boxWidth + boxGap;
     doc.setFillColor(240, 253, 244);
     doc.roundedRect(box2X, boxY, boxWidth, boxHeight, 2, 2, 'F');
@@ -185,11 +188,14 @@ const StudentPerformance = () => {
     doc.setFont('helvetica', 'bold');
     doc.text(String(performanceData.participations.length), box2X + boxWidth / 2, boxY + 12, { align: 'center' });
     doc.setFontSize(6);
+    doc.setTextColor(34, 197, 94);
+    doc.setFont('helvetica', 'bold');
+    doc.text('SABL', box2X + boxWidth / 2 - 8, boxY + 22, { align: 'center' });
     doc.setTextColor(71, 85, 105);
     doc.setFont('helvetica', 'normal');
-    doc.text('Participated', box2X + boxWidth / 2, boxY + 22, { align: 'center' });
+    doc.text('Participated', box2X + boxWidth / 2 + 5, boxY + 22, { align: 'center' });
     
-    // Box 3: Activity Marks
+    // Box 3: SABL Activity Marks
     const box3X = startX + (boxWidth + boxGap) * 2;
     doc.setFillColor(254, 249, 195);
     doc.roundedRect(box3X, boxY, boxWidth, boxHeight, 2, 2, 'F');
@@ -200,11 +206,14 @@ const StudentPerformance = () => {
     doc.setFont('helvetica', 'bold');
     doc.text(String(performanceData.participationMarks || 0), box3X + boxWidth / 2, boxY + 12, { align: 'center' });
     doc.setFontSize(6);
+    doc.setTextColor(161, 98, 7);
+    doc.setFont('helvetica', 'bold');
+    doc.text('SABL', box3X + boxWidth / 2 - 10, boxY + 22, { align: 'center' });
     doc.setTextColor(71, 85, 105);
     doc.setFont('helvetica', 'normal');
-    doc.text('Activity Marks', box3X + boxWidth / 2, boxY + 22, { align: 'center' });
+    doc.text('Activity Marks', box3X + boxWidth / 2 + 6, boxY + 22, { align: 'center' });
     
-    // Box 4: Total Marks
+    // Box 4: SABL Total Marks
     const box4X = startX + (boxWidth + boxGap) * 3;
     doc.setFillColor(255, 237, 213);
     doc.roundedRect(box4X, boxY, boxWidth, boxHeight, 2, 2, 'F');
@@ -215,9 +224,12 @@ const StudentPerformance = () => {
     doc.setFont('helvetica', 'bold');
     doc.text(String(performanceData.totalMarks), box4X + boxWidth / 2, boxY + 12, { align: 'center' });
     doc.setFontSize(6);
+    doc.setTextColor(234, 88, 12);
+    doc.setFont('helvetica', 'bold');
+    doc.text('SABL', box4X + boxWidth / 2 - 8, boxY + 22, { align: 'center' });
     doc.setTextColor(71, 85, 105);
     doc.setFont('helvetica', 'normal');
-    doc.text('Total Marks', box4X + boxWidth / 2, boxY + 22, { align: 'center' });
+    doc.text('Total Marks', box4X + boxWidth / 2 + 5, boxY + 22, { align: 'center' });
     
     // Participation rate bar
     doc.setFontSize(9);
@@ -558,19 +570,19 @@ Thanks for your patience 💙
                   <CardContent className="flex-1 flex flex-col justify-center">
                     <div className="space-y-4">
                       <div className="flex justify-between items-center p-3 bg-primary/5 rounded-lg">
-                        <span className="text-sm font-medium">Total Events</span>
+                        <span className="text-sm font-medium"><span className="text-primary font-bold">SABL</span> Total Events</span>
                         <span className="text-2xl font-bold text-primary">{totalEvents}</span>
                       </div>
                       <div className="flex justify-between items-center p-3 bg-green-50 dark:bg-green-950/30 rounded-lg">
-                        <span className="text-sm font-medium">Participated</span>
+                        <span className="text-sm font-medium"><span className="text-green-600 dark:text-green-400 font-bold">SABL</span> Participated</span>
                         <span className="text-2xl font-bold text-green-600 dark:text-green-400">{performanceData.participations.length}</span>
                       </div>
                       <div className="flex justify-between items-center p-3 bg-blue-50 dark:bg-blue-950/30 rounded-lg">
-                        <span className="text-sm font-medium">Activity Marks</span>
+                        <span className="text-sm font-medium"><span className="text-blue-600 dark:text-blue-400 font-bold">SABL</span> Activity Marks</span>
                         <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">{performanceData.participationMarks || 0}</span>
                       </div>
                       <div className="flex justify-between items-center p-3 bg-orange-50 dark:bg-orange-950/30 rounded-lg">
-                        <span className="text-sm font-medium">Total Marks</span>
+                        <span className="text-sm font-medium"><span className="text-orange-600 dark:text-orange-400 font-bold">SABL</span> Total Marks</span>
                         <span className="text-2xl font-bold text-orange-600 dark:text-orange-400">{performanceData.totalMarks}</span>
                       </div>
                     </div>
