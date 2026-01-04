@@ -323,8 +323,8 @@ const StudentPerformance = () => {
       };
     } else {
       return {
-        quote: "Participate More!",
-        color: "text-orange-600"
+        quote: "",
+        color: ""
       };
     }
   };
