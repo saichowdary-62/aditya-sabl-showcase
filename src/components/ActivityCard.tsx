@@ -23,7 +23,7 @@ const ActivityCard = ({ activity, onViewParticipants }: ActivityCardProps) => {
     <>
       <div className="dual-border-card clean-card-hover overflow-hidden group flex flex-col h-full">
         {activity.poster ? (
-          <div className="w-full h-52 bg-secondary flex items-center justify-center flex-shrink-0 relative overflow-hidden">
+          <div className="w-full h-44 sm:h-52 bg-secondary flex items-center justify-center flex-shrink-0 relative overflow-hidden">
             <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5"></div>
             <img
               src={activity.poster}
@@ -40,7 +40,7 @@ const ActivityCard = ({ activity, onViewParticipants }: ActivityCardProps) => {
             />
           </div>
         ) : (
-          <div className="h-52 bg-gradient-to-br from-primary/5 to-accent/5 flex items-center justify-center border-b-2 border-primary/20 flex-shrink-0 relative">
+          <div className="h-44 sm:h-52 bg-gradient-to-br from-primary/5 to-accent/5 flex items-center justify-center border-b-2 border-primary/20 flex-shrink-0 relative">
             <div className="text-center">
               <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3">
                 <Calendar className="h-8 w-8 text-primary" />
@@ -50,7 +50,7 @@ const ActivityCard = ({ activity, onViewParticipants }: ActivityCardProps) => {
           </div>
         )}
         
-        <div className="p-6 flex flex-col flex-grow bg-gradient-to-b from-white to-gray-50/50">
+        <div className="p-4 sm:p-6 flex flex-col flex-grow bg-gradient-to-b from-white to-gray-50/50">
           <div className="flex flex-col sm:flex-row sm:items-start justify-between mb-3 gap-2">
             <h3 className="text-lg sm:text-xl font-bold text-primary group-hover:text-accent transition-colors flex-1 line-clamp-2 leading-tight">
               {activity.name}
@@ -102,22 +102,22 @@ const ActivityCard = ({ activity, onViewParticipants }: ActivityCardProps) => {
                 </Button>
               </>
             ) : (
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full">
                 {onViewParticipants && (
                   <Button
                     variant="outline"
                     size="sm"
                     onClick={() => onViewParticipants(activity)}
-                    className="w-full btn-navy-outline text-sm font-medium py-3"
+                    className="w-full btn-navy-outline text-xs sm:text-sm font-medium py-3"
                   >
-                    <Users className="h-4 w-4 mr-2" />
-                    View Participants
+                    <Users className="h-4 w-4 mr-1 sm:mr-2 flex-shrink-0" />
+                    <span className="truncate">Participants</span>
                   </Button>
                 )}
-                <Button asChild variant="outline" size="sm" className="w-full btn-navy-outline text-sm font-medium py-3">
+                <Button asChild variant="outline" size="sm" className="w-full btn-navy-outline text-xs sm:text-sm font-medium py-3">
                   <Link to={`/activity/${activity.id}/photos`}>
-                    <Camera className="h-4 w-4 mr-2" />
-                    View Photos
+                    <Camera className="h-4 w-4 mr-1 sm:mr-2 flex-shrink-0" />
+                    <span className="truncate">Photos</span>
                   </Link>
                 </Button>
               </div>

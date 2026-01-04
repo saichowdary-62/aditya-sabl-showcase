@@ -90,44 +90,44 @@ const WeeklyWinners = () => {
 
   return (
     <div className="page-bg-clean">
-      <div className="container mx-auto px-4 py-12">
+      <div className="container mx-auto px-4 py-8 sm:py-12">
         {/* Header */}
-        <div className="text-center mb-12 animate-slide-up">
-          <Trophy className="h-16 w-16 text-primary mx-auto mb-6" />
-          <h1 className="text-4xl font-bold mb-4 text-gradient-navy">Weekly Winners</h1>
-          <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
+        <div className="text-center mb-8 sm:mb-12 animate-slide-up">
+          <Trophy className="h-12 w-12 sm:h-16 sm:w-16 text-primary mx-auto mb-4 sm:mb-6" />
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 text-gradient-navy">Weekly Winners</h1>
+          <p className="text-muted-foreground max-w-2xl mx-auto text-base sm:text-lg px-4">
             Celebrating our champions across two weekly activities with 1st, 2nd, and 3rd place honors.
           </p>
         </div>
 
         {/* Summary Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-8">
           <Card className="clean-card animate-slide-up">
-            <CardContent className="p-6 text-center">
-              <Users className="h-8 w-8 text-primary mx-auto mb-2" />
-              <p className="text-2xl font-bold text-primary">{filteredWinners.length}</p>
-              <p className="text-sm text-muted-foreground">Total Winners</p>
+            <CardContent className="p-4 sm:p-6 text-center">
+              <Users className="h-6 w-6 sm:h-8 sm:w-8 text-primary mx-auto mb-2" />
+              <p className="text-xl sm:text-2xl font-bold text-primary">{filteredWinners.length}</p>
+              <p className="text-xs sm:text-sm text-muted-foreground">Total Winners</p>
             </CardContent>
           </Card>
           <Card className="stats-card-orange animate-slide-up" style={{ animationDelay: '0.1s' }}>
-            <CardContent className="p-6 text-center">
-              <Calendar className="h-8 w-8 text-white mx-auto mb-2" />
-              <p className="text-2xl font-bold">{weeks.length}</p>
-              <p className="text-sm text-white/90">Weeks</p>
+            <CardContent className="p-4 sm:p-6 text-center">
+              <Calendar className="h-6 w-6 sm:h-8 sm:w-8 text-white mx-auto mb-2" />
+              <p className="text-xl sm:text-2xl font-bold">{weeks.length}</p>
+              <p className="text-xs sm:text-sm text-white/90">Weeks</p>
             </CardContent>
           </Card>
           <Card className="clean-card animate-slide-up" style={{ animationDelay: '0.2s' }}>
-            <CardContent className="p-6 text-center">
-              <Target className="h-8 w-8 text-primary mx-auto mb-2" />
-              <p className="text-2xl font-bold text-primary">{activities.length}</p>
-              <p className="text-sm text-muted-foreground">Activities</p>
+            <CardContent className="p-4 sm:p-6 text-center">
+              <Target className="h-6 w-6 sm:h-8 sm:w-8 text-primary mx-auto mb-2" />
+              <p className="text-xl sm:text-2xl font-bold text-primary">{activities.length}</p>
+              <p className="text-xs sm:text-sm text-muted-foreground">Activities</p>
             </CardContent>
           </Card>
           <Card className="stats-card-navy animate-slide-up" style={{ animationDelay: '0.3s' }}>
-            <CardContent className="p-6 text-center">
-              <Trophy className="h-8 w-8 text-white mx-auto mb-2" />
-              <p className="text-2xl font-bold">{filteredWinners.filter(w => w.position === 1).length}</p>
-              <p className="text-sm text-white/90">Champions</p>
+            <CardContent className="p-4 sm:p-6 text-center">
+              <Trophy className="h-6 w-6 sm:h-8 sm:w-8 text-white mx-auto mb-2" />
+              <p className="text-xl sm:text-2xl font-bold">{filteredWinners.filter(w => w.position === 1).length}</p>
+              <p className="text-xs sm:text-sm text-white/90">Champions</p>
             </CardContent>
           </Card>
         </div>
@@ -138,11 +138,11 @@ const WeeklyWinners = () => {
             <CardTitle className="text-primary">Filter Winners</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="flex flex-wrap gap-4 items-end">
-              <div className="flex-1 min-w-[200px]">
+            <div className="flex flex-col sm:flex-row flex-wrap gap-4 items-stretch sm:items-end">
+              <div className="flex-1 min-w-0 sm:min-w-[180px]">
                 <label className="text-sm font-medium mb-2 block text-primary">Week</label>
                 <Select value={selectedWeek} onValueChange={setSelectedWeek}>
-                  <SelectTrigger>
+                  <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select week" />
                   </SelectTrigger>
                   <SelectContent>
@@ -153,10 +153,10 @@ const WeeklyWinners = () => {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="flex-1 min-w-[200px]">
+              <div className="flex-1 min-w-0 sm:min-w-[180px]">
                 <label className="text-sm font-medium mb-2 block text-primary">Activity</label>
                 <Select value={selectedActivity} onValueChange={setSelectedActivity}>
-                  <SelectTrigger>
+                  <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select activity" />
                   </SelectTrigger>
                   <SelectContent>
@@ -167,7 +167,7 @@ const WeeklyWinners = () => {
                   </SelectContent>
                 </Select>
               </div>
-              <Button variant="outline" onClick={clearFilters} className="btn-navy-outline">
+              <Button variant="outline" onClick={clearFilters} className="btn-navy-outline w-full sm:w-auto">
                 Clear Filters
               </Button>
             </div>

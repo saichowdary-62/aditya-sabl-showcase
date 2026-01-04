@@ -560,29 +560,29 @@ Thanks for your patience 💙
 
                 {/* Quick Stats */}
                 <Card className="flex flex-col">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Trophy className="h-5 w-5" />
+                  <CardHeader className="pb-2 sm:pb-4">
+                    <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                      <Trophy className="h-4 w-4 sm:h-5 sm:w-5" />
                       Performance Stats
                     </CardTitle>
                   </CardHeader>
                   <CardContent className="flex-1 flex flex-col justify-center">
-                    <div className="space-y-4">
-                      <div className="flex justify-between items-center p-3 bg-primary/5 rounded-lg">
-                        <span className="text-sm font-medium"><span className="text-primary font-bold">SABL</span> Total Events</span>
-                        <span className="text-2xl font-bold text-primary">{totalEvents}</span>
+                    <div className="space-y-2 sm:space-y-4">
+                      <div className="flex justify-between items-center p-2 sm:p-3 bg-primary/5 rounded-lg">
+                        <span className="text-xs sm:text-sm font-medium"><span className="text-primary font-bold">SABL</span> Total Events</span>
+                        <span className="text-lg sm:text-2xl font-bold text-primary">{totalEvents}</span>
                       </div>
-                      <div className="flex justify-between items-center p-3 bg-green-50 dark:bg-green-950/30 rounded-lg">
-                        <span className="text-sm font-medium"><span className="text-green-600 dark:text-green-400 font-bold">SABL</span> Participated</span>
-                        <span className="text-2xl font-bold text-green-600 dark:text-green-400">{performanceData.participations.length}</span>
+                      <div className="flex justify-between items-center p-2 sm:p-3 bg-green-50 dark:bg-green-950/30 rounded-lg">
+                        <span className="text-xs sm:text-sm font-medium"><span className="text-green-600 dark:text-green-400 font-bold">SABL</span> Participated</span>
+                        <span className="text-lg sm:text-2xl font-bold text-green-600 dark:text-green-400">{performanceData.participations.length}</span>
                       </div>
-                      <div className="flex justify-between items-center p-3 bg-blue-50 dark:bg-blue-950/30 rounded-lg">
-                        <span className="text-sm font-medium"><span className="text-blue-600 dark:text-blue-400 font-bold">SABL</span> Activity Marks</span>
-                        <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">{performanceData.participationMarks || 0}</span>
+                      <div className="flex justify-between items-center p-2 sm:p-3 bg-blue-50 dark:bg-blue-950/30 rounded-lg">
+                        <span className="text-xs sm:text-sm font-medium"><span className="text-blue-600 dark:text-blue-400 font-bold">SABL</span> Activity Marks</span>
+                        <span className="text-lg sm:text-2xl font-bold text-blue-600 dark:text-blue-400">{performanceData.participationMarks || 0}</span>
                       </div>
-                      <div className="flex justify-between items-center p-3 bg-orange-50 dark:bg-orange-950/30 rounded-lg">
-                        <span className="text-sm font-medium"><span className="text-orange-600 dark:text-orange-400 font-bold">SABL</span> Total Marks</span>
-                        <span className="text-2xl font-bold text-orange-600 dark:text-orange-400">{performanceData.totalMarks}</span>
+                      <div className="flex justify-between items-center p-2 sm:p-3 bg-orange-50 dark:bg-orange-950/30 rounded-lg">
+                        <span className="text-xs sm:text-sm font-medium"><span className="text-orange-600 dark:text-orange-400 font-bold">SABL</span> Total Marks</span>
+                        <span className="text-lg sm:text-2xl font-bold text-orange-600 dark:text-orange-400">{performanceData.totalMarks}</span>
                       </div>
                     </div>
                   </CardContent>
@@ -591,56 +591,59 @@ Thanks for your patience 💙
 
               {/* Participations Table */}
               <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Award className="h-5 w-5" />
+                <CardHeader className="pb-2 sm:pb-4">
+                  <CardTitle className="flex items-center gap-2 text-base sm:text-lg">
+                    <Award className="h-4 w-4 sm:h-5 sm:w-5" />
                     Activity Participations
                   </CardTitle>
-                  <CardDescription>
+                  <CardDescription className="text-xs sm:text-sm">
                     {performanceData.participations.length} activities participated
                   </CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="px-2 sm:px-6">
                   {performanceData.participations.length === 0 ? (
-                    <p className="text-center text-muted-foreground py-8">
+                    <p className="text-center text-muted-foreground py-8 text-sm">
                       No participations recorded yet
                     </p>
                   ) : (
-                    <div className="overflow-x-auto">
+                    <div className="overflow-x-auto -mx-2 sm:mx-0">
                       <Table>
                         <TableHeader>
                           <TableRow>
-                            <TableHead>Activity</TableHead>
-                            <TableHead>Date</TableHead>
-                            <TableHead>Award</TableHead>
-                            <TableHead className="text-right">Marks</TableHead>
+                            <TableHead className="text-xs sm:text-sm">Activity</TableHead>
+                            <TableHead className="text-xs sm:text-sm hidden sm:table-cell">Date</TableHead>
+                            <TableHead className="text-xs sm:text-sm">Award</TableHead>
+                            <TableHead className="text-right text-xs sm:text-sm">Marks</TableHead>
                           </TableRow>
                         </TableHeader>
                         <TableBody>
                           {performanceData.participations.map((participation: any) => (
                             <TableRow key={participation.id}>
-                              <TableCell className="font-medium">
+                              <TableCell className="font-medium text-xs sm:text-sm max-w-[120px] sm:max-w-none truncate">
                                 {participation.activityName}
                               </TableCell>
-                              <TableCell>
-                                <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                  <Calendar className="h-4 w-4" />
+                              <TableCell className="hidden sm:table-cell">
+                                <div className="flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">
+                                  <Calendar className="h-3 w-3 sm:h-4 sm:w-4" />
                                   {participation.activityDate ? 
                                     format(new Date(participation.activityDate), 'MMM dd, yyyy') 
                                     : 'N/A'}
                                 </div>
                               </TableCell>
                               <TableCell>
-                                <Badge variant={
-                                  participation.award === '1st Place' ? 'default' :
-                                  participation.award === '2nd Place' ? 'secondary' :
-                                  participation.award === '3rd Place' ? 'outline' :
-                                  'secondary'
-                                }>
+                                <Badge 
+                                  variant={
+                                    participation.award === '1st Place' ? 'default' :
+                                    participation.award === '2nd Place' ? 'secondary' :
+                                    participation.award === '3rd Place' ? 'outline' :
+                                    'secondary'
+                                  }
+                                  className="text-[10px] sm:text-xs px-1.5 sm:px-2"
+                                >
                                   {participation.award}
                                 </Badge>
                               </TableCell>
-                              <TableCell className="text-right font-semibold text-primary">
+                              <TableCell className="text-right font-semibold text-primary text-xs sm:text-sm">
                                 {participation.marks || 5}
                               </TableCell>
                             </TableRow>

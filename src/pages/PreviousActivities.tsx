@@ -85,15 +85,15 @@ const ParticipantsModal = ({ activity, isOpen, onClose }: { activity: Activity |
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto mx-4">
+      <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto mx-2 sm:mx-4">
         <DialogHeader>
-          <div className="flex justify-between items-center">
-            <DialogTitle className="flex items-center gap-2">
-              <Users className="h-5 w-5" />
-              Participants - {activity.name}
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+            <DialogTitle className="flex items-center gap-2 text-base sm:text-lg">
+              <Users className="h-4 w-4 sm:h-5 sm:w-5" />
+              <span className="line-clamp-1">Participants - {activity.name}</span>
             </DialogTitle>
             {participants.length > 0 && (
-              <Button variant="outline" size="sm" onClick={handleDownload}>
+              <Button variant="outline" size="sm" onClick={handleDownload} className="w-full sm:w-auto">
                 <Download className="h-4 w-4 mr-2" />
                 Download CSV
               </Button>
