@@ -100,12 +100,12 @@ const Home = () => {
 
       {/* This Week's Winners Section */}
       <section className="section-clean">
-        <div className="container mx-auto">
-          <div className="text-center mb-12 animate-slide-up">
-            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-8 sm:mb-12 animate-slide-up">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary mb-3 sm:mb-4">
               🏆 Top Performers of the Week
             </h2>
-            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+            <p className="text-muted-foreground text-base sm:text-lg max-w-2xl mx-auto px-4">
               Celebrating our outstanding students who have excelled in recent SABL activities
             </p>
           </div>
@@ -173,29 +173,29 @@ const Home = () => {
 
       {/* Statistics Section */}
       <section className="section-clean bg-gray-50">
-        <div className="container mx-auto">
-          <div className="stats-card-navy rounded-2xl p-8 md:p-12 text-white animate-slide-up shadow-elevated">
-            <div className="text-center mb-8">
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">SABL Impact</h2>
-              <p className="text-lg opacity-90">Measuring our success through student engagement and achievements</p>
+        <div className="container mx-auto px-4">
+          <div className="stats-card-navy rounded-2xl p-6 sm:p-8 md:p-12 text-white animate-slide-up shadow-elevated">
+            <div className="text-center mb-6 sm:mb-8">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4">SABL Impact</h2>
+              <p className="text-sm sm:text-base md:text-lg opacity-90">Measuring our success through student engagement and achievements</p>
             </div>
 
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 text-center">
               <div className="animate-slide-up" style={{ animationDelay: '0.1s' }}>
-                <div className="text-4xl font-bold mb-2">10+</div>
-                <div className="text-sm opacity-80">Events Conducted</div>
+                <div className="text-2xl sm:text-3xl md:text-4xl font-bold mb-1 sm:mb-2">10+</div>
+                <div className="text-xs sm:text-sm opacity-80">Events Conducted</div>
               </div>
               <div className="animate-slide-up" style={{ animationDelay: '0.2s' }}>
-                <div className="text-4xl font-bold mb-2">600+</div>
-                <div className="text-sm opacity-80">Student Participants</div>
+                <div className="text-2xl sm:text-3xl md:text-4xl font-bold mb-1 sm:mb-2">600+</div>
+                <div className="text-xs sm:text-sm opacity-80">Student Participants</div>
               </div>
               <div className="animate-slide-up" style={{ animationDelay: '0.3s' }}>
-                <div className="text-4xl font-bold mb-2">60+</div>
-                <div className="text-sm opacity-80">Winners Celebrated</div>
+                <div className="text-2xl sm:text-3xl md:text-4xl font-bold mb-1 sm:mb-2">60+</div>
+                <div className="text-xs sm:text-sm opacity-80">Winners Celebrated</div>
               </div>
               <div className="animate-slide-up" style={{ animationDelay: '0.4s' }}>
-                <div className="text-4xl font-bold mb-2">25+</div>
-                <div className="text-sm opacity-80">Industry Partners</div>
+                <div className="text-2xl sm:text-3xl md:text-4xl font-bold mb-1 sm:mb-2">25+</div>
+                <div className="text-xs sm:text-sm opacity-80">Industry Partners</div>
               </div>
             </div>
           </div>
@@ -204,44 +204,44 @@ const Home = () => {
 
       {/* Quick Navigation Section */}
       <section className="section-clean">
-        <div className="container mx-auto">
-          <div className="text-center mb-12 animate-slide-up">
-            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-4">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-8 sm:mb-12 animate-slide-up">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary mb-3 sm:mb-4">
               Quick Navigation
             </h2>
-            <p className="text-muted-foreground text-lg">
+            <p className="text-muted-foreground text-base sm:text-lg px-4">
               Explore different sections of our SABL activities
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 max-w-6xl mx-auto">
             <Link to="/upcoming" className="group" onClick={() => setTimeout(() => window.scrollTo(0, 0), 100)}>
-              <div className="clean-card clean-card-hover p-8 text-center border-primary/20 group-hover:border-primary/40 transition-all duration-300">
-                <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4 transition-all group-hover:scale-110">
-                  <Calendar className="h-8 w-8 text-white" />
+              <div className="clean-card clean-card-hover p-6 sm:p-8 text-center border-primary/20 group-hover:border-primary/40 transition-all duration-300">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 transition-all group-hover:scale-110">
+                  <Calendar className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold text-primary mb-2">Upcoming Activities</h3>
-                <p className="text-muted-foreground">Discover exciting events and competitions coming soon</p>
+                <h3 className="text-lg sm:text-xl font-semibold text-primary mb-2">Upcoming Activities</h3>
+                <p className="text-sm sm:text-base text-muted-foreground">Discover exciting events and competitions coming soon</p>
               </div>
             </Link>
             
             <Link to="/previous" className="group" onClick={() => setTimeout(() => window.scrollTo(0, 0), 100)}>
-              <div className="clean-card clean-card-hover p-8 text-center border-primary/20 group-hover:border-primary/40 transition-all duration-300">
-                <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4 transition-all group-hover:scale-110">
-                  <History className="h-8 w-8 text-white" />
+              <div className="clean-card clean-card-hover p-6 sm:p-8 text-center border-primary/20 group-hover:border-primary/40 transition-all duration-300">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 transition-all group-hover:scale-110">
+                  <History className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold text-primary mb-2">Previous Activities</h3>
-                <p className="text-muted-foreground">Browse through our successful past events and achievements</p>
+                <h3 className="text-lg sm:text-xl font-semibold text-primary mb-2">Previous Activities</h3>
+                <p className="text-sm sm:text-base text-muted-foreground">Browse through our successful past events and achievements</p>
               </div>
             </Link>
             
-            <Link to="/winners" className="group" onClick={() => setTimeout(() => window.scrollTo(0, 0), 100)}>
-              <div className="clean-card clean-card-hover p-8 text-center border-primary/20 group-hover:border-primary/40 transition-all duration-300">
-                <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4 transition-all group-hover:scale-110">
-                  <Trophy className="h-8 w-8 text-white" />
+            <Link to="/winners" className="group sm:col-span-2 md:col-span-1" onClick={() => setTimeout(() => window.scrollTo(0, 0), 100)}>
+              <div className="clean-card clean-card-hover p-6 sm:p-8 text-center border-primary/20 group-hover:border-primary/40 transition-all duration-300">
+                <div className="w-12 h-12 sm:w-16 sm:h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 transition-all group-hover:scale-110">
+                  <Trophy className="h-6 w-6 sm:h-8 sm:w-8 text-white" />
                 </div>
-                <h3 className="text-xl font-semibold text-primary mb-2">Hall of Fame</h3>
-                <p className="text-muted-foreground">Honor roll of all our winners and achievers</p>
+                <h3 className="text-lg sm:text-xl font-semibold text-primary mb-2">Hall of Fame</h3>
+                <p className="text-sm sm:text-base text-muted-foreground">Honor roll of all our winners and achievers</p>
               </div>
             </Link>
           </div>

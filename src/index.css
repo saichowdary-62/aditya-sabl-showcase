@@ -721,7 +721,7 @@
   }
   
   .section-clean {
-    @apply py-12 px-4;
+    @apply py-10 px-3;
   }
 
   .mobile-menu-enter {
@@ -730,6 +730,35 @@
 
   .mobile-menu-enter .navbar-link-white {
     @apply text-primary/80 hover:text-primary;
+  }
+  
+  /* Better touch targets on mobile */
+  button, a {
+    min-height: 44px;
+  }
+  
+  /* Improve card padding on mobile */
+  .stats-card-navy,
+  .stats-card-orange,
+  .stats-card-light {
+    @apply p-4;
+  }
+  
+  /* Reduce animation complexity on mobile for performance */
+  .celebration-particles,
+  .floating-emojis {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-clean {
+    @apply py-8 px-2;
+  }
+  
+  /* Even more compact on very small screens */
+  .dual-border-card {
+    @apply p-3;
   }
 }
 
