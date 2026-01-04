@@ -204,35 +204,20 @@ const StudentPerformance = () => {
     doc.setFont('helvetica', 'normal');
     doc.text('Activity Marks', box3X + boxWidth / 2, boxY + 22, { align: 'center' });
     
-    // Box 4: Extra Marks (Certificates)
+    // Box 4: Total Marks
     const box4X = startX + (boxWidth + boxGap) * 3;
-    doc.setFillColor(243, 232, 255);
-    doc.roundedRect(box4X, boxY, boxWidth, boxHeight, 2, 2, 'F');
-    doc.setDrawColor(147, 51, 234);
-    doc.roundedRect(box4X, boxY, boxWidth, boxHeight, 2, 2, 'S');
-    doc.setFontSize(14);
-    doc.setTextColor(126, 34, 206);
-    doc.setFont('helvetica', 'bold');
-    doc.text(String(performanceData.extraMarks || 0), box4X + boxWidth / 2, boxY + 12, { align: 'center' });
-    doc.setFontSize(6);
-    doc.setTextColor(71, 85, 105);
-    doc.setFont('helvetica', 'normal');
-    doc.text('Extra Marks', box4X + boxWidth / 2, boxY + 22, { align: 'center' });
-    
-    // Box 5: Total Marks
-    const box5X = startX + (boxWidth + boxGap) * 4;
     doc.setFillColor(255, 237, 213);
-    doc.roundedRect(box5X, boxY, boxWidth, boxHeight, 2, 2, 'F');
+    doc.roundedRect(box4X, boxY, boxWidth, boxHeight, 2, 2, 'F');
     doc.setDrawColor(249, 115, 22);
-    doc.roundedRect(box5X, boxY, boxWidth, boxHeight, 2, 2, 'S');
+    doc.roundedRect(box4X, boxY, boxWidth, boxHeight, 2, 2, 'S');
     doc.setFontSize(14);
     doc.setTextColor(234, 88, 12);
     doc.setFont('helvetica', 'bold');
-    doc.text(String(performanceData.totalMarks), box5X + boxWidth / 2, boxY + 12, { align: 'center' });
+    doc.text(String(performanceData.totalMarks), box4X + boxWidth / 2, boxY + 12, { align: 'center' });
     doc.setFontSize(6);
     doc.setTextColor(71, 85, 105);
     doc.setFont('helvetica', 'normal');
-    doc.text('Total Marks', box5X + boxWidth / 2, boxY + 22, { align: 'center' });
+    doc.text('Total Marks', box4X + boxWidth / 2, boxY + 22, { align: 'center' });
     
     // Participation rate bar
     doc.setFontSize(9);
@@ -583,10 +568,6 @@ Thanks for your patience 💙
                       <div className="flex justify-between items-center p-3 bg-blue-50 dark:bg-blue-950/30 rounded-lg">
                         <span className="text-sm font-medium">Activity Marks</span>
                         <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">{performanceData.participationMarks || 0}</span>
-                      </div>
-                      <div className="flex justify-between items-center p-3 bg-purple-50 dark:bg-purple-950/30 rounded-lg">
-                        <span className="text-sm font-medium">Extra Marks (Certificates)</span>
-                        <span className="text-2xl font-bold text-purple-600 dark:text-purple-400">{performanceData.extraMarks || 0}</span>
                       </div>
                       <div className="flex justify-between items-center p-3 bg-orange-50 dark:bg-orange-950/30 rounded-lg">
                         <span className="text-sm font-medium">Total Marks</span>

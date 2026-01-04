@@ -745,15 +745,13 @@ export const getStudentPerformance = async (pin: string) => {
     })) || [];
 
     const participationMarks = participations.reduce((sum, p) => sum + (p.marks || 5), 0);
-    const extraMarks = student.extra_marks || 0;
-    const totalMarks = participationMarks + extraMarks;
+    const totalMarks = participationMarks;
 
     return {
       student,
       participations,
       totalMarks,
-      participationMarks,
-      extraMarks
+      participationMarks
     };
   } catch (error) {
     console.error('Error fetching student performance:', error);
