@@ -68,18 +68,62 @@ const UpcomingActivities = () => {
             ))}
           </div>
         ) : (
-          <div className="text-center py-16 sm:py-20 px-4">
-            <div className="relative inline-block mb-8">
-              <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 rounded-full blur-xl"></div>
-              <div className="relative w-32 h-32 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full flex items-center justify-center mx-auto border-4 border-primary/20">
-                <Calendar className="h-16 w-16 text-primary" />
+          <div className="text-center py-20 sm:py-28 px-4">
+            {/* Animated Icon Container */}
+            <div className="relative inline-block mb-10">
+              {/* Outer pulsing ring */}
+              <div className="absolute inset-0 w-40 h-40 bg-gradient-to-r from-primary/30 via-accent/40 to-primary/30 rounded-full blur-2xl animate-pulse"></div>
+              {/* Middle decorative ring */}
+              <div className="absolute -inset-3 w-46 h-46 border-2 border-dashed border-primary/20 rounded-full animate-[spin_20s_linear_infinite]"></div>
+              {/* Inner glow */}
+              <div className="absolute inset-4 w-32 h-32 bg-gradient-to-br from-accent/20 to-primary/20 rounded-full blur-xl"></div>
+              {/* Main icon container */}
+              <div className="relative w-40 h-40 bg-gradient-to-br from-muted/80 via-background to-muted/60 rounded-full flex items-center justify-center mx-auto border border-primary/20 shadow-xl">
+                <div className="w-28 h-28 bg-gradient-to-br from-primary/10 to-accent/5 rounded-full flex items-center justify-center border border-primary/10">
+                  <Calendar className="h-14 w-14 text-primary drop-shadow-sm" />
+                </div>
               </div>
+              {/* Floating decorative dots */}
+              <div className="absolute top-2 right-4 w-3 h-3 bg-accent/60 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+              <div className="absolute bottom-4 left-2 w-2 h-2 bg-primary/50 rounded-full animate-bounce" style={{ animationDelay: '0.5s' }}></div>
+              <div className="absolute top-1/2 -right-2 w-2 h-2 bg-accent/40 rounded-full animate-bounce" style={{ animationDelay: '0.8s' }}></div>
             </div>
-            <h3 className="text-2xl sm:text-3xl font-bold text-primary mb-4">No Upcoming Activities</h3>
-            <p className="text-lg text-muted-foreground mb-6">Check back soon for new exciting events and competitions!</p>
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-accent/10 text-accent rounded-full">
-              <Target className="h-4 w-4" />
-              <span className="text-sm font-medium">Stay tuned for updates</span>
+
+            {/* Text Content */}
+            <h3 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-primary via-primary to-accent bg-clip-text text-transparent mb-5">
+              No Upcoming Activities
+            </h3>
+            <p className="text-lg sm:text-xl text-muted-foreground mb-8 max-w-md mx-auto leading-relaxed">
+              Check back soon for new exciting events and competitions!
+            </p>
+
+            {/* Enhanced Badge */}
+            <div className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-accent/10 via-accent/15 to-accent/10 text-accent rounded-full border border-accent/20 shadow-sm hover:shadow-md transition-all duration-300 hover:scale-105 cursor-default">
+              <div className="w-2 h-2 bg-accent rounded-full animate-pulse"></div>
+              <span className="text-sm font-semibold tracking-wide">Stay tuned for updates</span>
+              <div className="w-2 h-2 bg-accent rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+            </div>
+
+            {/* Subtle hint icons */}
+            <div className="flex justify-center gap-8 mt-10 opacity-50">
+              <div className="flex flex-col items-center gap-2">
+                <div className="w-10 h-10 bg-muted rounded-full flex items-center justify-center">
+                  <Clock className="h-5 w-5 text-muted-foreground" />
+                </div>
+                <span className="text-xs text-muted-foreground">Coming Soon</span>
+              </div>
+              <div className="flex flex-col items-center gap-2">
+                <div className="w-10 h-10 bg-muted rounded-full flex items-center justify-center">
+                  <Target className="h-5 w-5 text-muted-foreground" />
+                </div>
+                <span className="text-xs text-muted-foreground">New Events</span>
+              </div>
+              <div className="flex flex-col items-center gap-2">
+                <div className="w-10 h-10 bg-muted rounded-full flex items-center justify-center">
+                  <Users className="h-5 w-5 text-muted-foreground" />
+                </div>
+                <span className="text-xs text-muted-foreground">Competitions</span>
+              </div>
             </div>
           </div>
         )}
