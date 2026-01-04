@@ -545,45 +545,13 @@ Thanks for your patience 💙
                         />
                       </PieChart>
                     </ResponsiveContainer>
-                    <div className="mt-6 space-y-4">
-                      {/* Participation Rate with Progress Bar */}
-                      <div className="bg-gradient-to-r from-primary/5 to-primary/10 rounded-xl p-4 border border-primary/20">
-                        <div className="flex items-center justify-between mb-3">
-                          <span className="text-sm font-semibold text-foreground">Participation Rate</span>
-                          <span className="text-2xl font-bold text-primary">
-                            {totalEvents > 0 ? Math.round((performanceData.participations.length / totalEvents) * 100) : 0}%
-                          </span>
-                        </div>
-                        <div className="w-full bg-muted rounded-full h-3 overflow-hidden">
-                          <div 
-                            className="h-full rounded-full bg-gradient-to-r from-primary to-primary/70 transition-all duration-500 ease-out"
-                            style={{ width: `${totalEvents > 0 ? Math.round((performanceData.participations.length / totalEvents) * 100) : 0}%` }}
-                          />
-                        </div>
-                        <div className="flex justify-between text-xs text-muted-foreground mt-2">
-                          <span>{performanceData.participations.length} participated</span>
-                          <span>{totalEvents} total events</span>
-                        </div>
-                      </div>
-
-                      {/* Motivational Quote */}
-                      <div className={`flex items-center justify-center gap-3 p-4 rounded-xl border ${
-                        (totalEvents > 0 ? (performanceData.participations.length / totalEvents) * 100 : 0) >= 70 
-                          ? 'bg-green-50 dark:bg-green-950/30 border-green-200 dark:border-green-800' 
-                          : (totalEvents > 0 ? (performanceData.participations.length / totalEvents) * 100 : 0) >= 40 
-                          ? 'bg-blue-50 dark:bg-blue-950/30 border-blue-200 dark:border-blue-800'
-                          : 'bg-orange-50 dark:bg-orange-950/30 border-orange-200 dark:border-orange-800'
-                      }`}>
-                        <div className={`p-2 rounded-full ${
-                          (totalEvents > 0 ? (performanceData.participations.length / totalEvents) * 100 : 0) >= 70 
-                            ? 'bg-green-100 dark:bg-green-900/50' 
-                            : (totalEvents > 0 ? (performanceData.participations.length / totalEvents) * 100 : 0) >= 40 
-                            ? 'bg-blue-100 dark:bg-blue-900/50'
-                            : 'bg-orange-100 dark:bg-orange-900/50'
-                        }`}>
-                          <Sparkles className={`h-5 w-5 ${getMotivationalQuote(totalEvents > 0 ? (performanceData.participations.length / totalEvents) * 100 : 0).color}`} />
-                        </div>
-                        <p className={`text-sm font-semibold ${getMotivationalQuote(totalEvents > 0 ? (performanceData.participations.length / totalEvents) * 100 : 0).color}`}>
+                    <div className="mt-4 text-center">
+                      <p className="text-sm text-muted-foreground mb-2">
+                        Participation Rate: {totalEvents > 0 ? Math.round((performanceData.participations.length / totalEvents) * 100) : 0}%
+                      </p>
+                      <div className={`flex items-center justify-center gap-2 ${getMotivationalQuote(totalEvents > 0 ? (performanceData.participations.length / totalEvents) * 100 : 0).color}`}>
+                        <Sparkles className="h-4 w-4" />
+                        <p className="text-sm font-medium">
                           {getMotivationalQuote(totalEvents > 0 ? (performanceData.participations.length / totalEvents) * 100 : 0).quote}
                         </p>
                       </div>
