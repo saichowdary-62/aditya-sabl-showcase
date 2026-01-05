@@ -35,7 +35,7 @@ const WinnerCard = ({ winner, featured = false, onClick }: WinnerCardProps) => {
               <img 
                 src={winner.photo} 
                 alt={winner.name} 
-                className="w-12 h-12 rounded-full object-cover ring-2 ring-primary/20 group-hover:ring-primary/40 transition-all" 
+                className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover ring-2 ring-primary/20 group-hover:ring-primary/40 transition-all" 
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
                   target.style.display = 'none';
@@ -43,14 +43,14 @@ const WinnerCard = ({ winner, featured = false, onClick }: WinnerCardProps) => {
                 }}
               />
             ) : null}
-            <div className={`w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary font-semibold text-sm ${winner.photo ? 'hidden' : ''}`}>
+            <div className={`w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-primary/10 flex items-center justify-center text-primary font-semibold text-base sm:text-lg ${winner.photo ? 'hidden' : ''}`}>
               {winner.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
             </div>
             
             {/* Position Badge */}
             {positionStyle && PositionIcon && (
-              <div className={`absolute -bottom-1 -right-1 w-6 h-6 rounded-full ${positionStyle.bg} flex items-center justify-center ring-2 ring-background`}>
-                <PositionIcon className={`h-3 w-3 ${positionStyle.color}`} />
+              <div className={`absolute -bottom-1 -right-1 w-7 h-7 sm:w-8 sm:h-8 rounded-full ${positionStyle.bg} flex items-center justify-center ring-2 ring-background`}>
+                <PositionIcon className={`h-4 w-4 ${positionStyle.color}`} />
               </div>
             )}
           </div>
