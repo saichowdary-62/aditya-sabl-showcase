@@ -174,54 +174,34 @@ const Winners = () => {
           <div className="space-y-8">
             {/* Group winners by week and activity type for current week winners */}
             {filteredWinners.some(w => w.isThisWeekWinner) && (
-              <Card className="clean-card border-primary/30 animate-slide-up overflow-hidden relative celebration-container">
-                <div className="celebration-particles">
-                  {Array.from({ length: 8 }).map((_, i) => (
-                    <div key={i} className={`celebration-particle celebration-particle-${i + 1}`}></div>
-                  ))}
-                </div>
-                <CardHeader className="relative z-10">
-                  <CardTitle className="text-center text-primary flex items-center justify-center gap-2 animate-pulse-soft">
-                    <Trophy className="h-6 w-6 animate-bounce-gentle" />
+              <Card className="clean-card border-primary/30 animate-slide-up overflow-hidden relative">
+                <CardHeader>
+                  <CardTitle className="text-center text-primary flex items-center justify-center gap-2">
+                    <Trophy className="h-6 w-6" />
                     🏆 Top Performers of the Week
                   </CardTitle>
                 </CardHeader>
-                <CardContent className="relative z-10">
+                <CardContent>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                   {filteredWinners
                     .filter(w => w.isThisWeekWinner)
                     .sort((a, b) => (a.position || 1) - (b.position || 1))
                     .map((winner, index) => (
                       <div key={winner.id} className="animate-slide-up hover:scale-105 transition-all duration-300 relative" style={{ animationDelay: `${index * 0.1}s` }}>
-                        <div className="relative celebration-container">
-                          {/* Individual celebration effects for each winner */}
-                          <div className="celebration-particles">
-                            {Array.from({ length: 6 }).map((_, i) => (
-                              <div key={i} className={`celebration-particle celebration-particle-${i + 1}`}></div>
-                            ))}
-                          </div>
-                          
-                          {/* Floating emojis */}
-                          <div className="floating-emojis">
-                            <div className="floating-emoji floating-emoji-1">🎉</div>
-                            <div className="floating-emoji floating-emoji-2">✨</div>
-                            <div className="floating-emoji floating-emoji-3">🏆</div>
-                            <div className="floating-emoji floating-emoji-4">🎊</div>
-                          </div>
-                          
+                        <div className="relative">
                           <WinnerCard winner={winner} featured={winner.position === 1} onClick={() => handleWinnerClick(winner)} />
                           {winner.position === 1 && (
-                            <div className="absolute -top-2 -right-2 bg-yellow-500 text-white rounded-full p-2 shadow-lg animate-bounce-gentle">
+                            <div className="absolute -top-2 -right-2 bg-yellow-500 text-white rounded-full p-2 shadow-lg">
                               <Trophy className="h-4 w-4" />
                             </div>
                           )}
                           {winner.position === 2 && (
-                            <div className="absolute -top-2 -right-2 bg-gray-400 text-white rounded-full p-2 shadow-lg animate-pulse-soft">
+                            <div className="absolute -top-2 -right-2 bg-gray-400 text-white rounded-full p-2 shadow-lg">
                               <Trophy className="h-4 w-4" />
                             </div>
                           )}
                           {winner.position === 3 && (
-                            <div className="absolute -top-2 -right-2 bg-orange-500 text-white rounded-full p-2 shadow-lg animate-float-gentle">
+                            <div className="absolute -top-2 -right-2 bg-orange-500 text-white rounded-full p-2 shadow-lg">
                               <Trophy className="h-4 w-4" />
                             </div>
                           )}
@@ -279,24 +259,9 @@ const Winners = () => {
                         {nonWeekWinners.map((winner, index) => (
                           <div 
                             key={winner.id} 
-                            className="animate-slide-up hover:scale-105 transition-all duration-300 hover:z-10 relative celebration-container" 
+                            className="animate-slide-up hover:scale-105 transition-all duration-300 hover:z-10 relative" 
                             style={{ animationDelay: `${(eventIndex * 0.1) + (index * 0.05)}s` }}
                           >
-                            {/* Celebration particles for winners */}
-                            <div className="celebration-particles">
-                              {Array.from({ length: 6 }).map((_, i) => (
-                                <div key={i} className={`celebration-particle celebration-particle-${i + 1}`}></div>
-                              ))}
-                            </div>
-                            
-                            {/* Floating emojis for winners */}
-                            <div className="floating-emojis">
-                              <div className="floating-emoji floating-emoji-1">🎉</div>
-                              <div className="floating-emoji floating-emoji-2">✨</div>
-                              <div className="floating-emoji floating-emoji-3">🏆</div>
-                              <div className="floating-emoji floating-emoji-4">🎊</div>
-                            </div>
-                            
                             <div className="relative">
                               <WinnerCard 
                                 winner={winner} 
@@ -305,9 +270,9 @@ const Winners = () => {
                               />
                               {/* Position indicator */}
                               <div className={`absolute -top-2 -left-2 rounded-full p-2 shadow-lg ${
-                                winner.position === 1 ? 'bg-yellow-500 animate-bounce-gentle' :
-                                winner.position === 2 ? 'bg-gray-400 animate-pulse-soft' :
-                                winner.position === 3 ? 'bg-orange-500 animate-float-gentle' :
+                                winner.position === 1 ? 'bg-yellow-500' :
+                                winner.position === 2 ? 'bg-gray-400' :
+                                winner.position === 3 ? 'bg-orange-500' :
                                 'bg-primary'
                               }`}>
                                 <span className="text-white text-xs font-bold">
@@ -343,34 +308,19 @@ const Winners = () => {
 
         {/* Stats Overview */}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 my-8 sm:my-12">
-          <div className="stats-card-navy text-center animate-slide-up hover:scale-105 transition-transform duration-300 celebration-container">
-            <div className="celebration-particles">
-              {Array.from({ length: 4 }).map((_, i) => (
-                <div key={i} className={`celebration-particle celebration-particle-${i + 1}`}></div>
-              ))}
-            </div>
+          <div className="stats-card-navy text-center animate-slide-up hover:scale-105 transition-transform duration-300">
             <Trophy className="h-8 w-8 mx-auto mb-3" />
             <div className="text-2xl sm:text-3xl font-bold mb-1">{winners.length}</div>
             <div className="text-xs sm:text-sm opacity-90">Total Winners</div>
           </div>
 
-          <div className="stats-card-orange text-center animate-slide-up hover:scale-105 transition-transform duration-300 celebration-container" style={{ animationDelay: '0.1s' }}>
-            <div className="celebration-particles">
-              {Array.from({ length: 4 }).map((_, i) => (
-                <div key={i} className={`celebration-particle celebration-particle-${i + 1}`}></div>
-              ))}
-            </div>
+          <div className="stats-card-orange text-center animate-slide-up hover:scale-105 transition-transform duration-300" style={{ animationDelay: '0.1s' }}>
             <Award className="h-8 w-8 mx-auto mb-3 text-primary" />
             <div className="text-2xl sm:text-3xl font-bold mb-1">{events.length}</div>
             <div className="text-white/90 text-xs sm:text-sm">Different Events</div>
           </div>
 
-          <div className="stats-card-navy text-center animate-slide-up hover:scale-105 transition-transform duration-300 celebration-container" style={{ animationDelay: '0.2s' }}>
-            <div className="celebration-particles">
-              {Array.from({ length: 4 }).map((_, i) => (
-                <div key={i} className={`celebration-particle celebration-particle-${i + 1}`}></div>
-              ))}
-            </div>
+          <div className="stats-card-navy text-center animate-slide-up hover:scale-105 transition-transform duration-300" style={{ animationDelay: '0.2s' }}>
             <Calendar className="h-8 w-8 mx-auto mb-3 text-white" />
             <div className="text-2xl sm:text-3xl font-bold mb-1">{years.length}</div>
             <div className="text-white/90 text-xs sm:text-sm">Years of Excellence</div>
