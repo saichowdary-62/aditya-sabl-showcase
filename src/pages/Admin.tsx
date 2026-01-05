@@ -98,6 +98,7 @@ const Admin = () => {
   });
   const [searchPin, setSearchPin] = useState('');
   const [participantSearch, setParticipantSearch] = useState('');
+  const [winnerSearchRollNo, setWinnerSearchRollNo] = useState('');
 
   const [loading, setLoading] = useState(false);
   const [participantLoading, setParticipantLoading] = useState(false);
@@ -259,6 +260,50 @@ const Admin = () => {
     });
     setEditingWinner(null);
     setPhotoFile(null);
+    setWinnerSearchRollNo('');
+  };
+
+  // Roll Number Search Handler for Winners
+  const handleWinnerSearchByRollNo = async () => {
+    if (!winnerSearchRollNo.trim()) {
+      toast({
+        title: "Error",
+        description: "Please enter a roll number",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    try {
+      const student = students.find(s => s.pin.toLowerCase() === winnerSearchRollNo.trim().toLowerCase());
+      if (!student) {
+        toast({
+          title: "Not Found",
+          description: "No student found with this roll number",
+          variant: "destructive"
+        });
+        return;
+      }
+
+      // Auto-fill form with student details
+      setWinnerForm({
+        ...winnerForm,
+        name: student.name,
+        rollNumber: student.pin
+      });
+
+      toast({
+        title: "Student Found",
+        description: `Loaded details for ${student.name}`,
+      });
+    } catch (error) {
+      console.error('Error searching student:', error);
+      toast({
+        title: "Error",
+        description: "Failed to search for student",
+        variant: "destructive"
+      });
+    }
   };
 
   // Activity CRUD operations
@@ -703,6 +748,27 @@ const Admin = () => {
                   <CardTitle>{editingWinner ? 'Edit Winner' : 'Add New Winner'}</CardTitle>
                 </CardHeader>
                 <CardContent>
+                  {/* Search by Roll Number */}
+                  <div className="mb-6 p-4 border rounded-lg bg-muted/50">
+                    <Label className="text-sm font-medium mb-2 block">Search Student by Roll Number</Label>
+                    <div className="flex gap-2">
+                      <Input
+                        placeholder="Enter roll number..."
+                        value={winnerSearchRollNo}
+                        onChange={(e) => setWinnerSearchRollNo(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault();
+                            handleWinnerSearchByRollNo();
+                          }
+                        }}
+                      />
+                      <Button type="button" variant="secondary" onClick={handleWinnerSearchByRollNo}>
+                        <Search className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  </div>
+
                   <form onSubmit={handleWinnerSubmit} className="space-y-4">
                     <div>
                       <Label htmlFor="name">Name *</Label>
