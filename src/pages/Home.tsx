@@ -129,22 +129,7 @@ const Home = () => {
               thisWeekWinners
                 .sort((a, b) => (a.position || 1) - (b.position || 1))
                 .map((winner, index) => (
-                  <div key={winner.id} className="animate-slide-up relative celebration-container" style={{ animationDelay: `${index * 0.1}s` }}>
-                    {/* Celebration particles */}
-                    <div className="celebration-particles">
-                      {Array.from({ length: 8 }).map((_, i) => (
-                        <div key={i} className={`celebration-particle celebration-particle-${i + 1}`}></div>
-                      ))}
-                    </div>
-                    
-                    {/* Floating emojis */}
-                    <div className="floating-emojis">
-                      <div className="floating-emoji floating-emoji-1">🎉</div>
-                      <div className="floating-emoji floating-emoji-2">✨</div>
-                      <div className="floating-emoji floating-emoji-3">🏆</div>
-                      <div className="floating-emoji floating-emoji-4">🎊</div>
-                    </div>
-                    
+                  <div key={winner.id} className="animate-slide-up" style={{ animationDelay: `${index * 0.1}s` }}>
                     <WinnerCard 
                       winner={winner} 
                       featured={true} 
