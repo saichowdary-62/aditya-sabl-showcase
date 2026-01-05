@@ -22,7 +22,7 @@ const WinnerCard = ({ winner, featured = false, onClick }: WinnerCardProps) => {
 
   return (
     <Card
-      className={`group overflow-hidden border border-border/50 bg-card/80 backdrop-blur-sm transition-all duration-300 hover:shadow-lg hover:border-primary/30 ${
+      className={`group overflow-hidden border-2 border-primary/40 bg-card/80 backdrop-blur-sm transition-all duration-300 hover:shadow-lg hover:border-primary ${
         onClick ? 'cursor-pointer hover:-translate-y-0.5' : ''
       }`}
       onClick={onClick}
