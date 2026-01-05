@@ -35,7 +35,7 @@ const WinnerCard = ({ winner, featured = false, onClick }: WinnerCardProps) => {
               <img 
                 src={winner.photo} 
                 alt={winner.name} 
-                className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover ring-2 ring-primary/20 group-hover:ring-primary/40 transition-all" 
+                className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover border-2 border-primary ring-2 ring-primary/30 group-hover:ring-primary/50 transition-all" 
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;
                   target.style.display = 'none';
@@ -43,7 +43,7 @@ const WinnerCard = ({ winner, featured = false, onClick }: WinnerCardProps) => {
                 }}
               />
             ) : null}
-            <div className={`w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-primary/10 flex items-center justify-center text-primary font-semibold text-base sm:text-lg ${winner.photo ? 'hidden' : ''}`}>
+            <div className={`w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-primary/10 border-2 border-primary flex items-center justify-center text-primary font-semibold text-base sm:text-lg ${winner.photo ? 'hidden' : ''}`}>
               {winner.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
             </div>
             
