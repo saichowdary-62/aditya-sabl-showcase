@@ -12,8 +12,6 @@ import { getStudentPerformance } from '@/lib/data-service';
 import { supabase } from '@/integrations/supabase/client';
 import { format } from 'date-fns';
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
-import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable';
 
 const StudentPerformance = () => {
   const [pin, setPin] = useState('');
@@ -66,6 +64,9 @@ const StudentPerformance = () => {
 
   const handleDownload = async () => {
     if (!performanceData) return;
+
+    const { default: jsPDF } = await import('jspdf');
+    const { default: autoTable } = await import('jspdf-autotable');
     
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
