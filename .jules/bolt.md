@@ -1,0 +1,3 @@
+## 2024-05-22 - Artificial Loading Delay Anti-Pattern
+**Learning:** The application was using a global 3-second `setTimeout` in `App.tsx` to simulate a loading state (`PageLoader`). This artificially delayed the Time to Interactive (TTI) and First Contentful Paint (FCP), regardless of actual network speed or bundle readiness.
+**Action:** Removed the artificial delay and replaced it with `React.lazy` and `Suspense`. This allows the app to load as fast as possible while still handling component loading gracefully. Future "loading" states should be driven by actual data fetching (e.g., React Query `isLoading`) or asset loading, not arbitrary timers.
