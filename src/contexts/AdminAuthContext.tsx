@@ -1,5 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { createContext, useContext, useState } from 'react';
 
 interface AdminAuthContextType {
   isAdminAuthenticated: boolean;
@@ -16,15 +15,9 @@ const ADMIN_CREDENTIALS = {
 };
 
 export const AdminAuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
-
-  useEffect(() => {
-    // Check if admin is already logged in
-    const adminToken = localStorage.getItem('admin_token');
-    if (adminToken === 'admin_authenticated') {
-      setIsAdminAuthenticated(true);
-    }
-  }, []);
+  const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(() => {
+    return localStorage.getItem('admin_token') === 'admin_authenticated';
+  });
 
   const login = (username: string, password: string): boolean => {
     if (username === ADMIN_CREDENTIALS.username && password === ADMIN_CREDENTIALS.password) {
