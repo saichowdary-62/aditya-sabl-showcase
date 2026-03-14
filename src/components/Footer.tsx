@@ -3,19 +3,19 @@ import { Heart } from 'lucide-react';
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-background border-t py-3 mt-auto">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground">
-          <span>Forged by</span>
+    <footer className="bg-background border-t py-3 mt-auto w-full">
+      <div className="w-full px-4">
+        <p className="text-xs text-muted-foreground text-center w-full">
+          Forged by{' '}
           <a 
-            href="#" 
+            href="https://ropebit.live/bitpowr" 
             target="_blank" 
             rel="noopener noreferrer"
             className="font-bold text-primary hover:text-primary/80 transition-colors"
           >
-            ArcCoders
+            BitPowr
           </a>
-        </div>
+        </p>
       </div>
     </footer>
   );
