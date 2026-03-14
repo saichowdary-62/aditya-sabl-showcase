@@ -8,12 +8,13 @@ const Footer: React.FC = () => {
         <p className="text-xs text-muted-foreground text-center w-full">
           Forged by{' '}
           <a 
-            href="https://ropebit.live/bitpowr" 
+            href="#" 
             target="_blank" 
             rel="noopener noreferrer"
             className="font-bold text-primary hover:text-primary/80 transition-colors"
           >
-            BitPowr
+            ARCcoders
+            
           </a>
         </p>
       </div>
