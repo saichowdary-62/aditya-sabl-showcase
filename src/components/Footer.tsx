@@ -13,7 +13,7 @@ const Footer: React.FC = () => {
             rel="noopener noreferrer"
             className="font-bold text-primary hover:text-primary/80 transition-colors"
           >
-            ARCcoders
+            
             
           </a>
         </p>
