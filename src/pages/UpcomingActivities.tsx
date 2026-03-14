@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import ActivityCard from '@/components/ActivityCard';
 import { getActivities, Activity } from '@/lib/data-service';
 import { useData } from '@/contexts/DataContext';
-import { Calendar, Clock, MapPin, Target, Users } from 'lucide-react';
+import { Calendar, Clock, MapPin, Target, Users, Zap } from 'lucide-react';
 
 const UpcomingActivities = () => {
   const [upcomingActivities, setUpcomingActivities] = useState<Activity[]>([]);
@@ -80,7 +80,7 @@ const UpcomingActivities = () => {
               {/* Main icon container */}
               <div className="relative w-24 h-24 sm:w-40 sm:h-40 bg-gradient-to-br from-background via-muted/50 to-background rounded-full flex items-center justify-center mx-auto border border-primary/30 shadow-lg">
                 <div className="w-16 h-16 sm:w-28 sm:h-28 bg-gradient-to-br from-primary/15 to-accent/10 rounded-full flex items-center justify-center border border-primary/20 animate-pulse">
-                  <Calendar className="h-8 w-8 sm:h-14 sm:w-14 text-primary drop-shadow-md" />
+                  <Zap className="h-8 w-8 sm:h-14 sm:w-14 text-primary drop-shadow-md fill-primary/30" />
                 </div>
               </div>
               {/* Floating decorative dots */}
