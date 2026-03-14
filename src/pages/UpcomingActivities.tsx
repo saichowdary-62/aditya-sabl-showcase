@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import ActivityCard from '@/components/ActivityCard';
 import { getActivities, Activity } from '@/lib/data-service';
 import { useData } from '@/contexts/DataContext';
-import { Clock, MapPin, Target, Users, Zap } from 'lucide-react';
+import { Calendar, Clock, MapPin, Target, Users, Zap } from 'lucide-react';
 
 const UpcomingActivities = () => {
   const [upcomingActivities, setUpcomingActivities] = useState<Activity[]>([]);
