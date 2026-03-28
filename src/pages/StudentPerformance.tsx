@@ -15,10 +15,29 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recha
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
+// Define explicit types for performance data
+interface PerformanceData {
+  student: {
+    name: string;
+    pin: string;
+    branch: string;
+    year: string;
+  };
+  participations: {
+    id: string;
+    activityName: string;
+    activityDate: string | null;
+    award: string;
+    marks: number;
+  }[];
+  totalMarks: number;
+  participationMarks: number;
+}
+
 const StudentPerformance = () => {
   const [pin, setPin] = useState('');
   const [loading, setLoading] = useState(false);
-  const [performanceData, setPerformanceData] = useState<any>(null);
+  const [performanceData, setPerformanceData] = useState<PerformanceData | null>(null);
   const [error, setError] = useState('');
   const [totalEvents, setTotalEvents] = useState(0);
 
@@ -254,7 +273,7 @@ const StudentPerformance = () => {
       doc.setDrawColor(59, 130, 246);
       doc.line(20, 195, 105, 195);
       
-      const tableData = performanceData.participations.map((p: any) => [
+      const tableData = performanceData.participations.map((p) => [
         p.activityName,
         p.activityDate ? format(new Date(p.activityDate), 'MMM dd, yyyy') : 'N/A',
         p.award,
@@ -296,6 +315,7 @@ const StudentPerformance = () => {
     }
     
     // Footer
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const finalY = (doc as any).lastAutoTable?.finalY || 190;
     
     doc.setFillColor(248, 250, 252);
@@ -617,7 +637,7 @@ Thanks for your patience 💙
                           </TableRow>
                         </TableHeader>
                         <TableBody>
-                          {performanceData.participations.map((participation: any) => (
+                          {performanceData.participations.map((participation) => (
                             <TableRow key={participation.id}>
                               <TableCell className="font-medium text-xs sm:text-sm max-w-[120px] sm:max-w-none truncate">
                                 {participation.activityName}
