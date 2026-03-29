@@ -28,6 +28,7 @@ const ActivityCard = ({ activity, onViewParticipants }: ActivityCardProps) => {
             <img
               src={activity.poster}
               alt={activity.name}
+              loading="lazy"
               className="max-w-full max-h-full object-contain rounded-lg bg-background p-2 shadow-lg border-2 border-primary/20 relative z-10 group-hover:scale-105 transition-transform duration-300"
               onError={(e) => {
                 const target = e.target as HTMLImageElement;
