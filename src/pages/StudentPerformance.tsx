@@ -333,24 +333,24 @@ const StudentPerformance = () => {
       console.error('Template load failed, using plain background');
     }
     
-    // Overlay student name on the "presented to" line
-    doc.setFontSize(22);
+    // Overlay student name on the "presented to ___" blank line
+    doc.setFontSize(20);
     doc.setTextColor(26, 54, 93);
     doc.setFont('helvetica', 'bold');
-    doc.text(performanceData.student.name, pageWidth / 2, 118, { align: 'center' });
+    doc.text(performanceData.student.name, pageWidth / 2 + 15, 110, { align: 'center' });
     
-    // Overlay event name on the "event" line
-    doc.setFontSize(14);
+    // Overlay event name on the "event___" blank line
+    doc.setFontSize(13);
     doc.setTextColor(26, 54, 93);
     doc.setFont('helvetica', 'bold');
-    doc.text(participation.activityName, pageWidth / 2 - 20, 148, { align: 'center' });
+    doc.text(participation.activityName, 115, 137);
     
-    // Overlay date on the "on" line
-    doc.setFontSize(14);
+    // Overlay date after "on"
+    doc.setFontSize(13);
     doc.setTextColor(26, 54, 93);
     doc.setFont('helvetica', 'normal');
     const dateStr = participation.activityDate ? format(new Date(participation.activityDate), 'MMMM dd, yyyy') : 'N/A';
-    doc.text(dateStr, 155, 163);
+    doc.text(dateStr, 137, 152);
     
     doc.save(`${performanceData.student.name}_${participation.activityName}_Certificate.pdf`);
   };
