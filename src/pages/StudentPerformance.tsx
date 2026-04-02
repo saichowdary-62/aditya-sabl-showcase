@@ -310,7 +310,88 @@ const StudentPerformance = () => {
     doc.save(`${performanceData.student.name}_Performance_Report.pdf`);
   };
 
-  const getMotivationalQuote = (participationRate: number) => {
+  const generateCertificate = (participation: any) => {
+    if (!performanceData) return;
+    
+    const doc = new jsPDF('landscape');
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+    
+    // Border
+    doc.setDrawColor(26, 54, 93);
+    doc.setLineWidth(3);
+    doc.rect(10, 10, pageWidth - 20, pageHeight - 20);
+    doc.setDrawColor(249, 115, 22);
+    doc.setLineWidth(1);
+    doc.rect(14, 14, pageWidth - 28, pageHeight - 28);
+    
+    // Title
+    doc.setFontSize(32);
+    doc.setTextColor(26, 54, 93);
+    doc.setFont('helvetica', 'bold');
+    doc.text('CERTIFICATE OF PARTICIPATION', pageWidth / 2, 45, { align: 'center' });
+    
+    // Decorative line
+    doc.setDrawColor(249, 115, 22);
+    doc.setLineWidth(2);
+    doc.line(pageWidth / 2 - 60, 52, pageWidth / 2 + 60, 52);
+    
+    // Body text
+    doc.setFontSize(14);
+    doc.setTextColor(71, 85, 105);
+    doc.setFont('helvetica', 'normal');
+    doc.text('This is to certify that', pageWidth / 2, 72, { align: 'center' });
+    
+    // Student name
+    doc.setFontSize(26);
+    doc.setTextColor(26, 54, 93);
+    doc.setFont('helvetica', 'bold');
+    doc.text(performanceData.student.name, pageWidth / 2, 88, { align: 'center' });
+    
+    // PIN
+    doc.setFontSize(12);
+    doc.setTextColor(100, 116, 139);
+    doc.setFont('helvetica', 'normal');
+    doc.text(`PIN: ${performanceData.student.pin}  |  Branch: ${performanceData.student.branch}  |  Year: ${performanceData.student.year}`, pageWidth / 2, 98, { align: 'center' });
+    
+    // Participation text
+    doc.setFontSize(14);
+    doc.setTextColor(71, 85, 105);
+    doc.text('has successfully participated in', pageWidth / 2, 114, { align: 'center' });
+    
+    // Activity name
+    doc.setFontSize(22);
+    doc.setTextColor(249, 115, 22);
+    doc.setFont('helvetica', 'bold');
+    doc.text(participation.activityName, pageWidth / 2, 130, { align: 'center' });
+    
+    // Award
+    doc.setFontSize(16);
+    doc.setTextColor(26, 54, 93);
+    doc.setFont('helvetica', 'bold');
+    doc.text(`Award: ${participation.award}`, pageWidth / 2, 144, { align: 'center' });
+    
+    // Date
+    doc.setFontSize(12);
+    doc.setTextColor(100, 116, 139);
+    doc.setFont('helvetica', 'normal');
+    const dateStr = participation.activityDate ? format(new Date(participation.activityDate), 'MMMM dd, yyyy') : 'N/A';
+    doc.text(`Date: ${dateStr}`, pageWidth / 2, 156, { align: 'center' });
+    
+    // Footer
+    doc.setFontSize(11);
+    doc.setTextColor(26, 54, 93);
+    doc.setFont('helvetica', 'bold');
+    doc.text('ADITYA UNIVERSITY', pageWidth / 2, pageHeight - 30, { align: 'center' });
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(100, 116, 139);
+    doc.text('Department of CSE - SABL Activities', pageWidth / 2, pageHeight - 24, { align: 'center' });
+    
+    doc.save(`${performanceData.student.name}_${participation.activityName}_Certificate.pdf`);
+  };
+
+
     if (participationRate >= 70) {
       return {
         quote: "Outstanding Performance!",
