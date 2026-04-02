@@ -333,24 +333,35 @@ const StudentPerformance = () => {
       console.error('Template load failed, using plain background');
     }
     
-    // Student name on the "presented to ___" line
-    doc.setFontSize(18);
-    doc.setTextColor(26, 54, 93);
-    doc.setFont('helvetica', 'bolditalic');
-    doc.text(performanceData.student.name, 163, 108, { align: 'center' });
-    
-    // Event name on the "event___" line (centered between "event" and "organized by")
-    doc.setFontSize(15);
-    doc.setTextColor(26, 54, 93);
-    doc.setFont('helvetica', 'bold');
-    doc.text(participation.activityName, 138, 137, { align: 'center' });
-    
-    // Date after "on" at end of department line
-    doc.setFontSize(15);
-    doc.setTextColor(26, 54, 93);
-    doc.setFont('helvetica', 'bold');
+    // Helper: auto-shrink text to fit within a max width
+    const fitText = (text: string, maxWidth: number, startSize = 18, minSize = 10) => {
+      let size = startSize;
+      doc.setFont('times', 'bolditalic');
+      while (size > minSize) {
+        doc.setFontSize(size);
+        if (doc.getTextWidth(text) <= maxWidth) break;
+        size -= 0.5;
+      }
+      return size;
+    };
+
+    const name = performanceData.student.name;
+    const event = participation.activityName;
     const dateStr = participation.activityDate ? format(new Date(participation.activityDate), 'dd-MM-yyyy') : 'N/A';
-    doc.text(dateStr, 192, 152);
+
+    doc.setTextColor(26, 54, 93);
+
+    // Name on the "presented to ___" underline (centered in the blank span)
+    doc.setFontSize(fitText(name, 118, 20, 12));
+    doc.text(name, 169, 103, { align: 'center' });
+
+    // Event name on the "event___" underline (centered in the blank span)
+    doc.setFontSize(fitText(event, 126, 15, 10));
+    doc.text(event, 143, 132, { align: 'center' });
+
+    // Date after "on" (centered in remaining space)
+    doc.setFontSize(fitText(dateStr, 42, 14, 10));
+    doc.text(dateStr, 211, 147, { align: 'center' });
     
     doc.save(`${performanceData.student.name}_${participation.activityName}_Certificate.pdf`);
   };
