@@ -614,6 +614,7 @@ Thanks for your patience 💙
                             <TableHead className="text-xs sm:text-sm hidden sm:table-cell">Date</TableHead>
                             <TableHead className="text-xs sm:text-sm">Award</TableHead>
                             <TableHead className="text-right text-xs sm:text-sm">Marks</TableHead>
+                            <TableHead className="text-center text-xs sm:text-sm">Certificate</TableHead>
                           </TableRow>
                         </TableHeader>
                         <TableBody>
@@ -645,6 +646,17 @@ Thanks for your patience 💙
                               </TableCell>
                               <TableCell className="text-right font-semibold text-primary text-xs sm:text-sm">
                                 {participation.marks || 5}
+                              </TableCell>
+                              <TableCell className="text-center">
+                                <Button
+                                  variant="ghost"
+                                  size="sm"
+                                  className="h-7 w-7 sm:h-8 sm:w-8 p-0"
+                                  onClick={() => generateCertificate(participation)}
+                                  title="Download Certificate"
+                                >
+                                  <Download className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary" />
+                                </Button>
                               </TableCell>
                             </TableRow>
                           ))}
