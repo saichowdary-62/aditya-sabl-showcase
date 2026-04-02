@@ -333,24 +333,24 @@ const StudentPerformance = () => {
       console.error('Template load failed, using plain background');
     }
     
-    // Overlay student name on the "presented to ___" blank line
-    doc.setFontSize(20);
+    // Student name on the "presented to ___" line
+    doc.setFontSize(18);
+    doc.setTextColor(26, 54, 93);
+    doc.setFont('helvetica', 'bolditalic');
+    doc.text(performanceData.student.name, 163, 108, { align: 'center' });
+    
+    // Event name on the "event___" line (centered between "event" and "organized by")
+    doc.setFontSize(15);
     doc.setTextColor(26, 54, 93);
     doc.setFont('helvetica', 'bold');
-    doc.text(performanceData.student.name, pageWidth / 2 + 15, 110, { align: 'center' });
+    doc.text(participation.activityName, 138, 137, { align: 'center' });
     
-    // Overlay event name on the "event___" blank line
-    doc.setFontSize(13);
+    // Date after "on" at end of department line
+    doc.setFontSize(15);
     doc.setTextColor(26, 54, 93);
     doc.setFont('helvetica', 'bold');
-    doc.text(participation.activityName, 115, 137);
-    
-    // Overlay date after "on"
-    doc.setFontSize(13);
-    doc.setTextColor(26, 54, 93);
-    doc.setFont('helvetica', 'normal');
-    const dateStr = participation.activityDate ? format(new Date(participation.activityDate), 'MMMM dd, yyyy') : 'N/A';
-    doc.text(dateStr, 137, 152);
+    const dateStr = participation.activityDate ? format(new Date(participation.activityDate), 'dd-MM-yyyy') : 'N/A';
+    doc.text(dateStr, 192, 152);
     
     doc.save(`${performanceData.student.name}_${participation.activityName}_Certificate.pdf`);
   };
