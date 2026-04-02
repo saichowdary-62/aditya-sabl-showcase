@@ -392,7 +392,7 @@ const StudentPerformance = () => {
   };
 
 
-    if (participationRate >= 70) {
+    const getMotivationalQuote = (participationRate: number) => {
       return {
         quote: "Outstanding Performance!",
         color: "text-green-600"
