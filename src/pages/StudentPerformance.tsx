@@ -334,7 +334,7 @@ const StudentPerformance = () => {
     }
     
     // Helper: auto-shrink text to fit within a max width
-    const fitText = (text: string, maxWidth: number, startSize = 18, minSize = 10) => {
+    const fitText = (text: string, maxWidth: number, startSize: number, minSize = 10) => {
       let size = startSize;
       doc.setFont('times', 'bolditalic');
       while (size > minSize) {
@@ -349,19 +349,23 @@ const StudentPerformance = () => {
     const event = participation.activityName;
     const dateStr = participation.activityDate ? format(new Date(participation.activityDate), 'dd-MM-yyyy') : 'N/A';
 
-    doc.setTextColor(26, 54, 93);
+    // Orange color matching template
+    doc.setTextColor(230, 126, 34);
 
-    // Name on the "presented to ___" underline (centered in the blank span)
-    doc.setFontSize(fitText(name, 118, 20, 12));
-    doc.text(name, 169, 103, { align: 'center' });
+    // Name on the "presented to ___" underline
+    doc.setFont('times', 'bolditalic');
+    doc.setFontSize(fitText(name, 112, 19, 12));
+    doc.text(name, 168, 99, { align: 'center', baseline: 'middle' });
 
-    // Event name on the "event___" underline (centered in the blank span)
-    doc.setFontSize(fitText(event, 126, 15, 10));
-    doc.text(event, 143, 132, { align: 'center' });
+    // Event name on the "event___" underline
+    doc.setFont('times', 'bolditalic');
+    doc.setFontSize(fitText(event, 120, 14, 10));
+    doc.text(event, 144, 128, { align: 'center', baseline: 'middle' });
 
-    // Date after "on" (centered in remaining space)
-    doc.setFontSize(fitText(dateStr, 42, 14, 10));
-    doc.text(dateStr, 211, 147, { align: 'center' });
+    // Date after "on"
+    doc.setFont('times', 'bolditalic');
+    doc.setFontSize(fitText(dateStr, 38, 13, 10));
+    doc.text(dateStr, 210, 144, { align: 'center', baseline: 'middle' });
     
     doc.save(`${performanceData.student.name}_${participation.activityName}_Certificate.pdf`);
   };
