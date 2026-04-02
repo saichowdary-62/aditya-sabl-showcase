@@ -310,83 +310,47 @@ const StudentPerformance = () => {
     doc.save(`${performanceData.student.name}_Performance_Report.pdf`);
   };
 
-  const generateCertificate = (participation: any) => {
+  const generateCertificate = async (participation: any) => {
     if (!performanceData) return;
     
     const doc = new jsPDF('landscape');
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
     
-    // Border
-    doc.setDrawColor(26, 54, 93);
-    doc.setLineWidth(3);
-    doc.rect(10, 10, pageWidth - 20, pageHeight - 20);
-    doc.setDrawColor(249, 115, 22);
-    doc.setLineWidth(1);
-    doc.rect(14, 14, pageWidth - 28, pageHeight - 28);
+    // Load template image
+    try {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      await new Promise<void>((resolve, reject) => {
+        img.onload = () => resolve();
+        img.onerror = () => reject(new Error('Failed to load template'));
+        img.src = '/certificate-template.jpeg';
+      });
+      
+      // Add template as full background
+      doc.addImage(img, 'JPEG', 0, 0, pageWidth, pageHeight);
+    } catch (e) {
+      console.error('Template load failed, using plain background');
+    }
     
-    // Title
-    doc.setFontSize(32);
-    doc.setTextColor(26, 54, 93);
-    doc.setFont('helvetica', 'bold');
-    doc.text('CERTIFICATE OF PARTICIPATION', pageWidth / 2, 45, { align: 'center' });
-    
-    // Decorative line
-    doc.setDrawColor(249, 115, 22);
-    doc.setLineWidth(2);
-    doc.line(pageWidth / 2 - 60, 52, pageWidth / 2 + 60, 52);
-    
-    // Body text
-    doc.setFontSize(14);
-    doc.setTextColor(71, 85, 105);
-    doc.setFont('helvetica', 'normal');
-    doc.text('This is to certify that', pageWidth / 2, 72, { align: 'center' });
-    
-    // Student name
-    doc.setFontSize(26);
-    doc.setTextColor(26, 54, 93);
-    doc.setFont('helvetica', 'bold');
-    doc.text(performanceData.student.name, pageWidth / 2, 88, { align: 'center' });
-    
-    // PIN
-    doc.setFontSize(12);
-    doc.setTextColor(100, 116, 139);
-    doc.setFont('helvetica', 'normal');
-    doc.text(`PIN: ${performanceData.student.pin}  |  Branch: ${performanceData.student.branch}  |  Year: ${performanceData.student.year}`, pageWidth / 2, 98, { align: 'center' });
-    
-    // Participation text
-    doc.setFontSize(14);
-    doc.setTextColor(71, 85, 105);
-    doc.text('has successfully participated in', pageWidth / 2, 114, { align: 'center' });
-    
-    // Activity name
+    // Overlay student name on the "presented to" line
     doc.setFontSize(22);
-    doc.setTextColor(249, 115, 22);
-    doc.setFont('helvetica', 'bold');
-    doc.text(participation.activityName, pageWidth / 2, 130, { align: 'center' });
-    
-    // Award
-    doc.setFontSize(16);
     doc.setTextColor(26, 54, 93);
     doc.setFont('helvetica', 'bold');
-    doc.text(`Award: ${participation.award}`, pageWidth / 2, 144, { align: 'center' });
+    doc.text(performanceData.student.name, pageWidth / 2, 118, { align: 'center' });
     
-    // Date
-    doc.setFontSize(12);
-    doc.setTextColor(100, 116, 139);
+    // Overlay event name on the "event" line
+    doc.setFontSize(14);
+    doc.setTextColor(26, 54, 93);
+    doc.setFont('helvetica', 'bold');
+    doc.text(participation.activityName, pageWidth / 2 - 20, 148, { align: 'center' });
+    
+    // Overlay date on the "on" line
+    doc.setFontSize(14);
+    doc.setTextColor(26, 54, 93);
     doc.setFont('helvetica', 'normal');
     const dateStr = participation.activityDate ? format(new Date(participation.activityDate), 'MMMM dd, yyyy') : 'N/A';
-    doc.text(`Date: ${dateStr}`, pageWidth / 2, 156, { align: 'center' });
-    
-    // Footer
-    doc.setFontSize(11);
-    doc.setTextColor(26, 54, 93);
-    doc.setFont('helvetica', 'bold');
-    doc.text('ADITYA UNIVERSITY', pageWidth / 2, pageHeight - 30, { align: 'center' });
-    doc.setFontSize(9);
-    doc.setFont('helvetica', 'normal');
-    doc.setTextColor(100, 116, 139);
-    doc.text('Department of CSE - SABL Activities', pageWidth / 2, pageHeight - 24, { align: 'center' });
+    doc.text(dateStr, 155, 163);
     
     doc.save(`${performanceData.student.name}_${participation.activityName}_Certificate.pdf`);
   };
