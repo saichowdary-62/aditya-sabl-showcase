@@ -391,8 +391,8 @@ const StudentPerformance = () => {
     doc.save(`${performanceData.student.name}_${participation.activityName}_Certificate.pdf`);
   };
 
-
-    const getMotivationalQuote = (participationRate: number) => {
+  const getMotivationalQuote = (participationRate: number) => {
+    if (participationRate >= 70) {
       return {
         quote: "Outstanding Performance!",
         color: "text-green-600"
