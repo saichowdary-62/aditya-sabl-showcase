@@ -368,6 +368,7 @@ const StudentPerformance = () => {
     doc.text(dateStr, 208, 141, { align: 'center', baseline: 'alphabetic' });
     
     doc.save(`${performanceData.student.name}_${participation.activityName}_Certificate.pdf`);
+  };
 
   const getMotivationalQuote = (participationRate: number) => {
     if (participationRate >= 70) {
