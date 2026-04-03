@@ -406,6 +406,14 @@ Thanks for your patience 💙
             </AlertDescription>
           </Alert>
 
+          {/* Certificate Download Notice */}
+          <Alert className="mb-6 border-green-500/50 bg-green-500/10">
+            <AlertDescription className="text-green-700 dark:text-green-400 text-sm flex items-center gap-2">
+              <Sparkles className="h-4 w-4 shrink-0" />
+              <span><strong>🎉 New!</strong> You can now download your participation certificates for each activity! Search your PIN and click the download icon in the table.</span>
+            </AlertDescription>
+          </Alert>
+
           {/* Search Section */}
           <Card className="mb-8">
             <CardHeader>
