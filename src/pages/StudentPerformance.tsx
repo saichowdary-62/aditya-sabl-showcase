@@ -355,17 +355,17 @@ const StudentPerformance = () => {
     // Name on the "presented to ___" line — sits just above the underline
     doc.setFont('times', 'bolditalic');
     doc.setFontSize(fitText(name, 115, 20, 12));
-    doc.text(name, 168, 96, { align: 'center', baseline: 'alphabetic' });
+    doc.text(name, 168, 97, { align: 'center', baseline: 'alphabetic' });
 
     // Event name on the event underline — sits just above the underline
     doc.setFont('times', 'bolditalic');
     doc.setFontSize(fitText(event, 100, 15, 10));
-    doc.text(event, 140, 126, { align: 'center', baseline: 'alphabetic' });
+    doc.text(event, 140, 129, { align: 'center', baseline: 'alphabetic' });
 
     // Date after "on" — sits just above the underline
     doc.setFont('times', 'bolditalic');
     doc.setFontSize(fitText(dateStr, 40, 14, 10));
-    doc.text(dateStr, 208, 141, { align: 'center', baseline: 'alphabetic' });
+    doc.text(dateStr, 208, 143, { align: 'center', baseline: 'alphabetic' });
     
     doc.save(`${performanceData.student.name}_${participation.activityName}_Certificate.pdf`);
   };
