@@ -349,26 +349,25 @@ const StudentPerformance = () => {
     const event = participation.activityName;
     const dateStr = participation.activityDate ? format(new Date(participation.activityDate), 'dd-MM-yyyy') : 'N/A';
 
-    // Orange color matching template
-    doc.setTextColor(230, 126, 34);
+    // Orange color matching template style
+    doc.setTextColor(232, 118, 22);
 
-    // Name on the "presented to ___" underline
+    // Name on the "presented to ___" line — sits just above the underline
     doc.setFont('times', 'bolditalic');
-    doc.setFontSize(fitText(name, 112, 19, 12));
-    doc.text(name, 168, 99, { align: 'center', baseline: 'middle' });
+    doc.setFontSize(fitText(name, 115, 20, 12));
+    doc.text(name, 168, 96, { align: 'center', baseline: 'alphabetic' });
 
-    // Event name on the "event___" underline
+    // Event name on the event underline — sits just above the underline
     doc.setFont('times', 'bolditalic');
-    doc.setFontSize(fitText(event, 120, 14, 10));
-    doc.text(event, 144, 128, { align: 'center', baseline: 'middle' });
+    doc.setFontSize(fitText(event, 100, 15, 10));
+    doc.text(event, 140, 126, { align: 'center', baseline: 'alphabetic' });
 
-    // Date after "on"
+    // Date after "on" — sits just above the underline
     doc.setFont('times', 'bolditalic');
-    doc.setFontSize(fitText(dateStr, 38, 13, 10));
-    doc.text(dateStr, 210, 144, { align: 'center', baseline: 'middle' });
+    doc.setFontSize(fitText(dateStr, 40, 14, 10));
+    doc.text(dateStr, 208, 141, { align: 'center', baseline: 'alphabetic' });
     
     doc.save(`${performanceData.student.name}_${participation.activityName}_Certificate.pdf`);
-  };
 
   const getMotivationalQuote = (participationRate: number) => {
     if (participationRate >= 70) {
