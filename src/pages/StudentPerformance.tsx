@@ -349,23 +349,23 @@ const StudentPerformance = () => {
     const event = participation.activityName;
     const dateStr = participation.activityDate ? format(new Date(participation.activityDate), 'dd-MM-yyyy') : 'N/A';
 
-    // Orange color matching template
-    doc.setTextColor(230, 126, 34);
+    // Orange color matching template style
+    doc.setTextColor(232, 118, 22);
 
-    // Name on the "presented to ___" underline
+    // Name on the "presented to ___" line — sits just above the underline
     doc.setFont('times', 'bolditalic');
-    doc.setFontSize(fitText(name, 112, 19, 12));
-    doc.text(name, 168, 99, { align: 'center', baseline: 'middle' });
+    doc.setFontSize(fitText(name, 115, 20, 12));
+    doc.text(name, 168, 97, { align: 'center', baseline: 'alphabetic' });
 
-    // Event name on the "event___" underline
+    // Event name on the event underline — sits just above the underline
     doc.setFont('times', 'bolditalic');
-    doc.setFontSize(fitText(event, 120, 14, 10));
-    doc.text(event, 144, 128, { align: 'center', baseline: 'middle' });
+    doc.setFontSize(fitText(event, 100, 15, 10));
+    doc.text(event, 140, 129, { align: 'center', baseline: 'alphabetic' });
 
-    // Date after "on"
+    // Date after "on" — sits just above the underline
     doc.setFont('times', 'bolditalic');
-    doc.setFontSize(fitText(dateStr, 38, 13, 10));
-    doc.text(dateStr, 210, 144, { align: 'center', baseline: 'middle' });
+    doc.setFontSize(fitText(dateStr, 40, 14, 10));
+    doc.text(dateStr, 208, 143, { align: 'center', baseline: 'alphabetic' });
     
     doc.save(`${performanceData.student.name}_${participation.activityName}_Certificate.pdf`);
   };
@@ -404,6 +404,14 @@ const StudentPerformance = () => {
             <AlertDescription className="text-amber-700 dark:text-amber-400 text-sm">
               <strong>Note:</strong> Some info might look a little off. If your marks aren’t showing, chill 😌 — we’ll fix it soon.
 Thanks for your patience 💙
+            </AlertDescription>
+          </Alert>
+
+          {/* Certificate Download Notice */}
+          <Alert className="mb-6 border-green-500/50 bg-green-500/10">
+            <AlertDescription className="text-green-700 dark:text-green-400 text-sm flex items-center gap-2">
+              <Sparkles className="h-4 w-4 shrink-0" />
+              <span><strong>🎉 New!</strong> You can now download your participation certificates for each activity! Search your PIN and click the download icon in the table.</span>
             </AlertDescription>
           </Alert>
 
@@ -709,13 +717,14 @@ Thanks for your patience 💙
                               </TableCell>
                               <TableCell className="text-center">
                                 <Button
-                                  variant="ghost"
+                                  variant="outline"
                                   size="sm"
-                                  className="h-7 w-7 sm:h-8 sm:w-8 p-0"
+                                  className="h-7 sm:h-8 px-2 sm:px-3 gap-1 text-xs border-primary/30 hover:bg-primary/10 hover:border-primary"
                                   onClick={() => generateCertificate(participation)}
                                   title="Download Certificate"
                                 >
-                                  <Download className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary" />
+                                  <Download className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-primary" />
+                                  <span className="hidden sm:inline text-primary">Certificate</span>
                                 </Button>
                               </TableCell>
                             </TableRow>
