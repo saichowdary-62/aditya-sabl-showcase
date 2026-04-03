@@ -708,13 +708,14 @@ Thanks for your patience 💙
                               </TableCell>
                               <TableCell className="text-center">
                                 <Button
-                                  variant="ghost"
+                                  variant="outline"
                                   size="sm"
-                                  className="h-7 w-7 sm:h-8 sm:w-8 p-0"
+                                  className="h-7 sm:h-8 px-2 sm:px-3 gap-1 text-xs border-primary/30 hover:bg-primary/10 hover:border-primary"
                                   onClick={() => generateCertificate(participation)}
                                   title="Download Certificate"
                                 >
-                                  <Download className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-primary" />
+                                  <Download className="h-3 w-3 sm:h-3.5 sm:w-3.5 text-primary" />
+                                  <span className="hidden sm:inline text-primary">Certificate</span>
                                 </Button>
                               </TableCell>
                             </TableRow>
