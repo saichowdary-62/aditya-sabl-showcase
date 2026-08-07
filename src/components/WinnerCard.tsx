@@ -35,6 +35,7 @@ const WinnerCard = ({ winner, featured = false, onClick }: WinnerCardProps) => {
               <img 
                 src={winner.photo} 
                 alt={winner.name} 
+                loading="lazy"
                 className="w-16 h-16 sm:w-20 sm:h-20 rounded-full object-cover border-2 border-primary ring-2 ring-primary/30 group-hover:ring-primary/50 transition-all" 
                 onError={(e) => {
                   const target = e.target as HTMLImageElement;

@@ -50,6 +50,7 @@ const Home = () => {
           <img 
             src="https://ik.imagekit.io/lhb4hvprkpz/img8_7aJkuzpeF.jpg?updatedAt=1627472961687" 
             alt="Students collaborating" 
+            fetchPriority="high"
             className="w-full h-full object-cover mix-blend-overlay opacity-30"
           />
         </div>
